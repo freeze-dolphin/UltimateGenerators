@@ -1,0 +1,6 @@
+name: UltimateGenerators
+main: io.github.freeze_dolphin.ultimate_generators.Loader
+version: ${project.version}
+author: Freeze_Dolphin
+
+depend: [Slimefun, CS-CoreLib]
