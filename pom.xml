@@ -50,7 +50,7 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>me.mrCookieSlime.CSCoreLibPlugin</groupId>
 			<artifactId>CS-CoreLib</artifactId>
