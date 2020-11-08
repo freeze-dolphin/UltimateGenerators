@@ -48,7 +48,7 @@
 			<version>4.1.15</version>
 			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Slimefun4-4.1.15-NOBUTS.jar</systemPath>
+			<systemPath>${basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
 		
 		<dependency>
