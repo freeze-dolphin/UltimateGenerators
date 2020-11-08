@@ -50,5 +50,14 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/Slimefun4-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
+		
+		<dependency>
+			<groupId>me.mrCookieSlime.CSCoreLibPlugin</groupId>
+			<artifactId>CS-CoreLib</artifactId>
+			<version>1.5.18</version>
+			<type>jar</type>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
+		</dependency>
 	</dependencies>
 </project>
