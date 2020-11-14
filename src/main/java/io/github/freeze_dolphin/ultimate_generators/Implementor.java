@@ -100,7 +100,7 @@ public class Implementor {
 		(new BGenerator(GlobalVariables.c, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
 				SlimefunItems.PLASTIC_SHEET, SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, 
-				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, SlimefunItems.BASIC_CIRCUIT_BOARD)) {
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT)) {
 
 			@Override
 			public String getMachineIdentifier() {
@@ -115,7 +115,7 @@ public class Implementor {
 		}).registerChargeableBlock(false, 256);
 		
 		(new BGenerator(GlobalVariables.c, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
-				SlimefunItems.LEAD_INGOT, SlimefunItems.LEAD_INGOT, SlimefunItems.LEAD_INGOT, 
+				SlimefunItems.LEAD_INGOT, MOTOR, SlimefunItems.LEAD_INGOT, 
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
 				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT)) {
 
