@@ -18,6 +18,11 @@ import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
 public class Implementor {
 
+	private static final ItemStack MOTOR = SlimefunItems.ELECTRIC_MOTOR;
+	private static final ItemStack COIL = SlimefunItems.HEATING_COIL;
+	private static final ItemStack BCIRCUIT = SlimefunItems.BASIC_CIRCUIT_BOARD;
+	private static final ItemStack ACIRCUIT = SlimefunItems.ADVANCED_CIRCUIT_BOARD;
+
 	public Implementor() {
 
 		(new SlimefunItem(GlobalVariables.c, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, null, true)).register(false, new EnergyTicker() {
@@ -67,7 +72,7 @@ public class Implementor {
 				)) {
 
 			public ItemStack getProgressBar() {
-				return new ItemStack(Material.FLINT_AND_STEEL);
+				return mat(Material.FLINT_AND_STEEL);
 			}
 
 			@Override
@@ -75,6 +80,57 @@ public class Implementor {
 				return "DIESEL_GENERATOR";
 			}
 		}).registerUnrechargeableBlock(true, 256);
+
+		(new BGenerator(GlobalVariables.c, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL, 
+				SlimefunItems.BILLON_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.BILLON_INGOT, 
+				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL
+				)) {
+
+			public ItemStack getProgressBar() {
+				return mat(Material.MAGMA_CREAM);
+			}
+
+			@Override
+			public String getMachineIdentifier() {
+				return "BIOFUEL_GENERATOR";
+			}
+		}).registerUnrechargeableBlock(true, 256);
+
+		(new BGenerator(GlobalVariables.c, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
+				SlimefunItems.PLASTIC_SHEET, SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, 
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, SlimefunItems.BASIC_CIRCUIT_BOARD)) {
+
+			@Override
+			public String getMachineIdentifier() {
+				return "DRAGON_BREATH_GENERATOR";
+			}
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.END_CRYSTAL);
+			}
+
+		}).registerChargeableBlock(false, 256);
+		
+		(new BGenerator(GlobalVariables.c, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.LEAD_INGOT, SlimefunItems.LEAD_INGOT, SlimefunItems.LEAD_INGOT, 
+				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
+				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT)) {
+
+			@Override
+			public String getMachineIdentifier() {
+				return "REACTION_GENERATOR";
+			}
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.FLINT_AND_STEEL);
+			}
+
+		}).registerChargeableBlock(false, 256);
+
 	}
 
 	private ItemStack mat(Material m) {

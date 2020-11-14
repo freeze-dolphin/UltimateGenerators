@@ -53,7 +53,7 @@ public abstract class BGenerator extends SlimefunItem {
 	
 	private static final int[] border = 
 		{
-				 0,                              8, 
+				 0,  
 				 9,                             17, 
 				18, 19, 20, 21,     23, 24, 25, 26, 
 				27,                             35, 
@@ -78,7 +78,8 @@ public abstract class BGenerator extends SlimefunItem {
 		return new int[] { 38, 39, 40, 41, 42 }; 
 	}
 	
-	private static final int indicator = 22;
+	protected static final int indicator = 22;
+	protected static final int machineInfo = 8;
 
 	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
@@ -200,8 +201,7 @@ public abstract class BGenerator extends SlimefunItem {
 	
 	private void constructMenu(BlockMenuPreset preset) {
 		for (int i: border) {
-			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "),
-			new MenuClickHandler() {
+			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), new MenuClickHandler() {
 
 				@Override
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -211,8 +211,7 @@ public abstract class BGenerator extends SlimefunItem {
 			});
 		}
 		for (int i: border_in) {
-			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " "),
-			new MenuClickHandler() {
+			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " "), new MenuClickHandler() {
 
 				@Override
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -222,8 +221,7 @@ public abstract class BGenerator extends SlimefunItem {
 			});
 		}
 		for (int i: border_out) {
-			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " "),
-			new MenuClickHandler() {
+			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " "), new MenuClickHandler() {
 
 				@Override
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -248,8 +246,7 @@ public abstract class BGenerator extends SlimefunItem {
 			});
 		}
 		
-		preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "),
-		new MenuClickHandler() {
+		preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -257,6 +254,16 @@ public abstract class BGenerator extends SlimefunItem {
 			}
 							
 		});
+		
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+
+			@Override
+			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+				return false;
+			}
+							
+		});
+		
 	}
 	
 	public void registerDefaultRecipes() {

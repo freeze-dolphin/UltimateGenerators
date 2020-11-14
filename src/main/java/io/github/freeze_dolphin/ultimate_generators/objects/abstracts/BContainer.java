@@ -7,6 +7,7 @@ import java.util.Map;
 import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
@@ -42,18 +43,18 @@ public abstract class BContainer extends SlimefunItem {
 	public static Map<Block, MachineRecipe> processing = new HashMap<>();
 	public static Map<Block, Integer> progress = new HashMap<>();
 	protected List<MachineRecipe> recipes = new ArrayList<>();
-	
+
 	private static final int[] border = 
 		{
-				 0,                              8, 
-				 9,                             17, 
+				0, 
+				9,                             17, 
 				18, 19, 20, 21,     23, 24, 25, 26, 
 				27,                             35, 
 				36,                             44
 		};
 	private static final int[] border_in = 
 		{
-				 1,                      7, 
+				1,                      7, 
 				10, 11, 12, 13, 14, 15, 16
 		};
 	private static final int[] border_out = 
@@ -69,8 +70,9 @@ public abstract class BContainer extends SlimefunItem {
 	public int[] getOutputSlots() { 
 		return new int[] { 38, 39, 40, 41, 42 }; 
 	}
-	
-	private static final int indicator = 22;
+
+	protected static final int indicator = 22;
+	protected static final int machineInfo = 8;
 
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
@@ -124,8 +126,7 @@ public abstract class BContainer extends SlimefunItem {
 		registerDefaultRecipes();
 	}
 
-	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe,
-			ItemStack recipeOutput) {
+	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
 		super(category, item, id, recipeType, recipe, recipeOutput);
 
 		new BlockMenuPreset(id, getInventoryTitle()) {
@@ -149,7 +150,9 @@ public abstract class BContainer extends SlimefunItem {
 				return getOutputSlots();
 			}
 		};
+
 		registerBlockHandler(id, new SlimefunBlockHandler() {
+
 			public void onPlace(Player p, Block b, SlimefunItem item) {
 			}
 
@@ -205,11 +208,19 @@ public abstract class BContainer extends SlimefunItem {
 				}
 			});
 		}
-		preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " ", new String[0]),
-				new ChestMenu.MenuClickHandler() {
+		preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " ", new String[0]), new MenuClickHandler() {
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
 				return false;
 			}
+		});
+
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+
+			@Override
+			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+				return false;
+			}
+
 		});
 		for (int i : getOutputSlots()) {
 			preset.addMenuClickHandler(i, new ChestMenu.AdvancedMenuClickHandler() {
