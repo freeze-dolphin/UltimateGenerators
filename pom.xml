@@ -60,4 +60,25 @@
 			<systemPath>${basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
 		</dependency>
 	</dependencies>
+	
+	<build>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/tests/java</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/tests/resources</directory>
+            </testResource>
+        </testResources>
+        <finalName>${project.name} v${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>${basedir}/src</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                    <include>config.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
