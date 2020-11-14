@@ -14,4 +14,8 @@ public class UniversalMaterial extends MaterialData {
 		super(m, (byte) data);
 	}
 	
+	public MaterialData toData() {
+		return (MaterialData) this;
+	}
+	
 }

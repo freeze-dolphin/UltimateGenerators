@@ -5,31 +5,44 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.freeze_dolphin.ultimate_generators.objects.annotations.MachineItemStack;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.World.CustomSkull;
 
 public class UGItems {
 	
+	@MachineItemStack
 	public static ItemStack ENDLESS_GENERATOR;
+	@MachineItemStack
 	public static ItemStack NETHER_STAR_GENERATOR;
 	
-	public static ItemStack DIESEL_REFINER;
+	@MachineItemStack
+	public static ItemStack DIESEL_REFINERY;
 	public static ItemStack DIESEL_BUCKET;
+	@MachineItemStack
 	public static ItemStack DIESEL_GENERATOR;
 
+	@MachineItemStack
 	public static ItemStack BIOMASS_EXTRACTION_MACHINE;
 	public static ItemStack BIOMASS_BUCKET;
-	public static ItemStack BIOFUEL_REFINER;
+	@MachineItemStack
+	public static ItemStack BIOFUEL_REFINERY;
 	public static ItemStack BIOFUEL_BUCKET;
+	@MachineItemStack
 	public static ItemStack BIOFUEL_GENERATOR;
 	
+	@MachineItemStack
 	public static ItemStack DRAGON_BREATH_GENERATOR;
 	
+	@MachineItemStack
 	public static ItemStack REACTION_GENERATOR;
 	
+	@MachineItemStack
 	public static ItemStack ENDER_CRYSTAL_GENERATOR;
+	@MachineItemStack
 	public static ItemStack ENDER_CRYSTAL_GENERATOR_BASE;
+	@MachineItemStack
 	public static ItemStack ENDER_CYRSTAL_STABILIZER;
 	
 	public static ItemStack ENDERIUM_DUST, ENDERIUM_INGOT;
@@ -37,18 +50,18 @@ public class UGItems {
 	static {
 		try {
 			ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5ZjM1NmY1ZmU3ZDFiYzkyY2RkZmFlYmEzZWU3NzNhYzlkZjFjYzRkMWMyZjhmZTVmNDcwMTMwMzJjNTUxZCJ9fX0="),
-					"&6无尽发电机&r", "", "&r当接收到红石信号时工作", "&5创造发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &78192 J/s");
+					"&6无尽发电机&r", "", "&r当接收到红石信号时工作", "&5创造发电机", "&8⇨ &e⚡ &70 ~ +∞ J/s");
 			
 			NETHER_STAR_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 7), "&d下届之星发电机&r", "", "&4终极发电机", "&8⇨ &e⚡ &71024 J 缓存", "&8⇨ &e⚡ &7128 J/s");
 			
-			DIESEL_REFINER = new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c柴油精炼器&r", "", "&r精炼石油生产柴油");
+			DIESEL_REFINERY = new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c柴油精炼器&r", "", "&r精炼石油生产柴油");
 			DIESEL_BUCKET = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFmZTgzNjkyZjcxZjA1ZDExM2Q4OTFmOGI4MzhlMDdkN2NiODE0MTliMjBkYzFiMjA5ZWI4NGY3NzFmMGM5ZiJ9fX0="),
 					"&r桶装柴油&r");
 			DIESEL_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWVlMTE1NjU2YmMyMjA3NTVjNmQ1YmM4NzI2MGM4MjE0MWMyNTNhMzRiYzNkYjJiZDcyYjcyN2JlZmNjMCJ9fX0="),
 					"&7柴油发电机&r", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &736 J/s");
 			
 			BIOMASS_EXTRACTION_MACHINE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&a生物质萃取机&r", "", "&a中级机器", "&8⇨ &e⚡ &76 J/s");
-			BIOFUEL_REFINER = new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c生物燃油精炼器&r", "", "&r精炼生物质生产生物燃油");
+			BIOFUEL_REFINERY = new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c生物燃油精炼器&r", "", "&r精炼生物质生产生物燃油");
 			BIOMASS_BUCKET = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdjNDA3YWE3YjMzNjIyNTMwOWQ1MzUwZTNmNDUyYmZjZjM1NTY5MmU5ODFkODFkZGZlMzIwOGJjZjZlZDI2YyJ9fX0="),
 					"&r桶装生物燃油&r");
 			BIOFUEL_BUCKET = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFmZTgzNjkyZjcxZjA1ZDExM2Q4OTFmOGI4MzhlMDdkN2NiODE0MTliMjBkYzFiMjA5ZWI4NGY3NzFmMGM5ZiJ9fX0="),
