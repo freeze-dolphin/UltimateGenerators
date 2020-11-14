@@ -43,21 +43,19 @@
 		</dependency>
 
 		<dependency>
-			<groupId>me.mrCookieSlime.Slimefun</groupId>
+			<groupId>me.mrCookieSlime</groupId>
 			<artifactId>Slimefun</artifactId>
 			<version>4.1.15</version>
-			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
+			<systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
 
 		<dependency>
-			<groupId>me.mrCookieSlime.CSCoreLibPlugin</groupId>
+			<groupId>me.mrCookieSlime</groupId>
 			<artifactId>CS-CoreLib</artifactId>
 			<version>1.5.18</version>
-			<type>jar</type>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
+			<systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
 		</dependency>
 	</dependencies>
 	
