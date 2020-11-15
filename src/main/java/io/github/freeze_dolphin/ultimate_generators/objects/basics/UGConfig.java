@@ -57,7 +57,7 @@ public class UGConfig extends Config {
 	@SuppressWarnings("unchecked")
 	public MachineRecipe[] getMachineRecipes(String machineID) {
 		if (!contains(buildPath(machineID, "machine-recipes"))) return null;
-		
+			
 		List<List<Object>> machineRecipes = (List<List<Object>>) getConfiguration().getList(buildPath(machineID, "machine-recipes"));
 		List<MachineRecipe> result = new ArrayList<>();
 		for (List<Object> machineRecipe : machineRecipes) {
@@ -86,7 +86,7 @@ public class UGConfig extends Config {
 
 
 	public static String buildPath(String machineID, String key) {
-		return ("machines." + machineID.replaceAll(".", "_") + "." + key);
+		return ("machines." + machineID.replaceAll("\\.", "_") + "." + key);
 	}
 
 }

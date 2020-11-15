@@ -8,7 +8,6 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineHelper;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
@@ -23,8 +22,9 @@ import org.bukkit.material.MaterialData;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 
-public abstract class OilRefinery extends AContainer {
+public abstract class OilRefinery extends BContainer {
 
 	public OilRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, name, recipeType, recipe);
@@ -45,7 +45,7 @@ public abstract class OilRefinery extends AContainer {
 	}
 	
 	@Override
-	public String getInventoryTitle() {
+	public String loadInventoryTitle() {
 		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
 	}
 
@@ -55,7 +55,7 @@ public abstract class OilRefinery extends AContainer {
 	}
 	
 	@Override
-	public int getSpeed() {
+	public int loadSpeed() {
 		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
 	}
 	

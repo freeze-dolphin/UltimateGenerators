@@ -41,6 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
+import io.github.freeze_dolphin.ultimate_generators.Utils;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
@@ -89,7 +90,7 @@ public abstract class BGenerator extends SlimefunItem {
 		
 		ID = id;
 		
-		new BlockMenuPreset(id, getInventoryTitle()) {
+		new BlockMenuPreset(id, loadInventoryTitle()) {
 			
 			@Override
 			public void init() {
@@ -102,7 +103,7 @@ public abstract class BGenerator extends SlimefunItem {
 
 			@Override
 			public boolean canOpen(Block b, Player p) {
-				return p.hasPermission("slimefun.inventory.bypass") || CSCoreLib.getLib().getProtectionManager().canAccessChest(p.getUniqueId(), b, true);
+				return Utils.reflectCanOpenMethod(b, p);
 			}
 
 			@Override
@@ -148,7 +149,7 @@ public abstract class BGenerator extends SlimefunItem {
 	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
 		super(category, item, id, recipeType, recipe, recipeOutput);
 		
-		new BlockMenuPreset(id, getInventoryTitle()) {
+		new BlockMenuPreset(id, loadInventoryTitle()) {
 			
 			@Override
 			public void init() {
@@ -260,7 +261,7 @@ public abstract class BGenerator extends SlimefunItem {
 							
 		});
 		
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (loadSpeed() == 1 ? "&f默认" : loadSpeed())), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -298,9 +299,18 @@ public abstract class BGenerator extends SlimefunItem {
 		Loader.getUGConfig().reload();
 	}
 
-	public String getInventoryTitle() {
-		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+	public String loadInventoryTitle() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "inventory-title"))) {
+			return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "inventory-title", getInventoryTitle());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getInventoryTitle();
+		}
 	}
+	
+	public abstract String getInventoryTitle();
 
 	public String getMachineIdentifier() {
 		return ID;
@@ -310,9 +320,18 @@ public abstract class BGenerator extends SlimefunItem {
 		return Loader.getUGConfig().getMachineProduction(getMachineIdentifier());
 	}
 
-	public int getSpeed() {
-		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+	public int loadSpeed() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "speed"))) {
+			return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "speed", getSpeed());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getSpeed();
+		}
 	}
+	
+	public abstract int getSpeed();
 	
 	public abstract ItemStack getProgressBar();
 	

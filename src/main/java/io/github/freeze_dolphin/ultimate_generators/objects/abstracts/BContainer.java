@@ -37,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
+import io.github.freeze_dolphin.ultimate_generators.Utils;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
@@ -82,7 +83,7 @@ public abstract class BContainer extends SlimefunItem {
 
 		ID = id;
 		
-		new BlockMenuPreset(id, getInventoryTitle()) {
+		new BlockMenuPreset(id, loadInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
 			}
@@ -91,9 +92,7 @@ public abstract class BContainer extends SlimefunItem {
 			}
 
 			public boolean canOpen(Block b, Player p) {
-				boolean perm = (p.hasPermission("slimefun.inventory.bypass"))
-						|| (CSCoreLib.getLib().getProtectionManager().canAccessChest(p.getUniqueId(), b, true));
-				return (perm) && (ProtectionUtils.canAccessItem(p, b));
+				return Utils.reflectCanOpenMethod(b, p);
 			}
 
 			public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
@@ -134,7 +133,7 @@ public abstract class BContainer extends SlimefunItem {
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
 		super(category, item, id, recipeType, recipe, recipeOutput);
 
-		new BlockMenuPreset(id, getInventoryTitle()) {
+		new BlockMenuPreset(id, loadInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
 			}
@@ -219,7 +218,7 @@ public abstract class BContainer extends SlimefunItem {
 			}
 		});
 
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (loadSpeed() == 1 ? "&f默认" : loadSpeed())), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -271,17 +270,35 @@ public abstract class BContainer extends SlimefunItem {
 		Loader.getUGConfig().reload();
 	}
 
-	public String getInventoryTitle() {
-		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+	public String loadInventoryTitle() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "inventory-title"))) {
+			return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "inventory-title", getInventoryTitle());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getInventoryTitle();
+		}
 	}
+	
+	public abstract String getInventoryTitle();
 
 	public int getEnergyConsumption() {
 		return Loader.getUGConfig().getMachineConsumption(getMachineIdentifier());
 	}
 
-	public int getSpeed() {
-		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+	public int loadSpeed() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "speed"))) {
+			return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "speed", getSpeed());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getSpeed();
+		}
 	}
+	
+	public abstract int getSpeed();
 
 	public String getMachineIdentifier() {
 		return ID;
@@ -296,7 +313,7 @@ public abstract class BContainer extends SlimefunItem {
 	}
 
 	public void registerRecipe(MachineRecipe recipe) {
-		recipe.setTicks(recipe.getTicks() / getSpeed());
+		recipe.setTicks(recipe.getTicks() / loadSpeed());
 		recipes.add(recipe);
 	}
 

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
@@ -34,9 +32,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
+import io.github.freeze_dolphin.ultimate_generators.Utils;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
+@Deprecated
 public abstract class UnproductiveGenerator extends SlimefunItem {
 	public static Map<Block, MachineRecipe> processing = new HashMap<>();
 	public static Map<Block, Integer> progress = new HashMap<>();
@@ -59,18 +59,16 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 
 		ID = id;
 
-		new BlockMenuPreset(id, getInventoryTitle()) {
+		new BlockMenuPreset(id, loadInventoryTitle()) {
+
 			public void init() {
 				constructMenu(this);
 			}
 
-			public void newInstance(BlockMenu menu, Block b) {
-			}
+			public void newInstance(BlockMenu menu, Block b) {}
 
 			public boolean canOpen(Block b, Player p) {
-				boolean perm = (p.hasPermission("slimefun.inventory.bypass"))
-						|| (CSCoreLib.getLib().getProtectionManager().canAccessChest(p.getUniqueId(), b, true));
-				return (perm) && (ProtectionUtils.canAccessItem(p, b));
+				return Utils.reflectCanOpenMethod(b, p);
 			}
 
 			public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
@@ -121,9 +119,18 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 		});
 	}
 
-	public String getInventoryTitle() {
-		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+	public String loadInventoryTitle() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "inventory-title"))) {
+			return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "inventory-title", getInventoryTitle());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getInventoryTitle();
+		}
 	}
+	
+	public abstract String getInventoryTitle();
 
 	public abstract ItemStack getProgressBar();
 
@@ -140,9 +147,18 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 
 	public abstract void registerDefaultRecipes();
 
-	public int getSpeed() {
-		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+	public int loadSpeed() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "speed"))) {
+			return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+		} else {
+			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "speed", getSpeed());
+			Loader.getUGConfig().save();
+			Loader.getUGConfig().reload();
+			return getSpeed();
+		}
 	}
+	
+	public abstract int getSpeed();
 
 	public String getMachineIdentifier() {
 		return ID;
@@ -157,7 +173,7 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 	}
 
 	public void registerRecipe(MachineRecipe recipe) {
-		recipe.setTicks(recipe.getTicks() / getSpeed());
+		recipe.setTicks(recipe.getTicks() / loadSpeed());
 		recipes.add(recipe);
 	}
 
