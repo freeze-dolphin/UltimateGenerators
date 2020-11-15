@@ -36,9 +36,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.Utils;
-import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BContainer extends SlimefunItem {
@@ -83,7 +81,7 @@ public abstract class BContainer extends SlimefunItem {
 
 		ID = id;
 		
-		new BlockMenuPreset(id, loadInventoryTitle()) {
+		new BlockMenuPreset(id, getInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
 			}
@@ -127,13 +125,13 @@ public abstract class BContainer extends SlimefunItem {
 				return true;
 			}
 		});
-		loadRecipes();
+		registerDefaultRecipes();
 	}
 
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
 		super(category, item, id, recipeType, recipe, recipeOutput);
 
-		new BlockMenuPreset(id, loadInventoryTitle()) {
+		new BlockMenuPreset(id, getInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
 			}
@@ -181,7 +179,7 @@ public abstract class BContainer extends SlimefunItem {
 				return true;
 			}
 		});
-		loadRecipes();
+		registerDefaultRecipes();
 	}
 
 	protected void constructMenu(BlockMenuPreset preset) {
@@ -218,7 +216,7 @@ public abstract class BContainer extends SlimefunItem {
 			}
 		});
 
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (loadSpeed() == 1 ? "&f默认" : loadSpeed())), new MenuClickHandler() {
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -242,67 +240,12 @@ public abstract class BContainer extends SlimefunItem {
 
 
 	public abstract ItemStack getProgressBar();
-
-	public void loadRecipes() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "machine-recipes"))) {
-			for (MachineRecipe mr : Loader.getUGConfig().getMachineRecipes(getMachineIdentifier())) {
-				registerRecipe(mr);
-			}
-		} else {
-			registerDefaultRecipes();
-			saveRecipesToFile();
-		}
-	}
-
 	public abstract void registerDefaultRecipes();
-	
-	public void saveRecipesToFile() {
-		List<List<Object>> a = new ArrayList<>();
-		for (MachineRecipe mr : recipes) {
-			List<Object> b = new ArrayList<>();
-			b.add(mr.getTicks() / 2);
-			b.add(mr.getInput());
-			b.add(mr.getOutput());
-			a.add(b);
-		}
-		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-recipes", a);
-		Loader.getUGConfig().save();
-		Loader.getUGConfig().reload();
-	}
-
-	public String loadInventoryTitle() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "inventory-title"))) {
-			return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
-		} else {
-			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "inventory-title", getInventoryTitle());
-			Loader.getUGConfig().save();
-			Loader.getUGConfig().reload();
-			return getInventoryTitle();
-		}
-	}
-	
 	public abstract String getInventoryTitle();
-
-	public int getEnergyConsumption() {
-		return Loader.getUGConfig().getMachineConsumption(getMachineIdentifier());
-	}
-
-	public int loadSpeed() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "speed"))) {
-			return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
-		} else {
-			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "speed", getSpeed());
-			Loader.getUGConfig().save();
-			Loader.getUGConfig().reload();
-			return getSpeed();
-		}
-	}
-	
+	public abstract int getEnergyConsumption();
 	public abstract int getSpeed();
-
-	public String getMachineIdentifier() {
-		return ID;
-	}
+	
+	public String getMachineIdentifier() { return ID; }
 
 	public MachineRecipe getProcessing(Block b) {
 		return (MachineRecipe) processing.get(b);
@@ -313,7 +256,7 @@ public abstract class BContainer extends SlimefunItem {
 	}
 
 	public void registerRecipe(MachineRecipe recipe) {
-		recipe.setTicks(recipe.getTicks() / loadSpeed());
+		recipe.setTicks(recipe.getTicks() / getSpeed());
 		recipes.add(recipe);
 	}
 

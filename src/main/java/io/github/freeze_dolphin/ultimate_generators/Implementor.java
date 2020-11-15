@@ -32,7 +32,7 @@ public class Implementor {
 
 			@Override
 			public double generateEnergy(Location l, SlimefunItem paramSlimefunItem, Config paramConfig) {
-				return l.getBlock().getBlockPower() * Loader.getUGConfig().getMachineProduction("ENDLESS_GENERATOR");
+				return l.getBlock().getBlockPower() * 1024;
 			}});
 
 		(new BGenerator(GlobalVariables.c, UGItems.NETHER_STAR_GENERATOR, "NETHER_STAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
@@ -47,7 +47,7 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				registerFuel(new MachineFuel(240, mat(Material.NETHER_STAR), null));
+				registerFuel(new MachineFuel(30, mat(Material.NETHER_STAR)));
 			}
 
 			@Override
@@ -58,6 +58,11 @@ public class Implementor {
 			@Override
 			public int getSpeed() {
 				return 1;
+			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 64;
 			}
 		}).registerChargeableBlock(false, 1024);
 
@@ -119,6 +124,11 @@ public class Implementor {
 			public int getSpeed() {
 				return 1;
 			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 18;
+			}
 		}).registerUnrechargeableBlock(true, 256);
 
 		(new BGenerator(GlobalVariables.c, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
@@ -145,6 +155,11 @@ public class Implementor {
 			public int getSpeed() {
 				return 1;
 			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 18;
+			}
 		}).registerUnrechargeableBlock(true, 256);
 
 		(new BGenerator(GlobalVariables.c, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
@@ -170,6 +185,11 @@ public class Implementor {
 			@Override
 			public int getSpeed() {
 				return 1;
+			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 9;
 			}
 		}).registerChargeableBlock(false, 256);
 
@@ -198,6 +218,11 @@ public class Implementor {
 			@Override
 			public int getSpeed() {
 				return 1;
+			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 8;
 			}
 		}).registerChargeableBlock(false, 256);
 

@@ -18,11 +18,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
-
-import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
+import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class OilRefinery extends BContainer {
 
@@ -30,14 +28,15 @@ public abstract class OilRefinery extends BContainer {
 		super(category, item, name, recipeType, recipe);
 	}
 
-
 	@Override
 	public ItemStack getProgressBar() {
 		return new ItemStack(Material.FLINT_AND_STEEL);
 	}
 
 	@Override
-	public void registerDefaultRecipes() {}
+	public void registerDefaultRecipes() {
+		registerRecipe(40, new ItemStack[] {SlimefunItems.BUCKET_OF_OIL}, new ItemStack[] {UGItems.DIESEL_BUCKET});
+	}
 
 	@Override
 	public String getMachineIdentifier() {
@@ -45,21 +44,20 @@ public abstract class OilRefinery extends BContainer {
 	}
 	
 	@Override
-	public String loadInventoryTitle() {
-		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+	public String getInventoryTitle() {
+		return "&c柴油精炼器";
 	}
 
 	@Override
 	public int getEnergyConsumption() {
-		return Loader.getUGConfig().getMachineConsumption(getMachineIdentifier());
+		return 16;
 	}
 	
 	@Override
-	public int loadSpeed() {
-		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+	public int getSpeed() {
+		return 1;
 	}
 	
-	@SuppressWarnings("deprecation")
 	protected void tick(Block b) {
 		if (isProcessing(b)) {
 			int timeleft = progress.get(b);
@@ -84,10 +82,9 @@ public abstract class OilRefinery extends BContainer {
 				}
 				else progress.put(b, timeleft - 1);
 			}
-			else {
-				BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new MaterialData(Material.STAINED_GLASS_PANE, (byte) 15), " "));
+			else {				
 				pushItems(b, processing.get(b).getOutput());
-
+				BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, (byte) 15), " "));
 				progress.remove(b);
 				processing.remove(b);
 			}

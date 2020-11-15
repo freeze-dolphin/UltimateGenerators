@@ -17,11 +17,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
-
-import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
+import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BiofuelRefinery extends BContainer {
 
@@ -35,7 +33,9 @@ public abstract class BiofuelRefinery extends BContainer {
 	}
 	
 	@Override
-	public void registerDefaultRecipes() {}
+	public void registerDefaultRecipes() {
+		registerRecipe(40, new ItemStack[] {UGItems.BIOMASS_BUCKET}, new ItemStack[] {UGItems.BIOFUEL_BUCKET});
+	}
 
 	@Override
 	public String getMachineIdentifier() {
@@ -43,21 +43,20 @@ public abstract class BiofuelRefinery extends BContainer {
 	}
 
 	@Override
-	public String loadInventoryTitle() {
-		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
+	public String getInventoryTitle() {
+		return "&2生物燃油精炼器";
 	}
 
 	@Override
 	public int getEnergyConsumption() {
-		return Loader.getUGConfig().getMachineConsumption(getMachineIdentifier());
+		return 18;
 	}
 	
 	@Override
-	public int loadSpeed() {
-		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
+	public int getSpeed() {
+		return 1;
 	}
 	
-	@SuppressWarnings("deprecation")
 	protected void tick(Block b) {
 		if (isProcessing(b)) {
 			int timeleft = progress.get(b);
@@ -83,7 +82,7 @@ public abstract class BiofuelRefinery extends BContainer {
 				else progress.put(b, timeleft - 1);
 			}
 			else {
-				BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new MaterialData(Material.STAINED_GLASS_PANE, (byte) 15), " "));
+				BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, (byte) 15), " "));
 				pushItems(b, processing.get(b).getOutput());
 
 				progress.remove(b);

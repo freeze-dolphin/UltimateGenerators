@@ -40,10 +40,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.Utils;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BGenerator extends SlimefunItem {
@@ -90,7 +88,7 @@ public abstract class BGenerator extends SlimefunItem {
 		
 		ID = id;
 		
-		new BlockMenuPreset(id, loadInventoryTitle()) {
+		new BlockMenuPreset(id, getInventoryTitle()) {
 			
 			@Override
 			public void init() {
@@ -142,14 +140,13 @@ public abstract class BGenerator extends SlimefunItem {
 				return true;
 			}
 		});
-		
-		this.loadRecipes();
+		registerDefaultRecipes();
 	}
 
 	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
 		super(category, item, id, recipeType, recipe, recipeOutput);
 		
-		new BlockMenuPreset(id, loadInventoryTitle()) {
+		new BlockMenuPreset(id, getInventoryTitle()) {
 			
 			@Override
 			public void init() {
@@ -201,8 +198,7 @@ public abstract class BGenerator extends SlimefunItem {
 				return true;
 			}
 		});
-		
-		this.loadRecipes();
+		registerDefaultRecipes();
 	}
 	
 	private void constructMenu(BlockMenuPreset preset) {
@@ -261,7 +257,7 @@ public abstract class BGenerator extends SlimefunItem {
 							
 		});
 		
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (loadSpeed() == 1 ? "&f默认" : loadSpeed())), new MenuClickHandler() {
+		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -271,69 +267,14 @@ public abstract class BGenerator extends SlimefunItem {
 		});
 		
 	}
-	
-	public void loadRecipes() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "machine-fuels"))) {
-			for (MachineFuel mr : Loader.getUGConfig().getMachineFuels(getMachineIdentifier())) {
-				registerFuel(mr);
-			}
-		} else {
-			registerDefaultRecipes();
-			saveRecipesToFile();
-		}
-	}
 
 	public abstract void registerDefaultRecipes();
-	
-	public void saveRecipesToFile() {
-		List<List<Object>> a = new ArrayList<>();
-		for (MachineFuel mr : recipes) {
-			List<Object> b = new ArrayList<>();
-			b.add(mr.getTicks() / 2);
-			b.add(mr.getInput());
-			b.add(mr.getOutput());
-			a.add(b);
-		}
-		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-fuels", a);
-		Loader.getUGConfig().save();
-		Loader.getUGConfig().reload();
-	}
-
-	public String loadInventoryTitle() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "inventory-title"))) {
-			return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
-		} else {
-			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "inventory-title", getInventoryTitle());
-			Loader.getUGConfig().save();
-			Loader.getUGConfig().reload();
-			return getInventoryTitle();
-		}
-	}
-	
 	public abstract String getInventoryTitle();
-
-	public String getMachineIdentifier() {
-		return ID;
-	}
-
-	public int getEnergyProduction() {
-		return Loader.getUGConfig().getMachineProduction(getMachineIdentifier());
-	}
-
-	public int loadSpeed() {
-		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "speed"))) {
-			return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
-		} else {
-			Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "speed", getSpeed());
-			Loader.getUGConfig().save();
-			Loader.getUGConfig().reload();
-			return getSpeed();
-		}
-	}
-	
+	public abstract int getEnergyProduction();
 	public abstract int getSpeed();
-	
 	public abstract ItemStack getProgressBar();
+	
+	public String getMachineIdentifier() { return ID; }
 	
 	public MachineFuel getProcessing(Location l) {
 		return processing.get(l);
