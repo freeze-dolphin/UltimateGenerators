@@ -17,7 +17,6 @@ public class Loader extends JavaPlugin {
 		plug = this;
 		config = new UGConfig(this);
 
-
 		// load
 		try {
 			new UGItems();

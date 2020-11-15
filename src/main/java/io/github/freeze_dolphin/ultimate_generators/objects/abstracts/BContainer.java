@@ -37,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
+import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BContainer extends SlimefunItem {
@@ -73,10 +74,14 @@ public abstract class BContainer extends SlimefunItem {
 
 	protected static final int indicator = 22;
 	protected static final int machineInfo = 8;
-
+	
+	private String ID;
+	
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
 
+		ID = id;
+		
 		new BlockMenuPreset(id, getInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
@@ -123,7 +128,7 @@ public abstract class BContainer extends SlimefunItem {
 				return true;
 			}
 		});
-		registerDefaultRecipes();
+		loadRecipes();
 	}
 
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
@@ -177,7 +182,7 @@ public abstract class BContainer extends SlimefunItem {
 				return true;
 			}
 		});
-		registerDefaultRecipes();
+		loadRecipes();
 	}
 
 	protected void constructMenu(BlockMenuPreset preset) {
@@ -239,10 +244,30 @@ public abstract class BContainer extends SlimefunItem {
 
 	public abstract ItemStack getProgressBar();
 
-	public void registerDefaultRecipes() {
-		for (MachineRecipe mr : Loader.getUGConfig().getMachineRecipes(getMachineIdentifier())) {
-			registerRecipe(mr);
+	public void loadRecipes() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "machine-recipes"))) {
+			for (MachineRecipe mr : Loader.getUGConfig().getMachineRecipes(getMachineIdentifier())) {
+				registerRecipe(mr);
+			}
+		} else {
+			registerDefaultRecipes();
+			saveRecipesToFile();
 		}
+	}
+
+	public abstract void registerDefaultRecipes();
+	
+	public void saveRecipesToFile() {
+		List<List<Object>> a = new ArrayList<>();
+		for (MachineRecipe mr : recipes) {
+			List<Object> b = new ArrayList<>();
+			b.set(0, mr.getTicks() / 2);
+			b.set(1, mr.getInput());
+			b.set(2, mr.getOutput());
+			a.add(b);
+		}
+		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-recipes", a);
+		Loader.getUGConfig().reload();
 	}
 
 	public String getInventoryTitle() {
@@ -257,7 +282,9 @@ public abstract class BContainer extends SlimefunItem {
 		return Loader.getUGConfig().getMachineSpeed(getMachineIdentifier());
 	}
 
-	public abstract String getMachineIdentifier();
+	public String getMachineIdentifier() {
+		return ID;
+	}
 
 	public MachineRecipe getProcessing(Block b) {
 		return (MachineRecipe) processing.get(b);

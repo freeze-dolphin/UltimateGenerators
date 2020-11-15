@@ -42,6 +42,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.freeze_dolphin.ultimate_generators.Loader;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.github.freeze_dolphin.ultimate_generators.objects.basics.UGConfig;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BGenerator extends SlimefunItem {
@@ -80,9 +81,13 @@ public abstract class BGenerator extends SlimefunItem {
 	
 	protected static final int indicator = 22;
 	protected static final int machineInfo = 8;
-
+	
+	private String ID;
+	
 	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
+		
+		ID = id;
 		
 		new BlockMenuPreset(id, getInventoryTitle()) {
 			
@@ -137,7 +142,7 @@ public abstract class BGenerator extends SlimefunItem {
 			}
 		});
 		
-		this.registerDefaultRecipes();
+		this.loadRecipes();
 	}
 
 	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
@@ -196,7 +201,7 @@ public abstract class BGenerator extends SlimefunItem {
 			}
 		});
 		
-		this.registerDefaultRecipes();
+		this.loadRecipes();
 	}
 	
 	private void constructMenu(BlockMenuPreset preset) {
@@ -266,17 +271,39 @@ public abstract class BGenerator extends SlimefunItem {
 		
 	}
 	
-	public void registerDefaultRecipes() {
-		for (MachineFuel mr : Loader.getUGConfig().getMachineFuels(getMachineIdentifier())) {
-			registerFuel(mr);
+	public void loadRecipes() {
+		if (Loader.getUGConfig().contains(UGConfig.buildPath(getMachineIdentifier(), "machine-fuels"))) {
+			for (MachineFuel mr : Loader.getUGConfig().getMachineFuels(getMachineIdentifier())) {
+				registerFuel(mr);
+			}
+		} else {
+			registerDefaultRecipes();
+			saveRecipesToFile();
 		}
+	}
+
+	public abstract void registerDefaultRecipes();
+	
+	public void saveRecipesToFile() {
+		List<List<Object>> a = new ArrayList<>();
+		for (MachineFuel mr : recipes) {
+			List<Object> b = new ArrayList<>();
+			b.set(0, mr.getTicks() / 2);
+			b.set(1, mr.getInput());
+			b.set(2, mr.getOutput());
+			a.add(b);
+		}
+		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-fuels", a);
+		Loader.getUGConfig().reload();
 	}
 
 	public String getInventoryTitle() {
 		return Loader.getUGConfig().getMachineInventoryTitle(getMachineIdentifier());
 	}
 
-	public abstract String getMachineIdentifier();
+	public String getMachineIdentifier() {
+		return ID;
+	}
 
 	public int getEnergyProduction() {
 		return Loader.getUGConfig().getMachineProduction(getMachineIdentifier());

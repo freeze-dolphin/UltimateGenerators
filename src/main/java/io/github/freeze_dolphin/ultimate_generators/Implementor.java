@@ -25,7 +25,7 @@ public class Implementor {
 
 	public Implementor() {
 
-		(new SlimefunItem(GlobalVariables.c, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, null, true)).register(false, new EnergyTicker() {
+		(new SlimefunItem(GlobalVariables.c, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
 
 			@Override
 			public boolean explode(Location paramLocation) { return false; }
@@ -46,8 +46,8 @@ public class Implementor {
 			}
 
 			@Override
-			public String getMachineIdentifier() {
-				return "NETHER_STAR_GENERATOR";
+			public void registerDefaultRecipes() {
+				
 			}
 		}).registerChargeableBlock(false, 1024);
 
@@ -76,8 +76,9 @@ public class Implementor {
 			}
 
 			@Override
-			public String getMachineIdentifier() {
-				return "DIESEL_GENERATOR";
+			public void registerDefaultRecipes() {
+				// TODO Auto-generated method stub
+				
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
@@ -92,8 +93,9 @@ public class Implementor {
 			}
 
 			@Override
-			public String getMachineIdentifier() {
-				return "BIOFUEL_GENERATOR";
+			public void registerDefaultRecipes() {
+				// TODO Auto-generated method stub
+				
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
@@ -103,15 +105,15 @@ public class Implementor {
 				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT)) {
 
 			@Override
-			public String getMachineIdentifier() {
-				return "DRAGON_BREATH_GENERATOR";
-			}
-
-			@Override
 			public ItemStack getProgressBar() {
 				return mat(Material.END_CRYSTAL);
 			}
 
+			@Override
+			public void registerDefaultRecipes() {
+				// TODO Auto-generated method stub
+				
+			}
 		}).registerChargeableBlock(false, 256);
 		
 		(new BGenerator(GlobalVariables.c, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
@@ -120,15 +122,15 @@ public class Implementor {
 				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT)) {
 
 			@Override
-			public String getMachineIdentifier() {
-				return "REACTION_GENERATOR";
-			}
-
-			@Override
 			public ItemStack getProgressBar() {
 				return mat(Material.FLINT_AND_STEEL);
 			}
 
+			@Override
+			public void registerDefaultRecipes() {
+				// TODO Auto-generated method stub
+				
+			}
 		}).registerChargeableBlock(false, 256);
 
 	}

@@ -83,7 +83,7 @@ public class UGConfig extends Config {
 	}
 
 
-	private String buildPath(String machineID, String key) {
+	public static String buildPath(String machineID, String key) {
 		return ("machines." + machineID.replaceAll(".", "_") + "." + key);
 	}
 

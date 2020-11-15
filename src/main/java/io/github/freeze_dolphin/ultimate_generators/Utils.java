@@ -6,6 +6,7 @@ public class Utils {
 		
 	public static ItemStack[] buildRecipe(ItemStack ... itemStacks) {
 		ItemStack[] itArr = new ItemStack[] {null, null, null, null, null, null, null, null, null};
+		if (itemStacks.length <= 0) return itArr;
 		if (itemStacks.length > 9) return itArr;
 		for (int i = 0; i < itArr.length; i++) {
 			itArr[i] = itemStacks[i];

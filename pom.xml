@@ -63,16 +63,16 @@
 
 	<build>
 		<sourceDirectory>${project.basedir}/src</sourceDirectory>
-		<testSourceDirectory>${project.basedir}/tests/java</testSourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
 		<testResources>
 			<testResource>
-				<directory>${project.basedir}/tests/resources</directory>
+				<directory>${project.basedir}/src/test/resources</directory>
 			</testResource>
 		</testResources>
 		<finalName>${project.name} v${project.version}</finalName>
 		<resources>
 			<resource>
-				<directory>${basedir}/src</directory>
+				<directory>${basedir}/src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
 					<include>plugin.yml</include>
