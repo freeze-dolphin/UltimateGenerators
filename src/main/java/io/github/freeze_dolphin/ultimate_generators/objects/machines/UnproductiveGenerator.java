@@ -174,8 +174,8 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 		Loader.getUGConfig().reload();
 	}
 
-	public void registerRecipe(int seconds, ItemStack[] input, ItemStack[] output) {
-		registerRecipe(new MachineRecipe(seconds, input, output));
+	public void registerRecipe(int seconds, ItemStack[] input) {
+		registerRecipe(new MachineRecipe(seconds, input, new ItemStack[] {}));
 	}
 
 	private Inventory inject(Block b) {

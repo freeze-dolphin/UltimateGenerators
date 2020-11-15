@@ -14,6 +14,7 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
 public class Implementor {
@@ -47,7 +48,7 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				
+				registerRecipe(240, new ItemStack[] {mat(Material.NETHER_STAR)});
 			}
 		}).registerChargeableBlock(false, 1024);
 
@@ -77,8 +78,7 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				// TODO Auto-generated method stub
-				
+				registerFuel(new MachineFuel(90, UGItems.DIESEL_BUCKET));
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
@@ -94,8 +94,7 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				// TODO Auto-generated method stub
-				
+				registerFuel(new MachineFuel(120, UGItems.BIOFUEL_BUCKET));
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
@@ -111,8 +110,7 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				// TODO Auto-generated method stub
-				
+				registerFuel(new MachineFuel(30, UGItems.DRAGON_BREATH_GENERATOR));
 			}
 		}).registerChargeableBlock(false, 256);
 		
@@ -128,8 +126,9 @@ public class Implementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				// TODO Auto-generated method stub
-				
+				registerFuel(new MachineFuel(3, SlimefunItems.TINY_URANIUM));
+				registerFuel(new MachineFuel(27, SlimefunItems.SMALL_URANIUM));
+				registerFuel(new MachineFuel(108, SlimefunItems.URANIUM));
 			}
 		}).registerChargeableBlock(false, 256);
 
