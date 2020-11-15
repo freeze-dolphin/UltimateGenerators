@@ -1,4 +1,4 @@
-package io.github.freeze_dolphin.ultimate_generators.objects.machines;
+package io.github.freeze_dolphin.ultimate_generators.objects.abstracts;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,6 +171,7 @@ public abstract class UnproductiveGenerator extends SlimefunItem {
 			a.add(b);
 		}
 		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-recipes", a);
+		Loader.getUGConfig().save();
 		Loader.getUGConfig().reload();
 	}
 

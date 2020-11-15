@@ -6,10 +6,10 @@ import org.bukkit.inventory.ItemStack;
 
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
+import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.UnproductiveGenerator;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.github.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.github.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
-import io.github.freeze_dolphin.ultimate_generators.objects.machines.UnproductiveGenerator;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;

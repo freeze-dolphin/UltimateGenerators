@@ -294,6 +294,7 @@ public abstract class BGenerator extends SlimefunItem {
 			a.add(b);
 		}
 		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-fuels", a);
+		Loader.getUGConfig().save();
 		Loader.getUGConfig().reload();
 	}
 

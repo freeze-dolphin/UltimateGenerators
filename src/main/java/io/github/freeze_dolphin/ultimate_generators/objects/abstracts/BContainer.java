@@ -267,6 +267,7 @@ public abstract class BContainer extends SlimefunItem {
 			a.add(b);
 		}
 		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-recipes", a);
+		Loader.getUGConfig().save();
 		Loader.getUGConfig().reload();
 	}
 
