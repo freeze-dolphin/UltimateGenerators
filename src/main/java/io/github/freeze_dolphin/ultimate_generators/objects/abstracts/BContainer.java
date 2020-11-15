@@ -261,9 +261,9 @@ public abstract class BContainer extends SlimefunItem {
 		List<List<Object>> a = new ArrayList<>();
 		for (MachineRecipe mr : recipes) {
 			List<Object> b = new ArrayList<>();
-			b.set(0, mr.getTicks() / 2);
-			b.set(1, mr.getInput());
-			b.set(2, mr.getOutput());
+			b.add(mr.getTicks() / 2);
+			b.add(mr.getInput());
+			b.add(mr.getOutput());
 			a.add(b);
 		}
 		Loader.getUGConfig().setMachineValue(getMachineIdentifier(), "machine-recipes", a);

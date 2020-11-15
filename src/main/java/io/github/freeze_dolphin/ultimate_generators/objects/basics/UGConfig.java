@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import io.github.freeze_dolphin.ultimate_generators.Loader;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -49,6 +50,7 @@ public class UGConfig extends Config {
 	}
 	
 	public String getMachineInventoryTitle(String machineID) {
+		Loader.debug(contains(buildPath(machineID, "inventory-title")) ? getMachineValue(machineID, "inventory-title") : getString("defaults.inventory-title"));
 		return contains(buildPath(machineID, "inventory-title")) ? getMachineValue(machineID, "inventory-title") : getString("defaults.inventory-title");
 	}
 	

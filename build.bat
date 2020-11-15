@@ -1,3 +1,4 @@
 @echo off
 mvn package
-pause>nul
+start .\target\
+exit
