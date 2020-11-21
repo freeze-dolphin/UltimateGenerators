@@ -1,13 +1,20 @@
 package io.github.freeze_dolphin.ultimate_generators.listeners;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.freeze_dolphin.ultimate_generators.objects.entities.StableEnderCrystal;
+import io.github.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleEffect;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 public class EnderCrystalListener implements Listener {
@@ -35,11 +42,28 @@ public class EnderCrystalListener implements Listener {
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
-
+		if (e.getEntityType().equals(EntityType.ENDER_CRYSTAL)) {
+			EnderCrystal crystal = (EnderCrystal) e.getEntity();
+			if (StableEnderCrystal.getStabilizer(crystal) != null) {
+				Location l = StableEnderCrystal.getStabilizer(crystal).getLocation();
+				int stability = EnderCrystalStabilizer.getStability(l);
+				if (stability > 0) {
+					e.setCancelled(true);
+					EnderCrystalStabilizer.setStability(l, stability - 1);
+					try {
+						ParticleEffect.END_ROD.display(crystal.getLocation(), 0F, 0.5F, 0F, 0.1F, 5);
+					} catch (Exception pe) {}
+				} else {
+					// Explosion!
+					StableEnderCrystal.remove(l);
+					BlockStorage.addBlockInfo(b.getLocation(), "crystal", "false");
+				}
+			}
+		}
 	}
-
+	
 	private static boolean insertedCrystalAlready(Block b) {
-		return (BlockStorage.hasBlockInfo(b.getLocation()) && BlockStorage.getLocationInfo(b.getLocation(), "crystal") != null && BlockStorage.getLocationInfo(b.getLocation(), "crystal").equals("true"));
+		return EnderCrystalStabilizer.insertedCrystalAlready(b);
 	}
 
 }

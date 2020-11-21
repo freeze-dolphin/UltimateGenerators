@@ -10,7 +10,6 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EnderCrystal;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.freeze_dolphin.ultimate_generators.objects.entities.StableEnderCrystal;
@@ -43,15 +42,43 @@ public abstract class EnderCrystalStabilizer extends SlimefunItem {
 		super.register(slimefun);
 	}
 	
-	private static boolean insertedCrystalAlready(Block b) {
+	public static boolean insertedCrystalAlready(Block b) {
 		return (BlockStorage.hasBlockInfo(b.getLocation()) && BlockStorage.getLocationInfo(b.getLocation(), "crystal") != null && BlockStorage.getLocationInfo(b.getLocation(), "crystal").equals("true"));
+	}
+	
+	public static String analyzeStability(int stability) {
+		
+		// ● ○
+		
+		switch (stability) {
+		case 0: 
+			return "&4○ ○ ○ ○&r";
+		case 1: 
+			return "&c● ○ ○ ○&r";
+		case 2: 
+			return "&e● ● ○ ○&r";
+		case 3: 
+			return "&f● ● ● ○&r";
+		case 4: 
+			return "&a● ● ● ●&r";
+		default: 
+			return "&7&m○ ○ ○ ○&r";
+		}
+	}
+	
+	public static void setStability(Location l, int stability) {
+		BlockStorage.addBlockInfo(l, "stability", String.valueOf(stability));
+	}
+	
+	public static int getStability(Location l) {
+		return Integer.parseInt(BlockStorage.getLocationInfo(l, "stability"));
 	}
 	
 	protected void tick(Block b) {
 		Location l = b.getLocation();
 		
 		if (insertedCrystalAlready(b)) {
-			StableEnderCrystal.update(l, "");
+			StableEnderCrystal.update(l, analyzeStability(getStability(l)));
 		} else {
 			StableEnderCrystal.remove(l);
 		}
