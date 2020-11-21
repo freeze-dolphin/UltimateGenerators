@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuClickHandler;
@@ -12,7 +11,6 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
@@ -75,12 +73,14 @@ public abstract class BContainer extends SlimefunItem {
 	protected static final int indicator = 22;
 	protected static final int machineInfo = 8;
 
-	private String ID;
+	private final String ID;
+	private final boolean displayMachineInfo;
 
-	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
+	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, boolean displayMachineInfo) {
 		super(category, item, id, recipeType, recipe);
 
 		ID = id;
+		this.displayMachineInfo = displayMachineInfo;
 
 		new BlockMenuPreset(id, getInventoryTitle()) {
 			public void init() {
@@ -129,60 +129,6 @@ public abstract class BContainer extends SlimefunItem {
 		registerDefaultRecipes();
 	}
 
-	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
-		super(category, item, id, recipeType, recipe, recipeOutput);
-
-		new BlockMenuPreset(id, getInventoryTitle()) {
-			public void init() {
-				constructMenu(this);
-			}
-
-			public void newInstance(BlockMenu menu, Block b) {
-			}
-
-			public boolean canOpen(Block b, Player p) {
-				boolean perm = (p.hasPermission("slimefun.inventory.bypass"))
-						|| (CSCoreLib.getLib().getProtectionManager().canAccessChest(p.getUniqueId(), b, true));
-				return (perm) && (ProtectionUtils.canAccessItem(p, b));
-			}
-
-			public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-				if (flow.equals(ItemTransportFlow.INSERT)) {
-					return getInputSlots();
-				}
-				return getOutputSlots();
-			}
-		};
-
-		registerBlockHandler(id, new SlimefunBlockHandler() {
-
-			public void onPlace(Player p, Block b, SlimefunItem item) {
-			}
-
-			public boolean onBreak(Player p, Block b, SlimefunItem item, UnregisterReason reason) {
-				BlockMenu inv = BlockStorage.getInventory(b);
-				if (inv != null) {
-					for (int slot : getInputSlots()) {
-						if (inv.getItemInSlot(slot) != null) {
-							b.getWorld().dropItemNaturally(b.getLocation(), inv.getItemInSlot(slot));
-							inv.replaceExistingItem(slot, null);
-						}
-					}
-					for (int slot : getOutputSlots()) {
-						if (inv.getItemInSlot(slot) != null) {
-							b.getWorld().dropItemNaturally(b.getLocation(), inv.getItemInSlot(slot));
-							inv.replaceExistingItem(slot, null);
-						}
-					}
-				}
-				BContainer.processing.remove(b);
-				BContainer.progress.remove(b);
-				return true;
-			}
-		});
-		registerDefaultRecipes();
-	}
-
 	protected void constructMenu(BlockMenuPreset preset) {
 		for (int i : border) {
 			preset.addItem(i,
@@ -216,15 +162,6 @@ public abstract class BContainer extends SlimefunItem {
 				return false;
 			}
 		});
-
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
-
-			@Override
-			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-				return false;
-			}
-
-		});
 		for (int i : getOutputSlots()) {
 			preset.addMenuClickHandler(i, new ChestMenu.AdvancedMenuClickHandler() {
 				public boolean onClick(Player p, int slot, ItemStack cursor, ClickAction action) {
@@ -235,6 +172,26 @@ public abstract class BContainer extends SlimefunItem {
 						ClickAction action) {
 					return (cursor == null) || (cursor.getType() == null) || (cursor.getType() == Material.AIR);
 				}
+			});
+		}
+		
+		if (displayMachineInfo) {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+
+				@Override
+				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+					return false;
+				}
+
+			});
+		} else {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), new MenuClickHandler() {
+
+				@Override
+				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+					return false;
+				}
+
 			});
 		}
 	}

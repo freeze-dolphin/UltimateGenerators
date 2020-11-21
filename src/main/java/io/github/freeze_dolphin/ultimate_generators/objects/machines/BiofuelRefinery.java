@@ -24,7 +24,7 @@ import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMate
 public abstract class BiofuelRefinery extends BContainer {
 
 	public BiofuelRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
-		super(category, item, name, recipeType, recipe);
+		super(category, item, name, recipeType, recipe, false);
 	}
 
 	@Override

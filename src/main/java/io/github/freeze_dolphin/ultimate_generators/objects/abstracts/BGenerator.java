@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.AdvancedMenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuClickHandler;
@@ -48,20 +47,20 @@ public abstract class BGenerator extends SlimefunItem {
 
 	public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
 	public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
-	
+
 	private Set<MachineFuel> recipes = new HashSet<MachineFuel>();
-	
+
 	private static final int[] border = 
 		{
-				 0,  
-				 9,                             17, 
+				0,  
+				9,                             17, 
 				18, 19, 20, 21,     23, 24, 25, 26, 
 				27,                             35, 
 				36,                             44
 		};
 	private static final int[] border_in = 
 		{
-				 1,                      7, 
+				1,                      7, 
 				10, 11, 12, 13, 14, 15, 16
 		};
 	private static final int[] border_out = 
@@ -77,19 +76,21 @@ public abstract class BGenerator extends SlimefunItem {
 	public int[] getOutputSlots() { 
 		return new int[] { 38, 39, 40, 41, 42 }; 
 	}
-	
+
 	protected static final int indicator = 22;
 	protected static final int machineInfo = 8;
-	
-	private String ID;
-	
-	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
+
+	private final String ID;
+	private final boolean displayMachineInfo;
+
+	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, boolean displayMachineInfo) {
 		super(category, item, id, recipeType, recipe);
-		
+
 		ID = id;
-		
+		this.displayMachineInfo = displayMachineInfo;
+
 		new BlockMenuPreset(id, getInventoryTitle()) {
-			
+
 			@Override
 			public void init() {
 				constructMenu(this);
@@ -110,14 +111,14 @@ public abstract class BGenerator extends SlimefunItem {
 				else return getOutputSlots();
 			}
 		};
-		
+
 		registerBlockHandler(id, new SlimefunBlockHandler() {
-			
+
 			@Override
 			public void onPlace(Player p, Block b, SlimefunItem item) {
-				
+
 			}
-			
+
 			@Override
 			public boolean onBreak(Player p, Block b, SlimefunItem item, UnregisterReason reason) {
 				BlockMenu inv = BlockStorage.getInventory(b);
@@ -143,64 +144,6 @@ public abstract class BGenerator extends SlimefunItem {
 		registerDefaultRecipes();
 	}
 
-	public BGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
-		super(category, item, id, recipeType, recipe, recipeOutput);
-		
-		new BlockMenuPreset(id, getInventoryTitle()) {
-			
-			@Override
-			public void init() {
-				constructMenu(this);
-			}
-
-			@Override
-			public void newInstance(BlockMenu menu, Block b) {
-			}
-
-			@Override
-			public boolean canOpen(Block b, Player p) {
-				return p.hasPermission("slimefun.inventory.bypass") || CSCoreLib.getLib().getProtectionManager().canAccessChest(p.getUniqueId(), b, true);
-			}
-
-			@Override
-			public int[] getSlotsAccessedByItemTransport(ItemTransportFlow flow) {
-				if (flow.equals(ItemTransportFlow.INSERT)) return getInputSlots();
-				else return getOutputSlots();
-			}
-		};
-		
-		registerBlockHandler(id, new SlimefunBlockHandler() {
-			
-			@Override
-			public void onPlace(Player p, Block b, SlimefunItem item) {
-				
-			}
-			
-			@Override
-			public boolean onBreak(Player p, Block b, SlimefunItem item, UnregisterReason reason) {
-				BlockMenu inv = BlockStorage.getInventory(b);
-				if (inv != null) {
-					for (int slot: getInputSlots()) {
-						if (inv.getItemInSlot(slot) != null) {
-							b.getWorld().dropItemNaturally(b.getLocation(), inv.getItemInSlot(slot));
-							inv.replaceExistingItem(slot, null);
-						}
-					}
-					for (int slot: getOutputSlots()) {
-						if (inv.getItemInSlot(slot) != null) {
-							b.getWorld().dropItemNaturally(b.getLocation(), inv.getItemInSlot(slot));
-							inv.replaceExistingItem(slot, null);
-						}
-					}
-				}
-				progress.remove(b.getLocation());
-				processing.remove(b.getLocation());
-				return true;
-			}
-		});
-		registerDefaultRecipes();
-	}
-	
 	private void constructMenu(BlockMenuPreset preset) {
 		for (int i: border) {
 			preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), new MenuClickHandler() {
@@ -209,7 +152,7 @@ public abstract class BGenerator extends SlimefunItem {
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
 					return false;
 				}
-						
+
 			});
 		}
 		for (int i: border_in) {
@@ -219,7 +162,7 @@ public abstract class BGenerator extends SlimefunItem {
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
 					return false;
 				}
-						
+
 			});
 		}
 		for (int i: border_out) {
@@ -229,13 +172,13 @@ public abstract class BGenerator extends SlimefunItem {
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
 					return false;
 				}
-						
+
 			});
 		}
-		
+
 		for (int i: getOutputSlots()) {
 			preset.addMenuClickHandler(i, new AdvancedMenuClickHandler() {
-				
+
 				@Override
 				public boolean onClick(Player p, int slot, ItemStack cursor, ClickAction action) {
 					return false;
@@ -247,25 +190,36 @@ public abstract class BGenerator extends SlimefunItem {
 				}
 			});
 		}
-		
+
 		preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
 				return false;
 			}
-							
-		});
-		
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
 
-			@Override
-			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-				return false;
-			}
-							
 		});
-		
+
+		if (displayMachineInfo) {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+
+				@Override
+				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+					return false;
+				}
+
+			});
+		} else {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), new MenuClickHandler() {
+
+				@Override
+				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
+					return false;
+				}
+
+			});
+		}
+
 	}
 
 	public abstract void registerDefaultRecipes();
@@ -273,32 +227,32 @@ public abstract class BGenerator extends SlimefunItem {
 	public abstract int getEnergyProduction();
 	public abstract int getSpeed();
 	public abstract ItemStack getProgressBar();
-	
+
 	public String getMachineIdentifier() { return ID; }
-	
+
 	public MachineFuel getProcessing(Location l) {
 		return processing.get(l);
 	}
-	
+
 	public boolean isProcessing(Location l) {
 		return progress.containsKey(l);
 	}
-	
+
 	public void registerFuel(MachineFuel fuel) {
 		this.recipes.add(fuel);
 	}
-	
+
 	@Override
 	public void register(boolean slimefun) {
 		addItemHandler(new EnergyTicker() {
-			
+
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
 				if (isProcessing(l)) {
 					int timeleft = progress.get(l);
 					if (timeleft > 0) {
 						ItemStack item = getProgressBar().clone();
-				        item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(l).getTicks()));
+						item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(l).getTicks()));
 						ItemMeta im = item.getItemMeta();
 						im.setDisplayName(" ");
 						List<String> lore = new ArrayList<String>();
@@ -307,9 +261,9 @@ public abstract class BGenerator extends SlimefunItem {
 						lore.add(MachineHelper.getTimeLeft(timeleft / 2));
 						im.setLore(lore);
 						item.setItemMeta(im);
-						
+
 						BlockStorage.getInventory(l).replaceExistingItem(indicator, item);
-						
+
 						if (ChargableBlock.isChargable(l)) {
 							if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= getEnergyProduction()) {
 								ChargableBlock.addCharge(l, getEnergyProduction());
@@ -344,7 +298,7 @@ public abstract class BGenerator extends SlimefunItem {
 							pushItems(l, new ItemStack[] {new ItemStack(Material.BUCKET)});
 						}
 						BlockStorage.getInventory(l).replaceExistingItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
-						
+
 						progress.remove(l);
 						processing.remove(l);
 						return 0;
@@ -354,16 +308,16 @@ public abstract class BGenerator extends SlimefunItem {
 					MachineFuel r = null;
 					Map<Integer, Integer> found = new HashMap<Integer, Integer>();
 					outer:
-					for (MachineFuel recipe: recipes) {
-						for (int slot: getInputSlots()) {
-							if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot), recipe.getInput(), true)) {
-								found.put(slot, recipe.getInput().getAmount());
-								r = recipe;
-								break outer;
+						for (MachineFuel recipe: recipes) {
+							for (int slot: getInputSlots()) {
+								if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot), recipe.getInput(), true)) {
+									found.put(slot, recipe.getInput().getAmount());
+									r = recipe;
+									break outer;
+								}
 							}
 						}
-					}
-					
+
 					if (r != null) {
 						for (Map.Entry<Integer, Integer> entry: found.entrySet()) {
 							BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
@@ -387,7 +341,7 @@ public abstract class BGenerator extends SlimefunItem {
 	public Set<MachineFuel> getFuelTypes() {
 		return this.recipes;
 	}
-	
+
 	private Inventory inject(Location l) {
 		int size = BlockStorage.getInventory(l).toInventory().getSize();
 		Inventory inv = Bukkit.createInventory(null, size);
@@ -399,11 +353,11 @@ public abstract class BGenerator extends SlimefunItem {
 		}
 		return inv;
 	}
-	
+
 	protected void pushItems(Location l, ItemStack[] items) {
 		Inventory inv = inject(l);
 		inv.addItem(items);
-		
+
 		for (int slot: getOutputSlots()) {
 			BlockStorage.getInventory(l).replaceExistingItem(slot, inv.getItem(slot));
 		}

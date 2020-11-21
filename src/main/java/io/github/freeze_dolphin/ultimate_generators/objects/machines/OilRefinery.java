@@ -25,7 +25,7 @@ import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMate
 public abstract class OilRefinery extends BContainer {
 
 	public OilRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
-		super(category, item, name, recipeType, recipe);
+		super(category, item, name, recipeType, recipe, false);
 	}
 
 	@Override

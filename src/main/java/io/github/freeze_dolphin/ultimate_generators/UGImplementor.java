@@ -27,12 +27,21 @@ public class UGImplementor {
 
 	public UGImplementor() {}
 
+	public void implementIngredients() {
+
+		(new SlimefunItem(UGCategories.TECH_MISC, UGItems.MODULAR_GENERATOR_REGULATOR, "MODULAR_GENERATOR_REGULATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.BILLON_INGOT, SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.COBALT_INGOT, 
+				SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.ENERGY_REGULATOR, SlimefunItems.ADVANCED_CIRCUIT_BOARD, 
+				SlimefunItems.COBALT_INGOT, SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.BILLON_INGOT))).register(false);
+
+	}
+
 	public void implementMachines() {
 
 		(new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR, "ENDERIUM_EXTRACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.HARDENED_GLASS, 
-				SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.MEDIUM_CAPACITOR, SlimefunItems.RUNE_ENDER)) {
+				SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.MEDIUM_CAPACITOR, SlimefunItems.RUNE_ENDER), false) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -59,7 +68,7 @@ public class UGImplementor {
 
 	}
 
-	public void implementSmallGenerators() {
+	public void implementSingleGenerators() {
 
 		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
 
@@ -74,7 +83,7 @@ public class UGImplementor {
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.NETHER_STAR_GENERATOR, "NETHER_STAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.REINFORCED_PLATE, SlimefunItems.REINFORCED_ALLOY_INGOT, 
 				SlimefunItems.PLASTIC_SHEET, SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.PLASTIC_SHEET, 
-				SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.BIG_CAPACITOR, SlimefunItems.WITHER_PROOF_GLASS)) {
+				SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.BIG_CAPACITOR, SlimefunItems.WITHER_PROOF_GLASS), false) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -105,8 +114,7 @@ public class UGImplementor {
 		(new OilRefinery(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_REFINERY, "DIESEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
-				SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS
-				)) {
+				SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS)) {
 
 			@Override
 			public String getInventoryTitle() {
@@ -122,8 +130,7 @@ public class UGImplementor {
 		(new BiofuelRefinery(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
-				SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL
-				)) {
+				SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL)) {
 
 			@Override
 			public String getInventoryTitle() {
@@ -139,8 +146,7 @@ public class UGImplementor {
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_GENERATOR, "DIESEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				null, SlimefunItems.DURALUMIN_INGOT, null, 
 				SlimefunItems.DURALUMIN_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.DURALUMIN_INGOT, 
-				SlimefunItems.HEATING_COIL, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL
-				)) {
+				SlimefunItems.HEATING_COIL, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL), false) {
 
 			public ItemStack getProgressBar() {
 				return mat(Material.FLINT_AND_STEEL);
@@ -170,8 +176,7 @@ public class UGImplementor {
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.BILLON_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.BILLON_INGOT, 
-				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL
-				)) {
+				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL), false) {
 
 			public ItemStack getProgressBar() {
 				return mat(Material.MAGMA_CREAM);
@@ -201,7 +206,7 @@ public class UGImplementor {
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
 				SlimefunItems.PLASTIC_SHEET, SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, 
-				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT)) {
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT), false) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -232,7 +237,7 @@ public class UGImplementor {
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.LEAD_INGOT, MOTOR, SlimefunItems.LEAD_INGOT, 
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
-				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT)) {
+				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT), false) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -264,17 +269,18 @@ public class UGImplementor {
 
 	}
 
-	private ItemStack mat(Material m) {
-		return new ItemStack(m);
-	}
 
 	public void implementModularGenerators() {
 
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 
 				mat(Material.END_BRICKS), UGItems.ENDERIUM_INGOT, mat(Material.END_BRICKS), 
-				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS)))).register(false);
+				mat(Material.END_BRICKS), SlimefunItems.HARDENED_METAL_INGOT, mat(Material.END_BRICKS)))).register(false);
 		
+	}
+
+	private ItemStack mat(Material m) {
+		return new ItemStack(m);
 	}
 
 }

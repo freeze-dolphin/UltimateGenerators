@@ -25,7 +25,8 @@ public class Loader extends JavaPlugin {
 			new UGItems();
 			new UGCategories();
 			UGImplementor implementor = new UGImplementor();
-			implementor.implementSmallGenerators();
+			implementor.implementIngredients();
+			implementor.implementSingleGenerators();
 			implementor.implementModularGenerators();
 		} catch (Exception ex) {
 			ex.printStackTrace();
