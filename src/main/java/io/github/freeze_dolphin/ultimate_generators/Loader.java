@@ -24,10 +24,14 @@ public class Loader extends JavaPlugin {
 		try {
 			new UGItems();
 			new UGCategories();
+			
 			UGImplementor implementor = new UGImplementor();
 			implementor.implementIngredients();
 			implementor.implementSingleGenerators();
 			implementor.implementModularGenerators();
+			
+			UGListenersRegister register = new UGListenersRegister(this);
+			register.registerAll();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			severe("Cannot initialize plugin 'UltimateGenerators', self-disabling...");

@@ -271,8 +271,7 @@ public abstract class BContainer extends SlimefunItem {
 			int timeleft = ((Integer) progress.get(b)).intValue();
 			if (timeleft > 0) {
 				ItemStack item = getProgressBar().clone();
-				item.setDurability(
-						MachineHelper.getDurability(item, timeleft, ((MachineRecipe) processing.get(b)).getTicks()));
+				item.setDurability(MachineHelper.getDurability(item, timeleft, ((MachineRecipe) processing.get(b)).getTicks()));
 				im = item.getItemMeta();
 				im.setDisplayName(" ");
 				List<String> lore = new ArrayList<>();
