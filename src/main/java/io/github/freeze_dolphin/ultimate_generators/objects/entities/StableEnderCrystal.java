@@ -50,5 +50,5 @@ public class StableEnderCrystal {
 		EnderCrystal crystal = getCrystal(l);
 		crystal.remove();
 	}
-	
+
 }
