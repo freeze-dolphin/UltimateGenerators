@@ -4,7 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.github.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.github.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
@@ -16,16 +18,50 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
-public class Implementor {
+public class UGImplementor {
 
 	private static final ItemStack MOTOR = SlimefunItems.ELECTRIC_MOTOR;
 	private static final ItemStack COIL = SlimefunItems.HEATING_COIL;
 	private static final ItemStack BCIRCUIT = SlimefunItems.BASIC_CIRCUIT_BOARD;
 	private static final ItemStack ACIRCUIT = SlimefunItems.ADVANCED_CIRCUIT_BOARD;
 
-	public Implementor() {
+	public UGImplementor() {}
 
-		(new SlimefunItem(GlobalVariables.c, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
+	public void implementMachines() {
+
+		(new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR, "ENDERIUM_EXTRACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, 
+				SlimefunItems.HARDENED_GLASS, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.HARDENED_GLASS, 
+				SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.MEDIUM_CAPACITOR, SlimefunItems.RUNE_ENDER)) {
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.ENDER_PEARL);
+			}
+
+			@Override
+			public void registerDefaultRecipes() {
+				registerRecipe(320, new ItemStack[] {SlimefunItems.ENDER_LUMP_3, SlimefunItems.SILVER_DUST}, new ItemStack[] {UGItems.ENDERIUM_DUST});
+				registerRecipe(1200, new ItemStack[] {SlimefunItems.ENDER_LUMP_3, SlimefunItems.SILVER_INGOT}, new ItemStack[] {UGItems.ENDERIUM_INGOT});
+			}
+
+			@Override
+			public String getInventoryTitle() {
+				return "&5末影之尘精炼机";
+			}
+
+			@Override
+			public int getEnergyConsumption() {
+				return 16;
+			}
+
+		}).registerChargeableBlock(false, 256);
+
+	}
+
+	public void implementSmallGenerators() {
+
+		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
 
 			@Override
 			public boolean explode(Location paramLocation) { return false; }
@@ -35,7 +71,7 @@ public class Implementor {
 				return l.getBlock().getBlockPower() * 1024;
 			}});
 
-		(new BGenerator(GlobalVariables.c, UGItems.NETHER_STAR_GENERATOR, "NETHER_STAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.NETHER_STAR_GENERATOR, "NETHER_STAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.REINFORCED_PLATE, SlimefunItems.REINFORCED_ALLOY_INGOT, 
 				SlimefunItems.PLASTIC_SHEET, SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.PLASTIC_SHEET, 
 				SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.BIG_CAPACITOR, SlimefunItems.WITHER_PROOF_GLASS)) {
@@ -66,7 +102,7 @@ public class Implementor {
 			}
 		}).registerChargeableBlock(false, 1024);
 
-		(new OilRefinery(GlobalVariables.c, UGItems.DIESEL_REFINERY, "DIESEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new OilRefinery(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_REFINERY, "DIESEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS
@@ -83,7 +119,7 @@ public class Implementor {
 			}
 		}).registerChargeableBlock(false, 256);
 
-		(new BiofuelRefinery(GlobalVariables.c, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BiofuelRefinery(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
 				SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL
@@ -100,7 +136,7 @@ public class Implementor {
 			}
 		}).registerChargeableBlock(false, 256);
 
-		(new BGenerator(GlobalVariables.c, UGItems.DIESEL_GENERATOR, "DIESEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_GENERATOR, "DIESEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				null, SlimefunItems.DURALUMIN_INGOT, null, 
 				SlimefunItems.DURALUMIN_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.DURALUMIN_INGOT, 
 				SlimefunItems.HEATING_COIL, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL
@@ -131,7 +167,7 @@ public class Implementor {
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
-		(new BGenerator(GlobalVariables.c, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL, 
 				SlimefunItems.BILLON_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.BILLON_INGOT, 
 				SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL
@@ -162,7 +198,7 @@ public class Implementor {
 			}
 		}).registerUnrechargeableBlock(true, 256);
 
-		(new BGenerator(GlobalVariables.c, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
 				SlimefunItems.PLASTIC_SHEET, SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, 
 				SlimefunItems.ENDER_LUMP_3, SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT)) {
@@ -193,7 +229,7 @@ public class Implementor {
 			}
 		}).registerChargeableBlock(false, 256);
 
-		(new BGenerator(GlobalVariables.c, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.REACTION_GENERATOR, "REACTION_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.LEAD_INGOT, MOTOR, SlimefunItems.LEAD_INGOT, 
 				COIL, SlimefunItems.HARDENED_GLASS, COIL, 
 				BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT)) {
@@ -230,6 +266,15 @@ public class Implementor {
 
 	private ItemStack mat(Material m) {
 		return new ItemStack(m);
+	}
+
+	public void implementModularGenerators() {
+
+		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 
+				mat(Material.END_BRICKS), UGItems.ENDERIUM_INGOT, mat(Material.END_BRICKS), 
+				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS)))).register(false);
+		
 	}
 
 }

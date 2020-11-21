@@ -40,6 +40,7 @@ import io.github.freeze_dolphin.ultimate_generators.Utils;
 import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BContainer extends SlimefunItem {
+
 	public static Map<Block, MachineRecipe> processing = new HashMap<>();
 	public static Map<Block, Integer> progress = new HashMap<>();
 	protected List<MachineRecipe> recipes = new ArrayList<>();
@@ -73,14 +74,14 @@ public abstract class BContainer extends SlimefunItem {
 
 	protected static final int indicator = 22;
 	protected static final int machineInfo = 8;
-	
+
 	private String ID;
-	
+
 	public BContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
 
 		ID = id;
-		
+
 		new BlockMenuPreset(id, getInventoryTitle()) {
 			public void init() {
 				constructMenu(this);
@@ -243,8 +244,11 @@ public abstract class BContainer extends SlimefunItem {
 	public abstract void registerDefaultRecipes();
 	public abstract String getInventoryTitle();
 	public abstract int getEnergyConsumption();
-	public abstract int getSpeed();
 	
+	public int getSpeed() {
+		return 1;
+	}
+
 	public String getMachineIdentifier() { return ID; }
 
 	public MachineRecipe getProcessing(Block b) {

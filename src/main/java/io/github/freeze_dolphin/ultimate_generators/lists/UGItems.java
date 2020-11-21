@@ -35,8 +35,11 @@ public class UGItems {
 	public static ItemStack ENDER_CRYSTAL_GENERATOR;
 	public static ItemStack ENDER_CRYSTAL_GENERATOR_BASE;
 	public static ItemStack ENDER_CYRSTAL_STABILIZER;
-
+	
+	public static ItemStack ENDERIUM_EXTRACTOR;
 	public static ItemStack ENDERIUM_DUST, ENDERIUM_INGOT;
+	
+	public static ItemStack MODULAR_GENERATOR_REGULATOR;
 
 	static {
 		try {
@@ -61,14 +64,18 @@ public class UGItems {
 			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
 			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&f末影水晶发电机基座&r");
 			ENDER_CYRSTAL_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN), "&5末影水晶稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
-
-			ENDERIUM_DUST = new CustomItem(new UniversalMaterial(Material.SUGAR), "&5末影粉尘&r");
+			
+			ENDERIUM_EXTRACTOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTM4ZmZlN2Q2MDdkMTBiYzk3MTJkY2IxOWU4YjVkZjFlNTlkNGQ3MWQ1N2NlOTNlYWRiYTFhYzc2NmI3MTA2ZSJ9fX0="), "&5末影之尘精炼机&r", "", "&6高级机器", "&8⇨ &e⚡ &732 J/s");
+			
+			ENDERIUM_DUST = new CustomItem(new UniversalMaterial(Material.SUGAR), "&5末影之尘&r");
 			ENDERIUM_DUST.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 			ENDERIUM_DUST.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ENDERIUM_INGOT = new CustomItem(new UniversalMaterial(Material.IRON_INGOT), "&5末影锭&r");
 			ENDERIUM_INGOT.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 			ENDERIUM_INGOT.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-
+			
+			MODULAR_GENERATOR_REGULATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGI4NzM2ZmY0MmJjNjhjMTFlZGU4ZDg3NGIxNTEyZDI5ZjJlOGM1ZjZmZWJlOGY1OGRmY2Q5YTBhNTFkNmRlZSJ9fX0="), "&b模块化发电机核心&r");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

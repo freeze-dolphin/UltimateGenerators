@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
 
 public class Loader extends JavaPlugin {
@@ -22,8 +23,10 @@ public class Loader extends JavaPlugin {
 		// load
 		try {
 			new UGItems();
-			new GlobalVariables();
-			new Implementor();
+			new UGCategories();
+			UGImplementor implementor = new UGImplementor();
+			implementor.implementSmallGenerators();
+			implementor.implementModularGenerators();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			severe("Cannot initialize plugin 'UltimateGenerators', self-disabling...");
