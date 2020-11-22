@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import io.github.freeze_dolphin.ultimate_generators.objects.entities.StableEnderCrystal;
 import io.github.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleEffect;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleType;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 public class EnderCrystalListener implements Listener {
@@ -45,7 +44,8 @@ public class EnderCrystalListener implements Listener {
 		if (e.getEntityType().equals(EntityType.ENDER_CRYSTAL)) {
 			EnderCrystal crystal = (EnderCrystal) e.getEntity();
 			if (StableEnderCrystal.getStabilizer(crystal) != null) {
-				Location l = StableEnderCrystal.getStabilizer(crystal).getLocation();
+				Block b = StableEnderCrystal.getStabilizer(crystal);
+				Location l = b.getLocation();
 				int stability = EnderCrystalStabilizer.getStability(l);
 				if (stability > 0) {
 					e.setCancelled(true);
