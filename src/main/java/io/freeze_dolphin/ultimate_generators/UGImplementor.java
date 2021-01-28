@@ -152,7 +152,6 @@ public class UGImplementor {
 				UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE
 		})).registerDistibutingCapacitor(true, 2621440);
 
-
 		SlimefunStartup.getItemCfg().setValue("KAPA_ELECTRICITY_STORAGE.hide-in-guide", true);
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", RecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 20971520);
 
