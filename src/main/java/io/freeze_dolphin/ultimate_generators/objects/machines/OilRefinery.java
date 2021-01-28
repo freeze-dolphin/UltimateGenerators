@@ -19,6 +19,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
@@ -26,7 +27,7 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 public abstract class OilRefinery extends BContainer {
 
 	public OilRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
-		super(category, item, name, recipeType, recipe, false);
+		super(category, item, name, recipeType, recipe, Loader.getDisplaySw());
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public abstract class OilRefinery extends BContainer {
 	public String getMachineIdentifier() {
 		return "DIESEL_REFINERY";
 	}
-	
+
 	@Override
 	public String getInventoryTitle() {
 		return "&c柴油精炼器";
@@ -53,13 +54,16 @@ public abstract class OilRefinery extends BContainer {
 	public int getEnergyConsumption() {
 		return 16;
 	}
-	
+
 	@Override
 	public int getSpeed() {
 		return 1;
 	}
-	
+
 	protected void tick(Block b) {
+
+		if (b.isBlockPowered()) { return; }
+
 		if (isProcessing(b)) {
 			int timeleft = progress.get(b);
 			if (timeleft > 0) {

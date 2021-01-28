@@ -201,7 +201,7 @@ public abstract class BGenerator extends SlimefunItem {
 		});
 
 		if (displayMachineInfo) {
-			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3发电量: &e" + getEnergyProduction() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&7 - &3发电量: &e" + getEnergyProduction() * 2 + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
 
 				@Override
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -248,6 +248,9 @@ public abstract class BGenerator extends SlimefunItem {
 
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
+				
+				if (l.getBlock().isBlockPowered()) { return 0D; }
+				
 				if (isProcessing(l)) {
 					int timeleft = progress.get(l);
 					if (timeleft > 0) {

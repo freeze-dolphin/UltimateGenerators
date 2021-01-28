@@ -3,9 +3,9 @@ package io.freeze_dolphin.ultimate_generators;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
@@ -28,7 +28,7 @@ public class UGImplementor {
 
 	private static final ItemStack ALUI = SlimefunItems.ALUMINUM_INGOT;
 	private static final ItemStack COPPI = SlimefunItems.COPPER_INGOT;
-
+	
 	public UGImplementor() {}
 
 	public void implementIngredients() {
@@ -151,25 +151,25 @@ public class UGImplementor {
 				UGItems.GAMMA_ELECTRICITY_STORAGE, SlimefunItems.REDSTONE_ALLOY, UGItems.GAMMA_ELECTRICITY_STORAGE, 
 				UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE
 		})).registerDistibutingCapacitor(true, 2621440);
-
+		
 		SlimefunStartup.getItemCfg().setValue("KAPA_ELECTRICITY_STORAGE.hide-in-guide", true);
-		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", RecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 20971520);
+		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 20971520);
 
 		SlimefunStartup.getItemCfg().setValue("PHI_ELECTRICITY_STORAGE.hide-in-guide", true);
-		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.PHI_ELECTRICITY_STORAGE, "PHI_ELECTRICITY_STORAGE", RecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 167772160);
+		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.PHI_ELECTRICITY_STORAGE, "PHI_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 167772160);
 
 	}
 
 	public void implementSingleGenerators() {
 
-		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", RecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
+		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.ENDLESS_GENERATOR, "ENDLESS_GENERATOR", UGRecipeType.NULL, Utils.buildRecipe(), true)).register(false, new EnergyTicker() {
 
 			@Override
 			public boolean explode(Location paramLocation) { return false; }
 
 			@Override
 			public double generateEnergy(Location l, SlimefunItem paramSlimefunItem, Config paramConfig) {
-				return l.getBlock().getBlockPower() * 1024;
+				return l.getBlock().getBlockPower() * 4096;
 			}});
 
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.NETHER_STAR_GENERATOR, "NETHER_STAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(

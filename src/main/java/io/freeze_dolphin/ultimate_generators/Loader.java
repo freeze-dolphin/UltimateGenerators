@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 
 public class Loader extends JavaPlugin {
 
@@ -25,6 +26,7 @@ public class Loader extends JavaPlugin {
 		// load
 		try {
 			new UGItems(this);
+			new UGRecipeType();
 			new UGCategories(this);
 			
 			UGImplementor implementor = new UGImplementor();
@@ -83,7 +85,7 @@ public class Loader extends JavaPlugin {
 	public static boolean getDisplaySw() {
 		YamlConfiguration pdf = new YamlConfiguration();
 		try {
-			pdf.load(new InputStreamReader(Loader.class.getClassLoader().getResourceAsStream("/plugin.yml")));
+			pdf.load(new InputStreamReader(Loader.class.getClassLoader().getResourceAsStream("plugin.yml")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			plug.getLogger().severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling...");

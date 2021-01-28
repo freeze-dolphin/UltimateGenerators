@@ -176,7 +176,7 @@ public abstract class BContainer extends SlimefunItem {
 		}
 		
 		if (displayMachineInfo) {
-			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", " &7 - &3耗电量: &e" + getEnergyConsumption() + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
+			preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&7 - &3耗电量: &e" + getEnergyConsumption() * 2 + " J/s", "&7 - &3工作速度: &e" + (getSpeed() == 1 ? "&f默认" : getSpeed())), new MenuClickHandler() {
 
 				@Override
 				public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -266,6 +266,9 @@ public abstract class BContainer extends SlimefunItem {
 	}
 
 	protected void tick(Block b) {
+		
+		if (b.isBlockPowered()) { return; }
+		
 		ItemMeta im;
 		if (isProcessing(b)) {
 			int timeleft = ((Integer) progress.get(b)).intValue();

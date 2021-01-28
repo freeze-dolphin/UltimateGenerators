@@ -85,14 +85,14 @@ public class UGItems {
 			BETA_BATTERY = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjIxNjcxN2YxZGE5NGY5OWJlODI0MmE5MzFlMzliYmYzMjI1MWRlZGY0NmNkMjA3M2ZmYTg4OTY5ZDc0Zjk2MyJ9fX0="), "&9Beta 电池&r");
 			GAMMA_BATTERY = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDgwZTJjMzNjNGM4MzI0NDUyYWNjZjkyMzU2NjllNjVmMDBkMTkyNmNjNTMzMTQ1MTkyNWNhMjZlNmFhNzIxIn19fQ=="), "&dGamma 电池&r");
 
-			BASIC_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 4), "&e基础电力存储机&r", "", "&e基础电力存储机", "&8\u21E8 &e\u26A1 &7/**/640 J 容量");
-			ADVANCED_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 1), "&d高级电力存储机&r", "", "&a中型电力存储机", "&8\u21E8 &e\u26A1 &7/**/2560 J 容量");
-			ALPHA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&e&lAlpha&e-α 电力存储机&r", "", "&e大型电力存储机", "&8\u21E8 &e\u26A1 &7/**/5120 J 容量");
-			BETA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 11), "&9&lBeta&9-β 电力存储机&r", "", "&e超级电力存储机", "&8\u21E8 &e\u26A1 &7/**/40960 J 容量");
-			GAMMA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&5&lGamma&5-γ 电力存储机&r", "", "&e终极电力存储机", "&8\u21E8 &e\u26A1 &7/**/327680 J 容量");
-			LAMBDA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d&lLAMBDA&d-λ 电力存储机&r", "", "&f其实没必要搞这么大的电容了...吧......", "", "&e终极电力存储机", "&8\u21E8 &e\u26A1 &7/**/2621440 J 容量", "", Utils.db64s("Jjgmb+S9oOS7peS4uui/meWwseaYr+acgOWkp+WuuemHj+eahOeUteWuueS6huWQlz8="));
-			KAPA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 15), Utils.db64s("JjAmbEtBUEEmMC3OuiAmMOeUteWKm+WtmOWCqOacuiZy"), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&e终极电力存储机", Utils.db64s("JjhcdTIxRTggJmVcdTI2QTEgJjcyMDk3MTUyMCBKIOWuuemHjw=="), "", Utils.db64s("Jjgmb0ZyZWV6ZV9Eb2xwaGluIOW5tuS4jeaJk+eul+atouatpeS6juatpC4uLg=="));
-			PHI_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS), Utils.db64s("JmYmbFAmNyZsSCZmJmxJJjctJmbPhiAmN+eUtSZm5YqbJjflrZgmZuWCqCY35py6JnI="), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&e终极电力存储机", Utils.db64s("JjhcdTIxRTggJmVcdTI2QTEgJjcxNjc3NzIxNjAgSiDlrrnph48="), "", Utils.db64s("Jmbov5novrnlu7rorq7mg7PopoHlvZPmnI3pnLjnmoTlhYjmiorov5nlgqjnlLXmnLrlhYXmu6HnlLU="));
+			BASIC_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 4), "&e基础电力存储机&r", "", "&e基础电力存储机", "&8\u21E8 &e\u26A1 &7640 J 容量");
+			ADVANCED_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 1), "&d高级电力存储机&r", "", "&6中型电力存储机", "&8\u21E8 &e\u26A1 &72560 J 容量");
+			ALPHA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&e&lAlpha&e-α 电力存储机&r", "", "&a大型电力存储机", "&8\u21E8 &e\u26A1 &75120 J 容量");
+			BETA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 11), "&9&lBeta&9-β 电力存储机&r", "", "&2超级电力存储机", "&8\u21E8 &e\u26A1 &740960 J 容量");
+			GAMMA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&5&lGamma&5-γ 电力存储机&r", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &7327680 J 容量");
+			LAMBDA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d&lLAMBDA&d-λ 电力存储机&r", "", "&f其实没必要搞这么大的电容了...吧......", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &72621440 J 容量", "", Utils.db64s("Jjgmb+S9oOS7peS4uui/meWwseaYr+acgOWkp+WuuemHj+eahOeUteWuueS6huWQlz8="));
+			KAPA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 15), Utils.db64s("JjAmbEtBUEEmMC3OuiAmMOeUteWKm+WtmOWCqOacuiZy"), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcyMDk3MTUyMCBKIOWuuemHjw=="), "", Utils.db64s("Jjgmb0ZyZWV6ZV9Eb2xwaGluIOW5tuS4jeaJk+eul+atouatpeS6juatpC4uLg=="));
+			PHI_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS), Utils.db64s("JmYmbFAmNyZsSCZmJmxJJjctJmbPhiAmN+eUtSZm5YqbJjflrZgmZuWCqCY35py6JnI="), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcxNjc3NzIxNjAgSiDlrrnph48="), "", Utils.db64s("Jmbov5novrnlu7rorq7mg7PopoHlvZPmnI3pnLjnmoTlhYjmiorov5nlgqjnlLXmnLrlhYXmu6HnlLU="));
 
 		} catch (Exception e) {
 			e.printStackTrace();

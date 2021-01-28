@@ -5,15 +5,11 @@ author: Freeze_Dolphin
 
 depend: [Slimefun, CS-CoreLib]
 
+
+
 # ----------------------------
 # Internal Configurations
-# 内部配置
 # ----------------------------
-# P.S.: The reason for putting the plugin configurations here is that I AM SO LAZY :)
-# 附言: 你也许会问为什么插件的配置文件是写在 plugin.yml 里的————这都是因为我懒得搞 config.yml :)
-# (当然另一个主要原因是配置项很少)
-#
 
 show-machine-indicator: true # Default: true
 # Whether to show the machine status indicator in machines' GUI
-# 是否在机器的界面里显示机器状态指示器
