@@ -46,6 +46,20 @@
 			<scope>provided</scope>
 			<classifier>all</classifier>
 		</dependency>
+		<dependency>
+			<groupId>me.mrCookieSlime</groupId>
+			<artifactId>Slimefun</artifactId>
+			<version>4.1.15</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>me.mrCookieSlime</groupId>
+			<artifactId>CS-CoreLib</artifactId>
+			<version>1.5.18</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
