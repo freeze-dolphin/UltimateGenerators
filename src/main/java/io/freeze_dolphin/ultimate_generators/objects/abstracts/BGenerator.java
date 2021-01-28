@@ -1,4 +1,4 @@
-package io.github.freeze_dolphin.ultimate_generators.objects.abstracts;
+package io.freeze_dolphin.ultimate_generators.objects.abstracts;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +39,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.freeze_dolphin.ultimate_generators.Utils;
-import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.github.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BGenerator extends SlimefunItem {
 

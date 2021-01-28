@@ -1,4 +1,4 @@
-package io.github.freeze_dolphin.ultimate_generators.objects.basics;
+package io.freeze_dolphin.ultimate_generators.objects.basics;
 
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;

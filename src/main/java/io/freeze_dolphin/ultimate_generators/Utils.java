@@ -1,5 +1,7 @@
-package io.github.freeze_dolphin.ultimate_generators;
+package io.freeze_dolphin.ultimate_generators;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 
 import org.bukkit.block.Block;
@@ -14,8 +16,23 @@ import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
 import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
 
 public class Utils {
-
+	
+	public static final String db64s(final String base64) {
+		try {
+			return new String(Base64.getDecoder().decode(base64), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			Loader.severe("Error occourred while decoding Base64, have you ever modified the plugin?");
+			return base64;
+		}
+	}
+	
 	public static ItemStack[] buildRecipe(ItemStack ... itemStacks) {
+		
+		if (itemStacks.length == 9) {
+			return itemStacks;
+		}
+		
 		ItemStack[] itArr = new ItemStack[] {null, null, null, null, null, null, null, null, null};
 		if (itemStacks.length <= 0) return itArr;
 		if (itemStacks.length > 9) return itArr;

@@ -1,12 +1,14 @@
-package io.github.freeze_dolphin.ultimate_generators;
+package io.freeze_dolphin.ultimate_generators;
 
+import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.freeze_dolphin.ultimate_generators.lists.UGCategories;
-import io.github.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 
 public class Loader extends JavaPlugin {
 
@@ -22,11 +24,12 @@ public class Loader extends JavaPlugin {
 		
 		// load
 		try {
-			new UGItems();
-			new UGCategories();
+			new UGItems(this);
+			new UGCategories(this);
 			
 			UGImplementor implementor = new UGImplementor();
 			implementor.implementIngredients();
+			implementor.implementMachines();
 			implementor.implementSingleGenerators();
 			implementor.implementModularGenerators();
 			
@@ -34,7 +37,7 @@ public class Loader extends JavaPlugin {
 			register.registerAll();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			severe("Cannot initialize plugin 'UltimateGenerators', self-disabling...");
+			severe("Cannot initialize the plugin, self-disabling...");
 			this.setEnabled(false);
 		}
 
@@ -75,6 +78,20 @@ public class Loader extends JavaPlugin {
 
 	public static void severe(String msg) {
 		logger.severe(msg);
+	}
+	
+	public static boolean getDisplaySw() {
+		YamlConfiguration pdf = new YamlConfiguration();
+		try {
+			pdf.load(new InputStreamReader(Loader.class.getClassLoader().getResourceAsStream("/plugin.yml")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			plug.getLogger().severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling...");
+			plug.getServer().getPluginManager().disablePlugin(plug);
+		}
+		
+		return pdf.contains("show-machine-indicator") && pdf.isBoolean("show-machine-indicator") && pdf.getBoolean("show-machine-indicator");
+		
 	}
 	
 }
