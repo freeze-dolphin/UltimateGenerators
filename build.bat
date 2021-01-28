@@ -1,3 +1,3 @@
 @echo off
-mvn package
+mvn clean package
 exit
