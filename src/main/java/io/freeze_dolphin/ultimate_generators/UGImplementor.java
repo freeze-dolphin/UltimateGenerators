@@ -21,7 +21,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
-public class UGImplementor {
+class UGImplementor {
 
 	private static final ItemStack MOTOR = SlimefunItems.ELECTRIC_MOTOR;
 	private static final ItemStack COIL = SlimefunItems.HEATING_COIL;
@@ -91,6 +91,38 @@ public class UGImplementor {
 
 	public void implementMachines() {
 
+		(new OilRefinery(UGCategories.MACHINES, UGItems.DIESEL_REFINERY, "DIESEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL, 
+				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
+				SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS)) {
+
+			@Override
+			public String getInventoryTitle() {
+				return "&c柴油精炼机";
+			}
+
+			@Override
+			public int getSpeed() {
+				return 1;
+			}
+		}).registerChargeableBlock(false, 256);
+
+		(new BiofuelRefinery(UGCategories.MACHINES, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL, 
+				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
+				SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL)) {
+
+			@Override
+			public String getInventoryTitle() {
+				return "&2生物燃油精炼机";
+			}
+
+			@Override
+			public int getSpeed() {
+				return 1;
+			}
+		}).registerChargeableBlock(false, 256);
+
 		(new BContainer(UGCategories.MACHINES, UGItems.BIOMASS_EXTRACTION_MACHINE, "BIOMASS_EXTRACTION_MACHINE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				ALUI, mat(Material.PISTON_BASE), ALUI, 
 				HGLASS, COIL, HGLASS, 
@@ -126,8 +158,8 @@ public class UGImplementor {
 				return 3;
 			}
 		}).registerChargeableBlock(false, 128);
-		
-		
+
+
 		/*
 		(new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR, "ENDERIUM_EXTRACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, 
@@ -245,37 +277,6 @@ public class UGImplementor {
 			}
 		}).registerChargeableBlock(false, 1024);
 
-		(new OilRefinery(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_REFINERY, "DIESEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
-				SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL, 
-				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
-				SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS)) {
-
-			@Override
-			public String getInventoryTitle() {
-				return "&c柴油精炼机";
-			}
-
-			@Override
-			public int getSpeed() {
-				return 1;
-			}
-		}).registerChargeableBlock(false, 256);
-
-		(new BiofuelRefinery(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
-				SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL, 
-				SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS, 
-				SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL)) {
-
-			@Override
-			public String getInventoryTitle() {
-				return "&2生物燃油精炼机";
-			}
-
-			@Override
-			public int getSpeed() {
-				return 1;
-			}
-		}).registerChargeableBlock(false, 256);
 
 		(new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DIESEL_GENERATOR, "DIESEL_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				null, SlimefunItems.DURALUMIN_INGOT, null, 

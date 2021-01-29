@@ -2,7 +2,7 @@ package io.freeze_dolphin.ultimate_generators;
 
 import io.freeze_dolphin.ultimate_generators.listeners.*;
 
-public class UGListenersRegister {
+class UGListenersRegister {
 	
 	private Loader plug;
 	
