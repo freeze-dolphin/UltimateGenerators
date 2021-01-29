@@ -1,12 +1,20 @@
 import os
 import sys
 
+for comp in sys.argv: 
+	print(comp)
+
 argl = len(sys.argv)
 
 if (argl >= 1): 
-    cmdC = "";
-    for comp in sys.argv:
-        cmdC.join(comp + " ")
-    os.system("mvn " + cmdC + " package")
+	print("Arguments are Detected")
+	cmdC = " "
+	for comp in sys.argv:
+                if (comp.
+		cmdC = cmdC + comp + " "
+	c = "mvn" + cmdC + "package"
+	print(c)
+	os.system(c)
 else: 
-    os.system("mvn package")
+	print("Executing Pure Mode")
+	os.system("mvn package")

@@ -6,12 +6,15 @@ import org.bukkit.inventory.ItemStack;
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
+import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.SlimefunStartup;
+import me.mrCookieSlime.Slimefun.Lists.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
@@ -28,7 +31,7 @@ public class UGImplementor {
 
 	private static final ItemStack ALUI = SlimefunItems.ALUMINUM_INGOT;
 	private static final ItemStack COPPI = SlimefunItems.COPPER_INGOT;
-	
+
 	public UGImplementor() {}
 
 	public void implementIngredients() {
@@ -82,9 +85,48 @@ public class UGImplementor {
 				UGItems.BETA_BATTERY, ACIRCUIT, UGItems.BETA_BATTERY
 				))).register(false);
 
+		(new SlimefunItem(Categories.RESOURCES, UGItems.DIESEL_BUCKET, "DIESEL_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c柴油精炼器&r", "&a在柴油精炼器里将石油精炼为柴油")), Utils.buildRecipe())).register(false);
+
 	}
 
 	public void implementMachines() {
+
+		(new BContainer(UGCategories.MACHINES, UGItems.BIOMASS_EXTRACTION_MACHINE, "BIOMASS_EXTRACTION_MACHINE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				ALUI, mat(Material.PISTON_BASE), ALUI, 
+				HGLASS, COIL, HGLASS, 
+				COIL, mat(Material.HOPPER), COIL
+				), Loader.getDisplaySw()) {
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.SLIME_BALL);
+			}
+
+			@Override
+			public void registerDefaultRecipes() {
+				registerRecipe(4, new ItemStack[] {new ItemStack(Material.SLIME_BALL, 2), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(4, new ItemStack[] {new ItemStack(Material.NETHER_WART_BLOCK, 2), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.LEAVES, 32), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.LEAVES_2, 32), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.BEETROOT_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.MELON_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+				registerRecipe(8, new ItemStack[] {new ItemStack(Material.PUMPKIN_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
+			}
+
+			@Override
+			public String getInventoryTitle() {
+				return "&&a生物质萃取机";
+			}
+
+			@Override
+			public int getEnergyConsumption() {
+				return 3;
+			}
+		}).registerChargeableBlock(false, 128);
+
 
 		/*
 		(new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR, "ENDERIUM_EXTRACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
@@ -151,7 +193,7 @@ public class UGImplementor {
 				UGItems.GAMMA_ELECTRICITY_STORAGE, SlimefunItems.REDSTONE_ALLOY, UGItems.GAMMA_ELECTRICITY_STORAGE, 
 				UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE
 		})).registerDistibutingCapacitor(true, 2621440);
-		
+
 		SlimefunStartup.getItemCfg().setValue("KAPA_ELECTRICITY_STORAGE.hide-in-guide", true);
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(false, 20971520);
 
@@ -549,7 +591,6 @@ public class UGImplementor {
 		}.registerUnrechargeableBlock(true, 256);
 
 	}
-
 
 	public void implementModularGenerators() {
 
