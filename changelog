@@ -1,0 +1,11 @@
+# Format
+## '**' means necessary, while '^^' means optional
+## '$$' means a variable
+### *$publishing date$* *[$version$]*: 
+### - *$contents$* ^($changing time$)^
+
+2021.1.29 [v1.0.0]: 
+- initial release
+
+? [v1.0.?]: 
+- changed project license from GGPL-3.0 to AGPL-3.0 (2021.1.29-16:40)
