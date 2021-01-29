@@ -90,7 +90,7 @@ public class UGItems {
 
 			BASIC_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 4), "&e基础电力存储机&r", "", "&e基础电力存储机", "&8\u21E8 &e\u26A1 &7640 J 容量");
 			ADVANCED_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 1), "&d高级电力存储机&r", "", "&6中型电力存储机", "&8\u21E8 &e\u26A1 &72560 J 容量");
-			ALPHA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&e&lAlpha&e-α 电力存储机&r", "", "&a大型电力存储机", "&8\u21E8 &e\u26A1 &75120 J 容量");
+			ALPHA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&a&lAlpha&a-α 电力存储机&r", "", "&a大型电力存储机", "&8\u21E8 &e\u26A1 &75120 J 容量");
 			BETA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 11), "&9&lBeta&9-β 电力存储机&r", "", "&2超级电力存储机", "&8\u21E8 &e\u26A1 &740960 J 容量");
 			GAMMA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&5&lGamma&5-γ 电力存储机&r", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &7327680 J 容量");
 			LAMBDA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d&lLAMBDA&d-λ 电力存储机&r", "", "&f其实没必要搞这么大的电容了...吧......", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &72621440 J 容量", "", Utils.db64s("Jjgmb+S9oOS7peS4uui/meWwseaYr+acgOWkp+WuuemHj+eahOeUteWuueS6huWQlz8="));

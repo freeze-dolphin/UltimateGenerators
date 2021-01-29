@@ -9,3 +9,4 @@
 
 ? [v1.0.?]: 
 - changed project license from GGPL-3.0 to AGPL-3.0 (2021.1.29-16:40)
+- fixed the display name of ALPHA_ELECTRICITY_STORAGE (2021.1.29-17:52)
