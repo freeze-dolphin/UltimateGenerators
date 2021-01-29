@@ -47,7 +47,7 @@ public class UGItems {
 			DIESEL_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWVlMTE1NjU2YmMyMjA3NTVjNmQ1YmM4NzI2MGM4MjE0MWMyNTNhMzRiYzNkYjJiZDcyYjcyN2JlZmNjMCJ9fX0="),"&7柴油发电机&r", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &736 J/s");
 
 			BIOMASS_EXTRACTION_MACHINE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&a生物质萃取机&r", "", "&a中级机器", "&8⇨ &e⚡ &76 J/s");
-			BIOMASS_BUCKET = new CustomItem(CustomSkull.getItem(""));
+			BIOMASS_BUCKET = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzdkYmYxNTAzYmQxYTI3YTQ1N2M1MDk3NDRkNTIwZWVjMzhlM2Q0OGQ4YTNiZmUzY2FkZTc2Nzc4OTY0MmYifX19"),"&r桶装生物质&r");
 			BIOFUEL_REFINERY = new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c生物燃油精炼器&r", "", "&r精炼生物质生产生物燃油");
 			BIOFUEL_BUCKET = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdjNDA3YWE3YjMzNjIyNTMwOWQ1MzUwZTNmNDUyYmZjZjM1NTY5MmU5ODFkODFkZGZlMzIwOGJjZjZlZDI2YyJ9fX0="),"&r桶装生物燃油&r");
 			BIOFUEL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 4), "&2生物燃油发电机&r", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &736 J/s");
@@ -94,6 +94,8 @@ public class UGItems {
 			BETA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 11), "&9&lBeta&9-β 电力存储机&r", "", "&2超级电力存储机", "&8\u21E8 &e\u26A1 &740960 J 容量");
 			GAMMA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&5&lGamma&5-γ 电力存储机&r", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &7327680 J 容量");
 			LAMBDA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d&lLAMBDA&d-λ 电力存储机&r", "", "&f其实没必要搞这么大的电容了...吧......", "", "&4终极电力存储机", "&8\u21E8 &e\u26A1 &72621440 J 容量", "", Utils.db64s("Jjgmb+S9oOS7peS4uui/meWwseaYr+acgOWkp+WuuemHj+eahOeUteWuueS6huWQlz8="));
+
+			// Hidden Items (Encoded to prevent freely editing)
 			KAPA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 15), Utils.db64s("JjAmbEtBUEEmMC3OuiAmMOeUteWKm+WtmOWCqOacuiZy"), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcyMDk3MTUyMCBKIOWuuemHjw=="), "", Utils.db64s("Jjgmb0ZyZWV6ZV9Eb2xwaGluIOW5tuS4jeaJk+eul+atouatpeS6juatpC4uLg=="));
 			PHI_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS), Utils.db64s("JmYmbFAmNyZsSCZmJmxJJjctJmbPhiAmN+eUtSZm5YqbJjflrZgmZuWCqCY35py6JnI="), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcxNjc3NzIxNjAgSiDlrrnph48="), "", Utils.db64s("Jmbov5novrnlu7rorq7mg7PopoHlvZPmnI3pnLjnmoTlhYjmiorov5nlgqjnlLXmnLrlhYXmu6HnlLU="));
 

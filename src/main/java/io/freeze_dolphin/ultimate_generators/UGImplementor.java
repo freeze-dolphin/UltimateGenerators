@@ -126,8 +126,8 @@ public class UGImplementor {
 				return 3;
 			}
 		}).registerChargeableBlock(false, 128);
-
-
+		
+		
 		/*
 		(new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR, "ENDERIUM_EXTRACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, SlimefunItems.HARDENED_METAL_INGOT, 
