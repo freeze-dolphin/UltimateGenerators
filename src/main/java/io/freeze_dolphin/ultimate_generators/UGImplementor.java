@@ -66,19 +66,19 @@ public class UGImplementor {
 
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.ALPHA_BATTERY, "ALPHA_BATTERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				UGItems.ADVANCED_BATTERY, ACIRCUIT, UGItems.ADVANCED_BATTERY, 
-				SlimefunItems.REDSTONE_ALLOY, COPPI, SlimefunItems.REDSTONE_ALLOY, 
+				COPPI, UGItems.ELECTRICITY_STORAGE_UNIT, COPPI, 
 				UGItems.ADVANCED_BATTERY, ACIRCUIT, UGItems.ADVANCED_BATTERY
 				))).register(false);
 
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.BETA_BATTERY, "BETA_BATTERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				UGItems.ALPHA_BATTERY, ACIRCUIT, UGItems.ALPHA_BATTERY, 
-				SlimefunItems.REDSTONE_ALLOY, COPPI, SlimefunItems.REDSTONE_ALLOY, 
+				COPPI, UGItems.ELECTRICITY_STORAGE_UNIT, COPPI, 
 				UGItems.ALPHA_BATTERY, ACIRCUIT, UGItems.ALPHA_BATTERY
 				))).register(false);
 
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.GAMMA_BATTERY, "GAMMA_BATTERY", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				UGItems.BETA_BATTERY, ACIRCUIT, UGItems.BETA_BATTERY, 
-				SlimefunItems.REDSTONE_ALLOY, COPPI, SlimefunItems.REDSTONE_ALLOY, 
+				COPPI, UGItems.ELECTRICITY_STORAGE_UNIT, COPPI, 
 				UGItems.BETA_BATTERY, ACIRCUIT, UGItems.BETA_BATTERY
 				))).register(false);
 
@@ -153,10 +153,10 @@ public class UGImplementor {
 		})).registerDistibutingCapacitor(true, 2621440);
 		
 		SlimefunStartup.getItemCfg().setValue("KAPA_ELECTRICITY_STORAGE.hide-in-guide", true);
-		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 20971520);
+		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE, "KAPA_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(false, 20971520);
 
 		SlimefunStartup.getItemCfg().setValue("PHI_ELECTRICITY_STORAGE.hide-in-guide", true);
-		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.PHI_ELECTRICITY_STORAGE, "PHI_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(true, 167772160);
+		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.PHI_ELECTRICITY_STORAGE, "PHI_ELECTRICITY_STORAGE", UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(false, 167772160);
 
 	}
 
