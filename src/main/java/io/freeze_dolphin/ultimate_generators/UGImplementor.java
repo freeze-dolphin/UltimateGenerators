@@ -142,7 +142,6 @@ class UGImplementor {
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.LEAVES, 32), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.LEAVES_2, 32), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
-				registerRecipe(8, new ItemStack[] {new ItemStack(Material.SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.BEETROOT_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.MELON_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
 				registerRecipe(8, new ItemStack[] {new ItemStack(Material.PUMPKIN_SEEDS, 16), mat(Material.BUCKET)}, new ItemStack[] {UGItems.BIOMASS_BUCKET});
