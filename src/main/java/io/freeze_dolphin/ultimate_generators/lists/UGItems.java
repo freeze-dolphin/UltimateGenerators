@@ -35,7 +35,9 @@ public class UGItems {
 	public static ItemStack ELECTRICITY_STORAGE_UNIT;
 	public static ItemStack ADVANCED_BATTERY, ALPHA_BATTERY, BETA_BATTERY, GAMMA_BATTERY;
 	public static ItemStack BASIC_ELECTRICITY_STORAGE, ADVANCED_ELECTRICITY_STORAGE, ALPHA_ELECTRICITY_STORAGE, BETA_ELECTRICITY_STORAGE, GAMMA_ELECTRICITY_STORAGE, LAMBDA_ELECTRICITY_STORAGE, KAPA_ELECTRICITY_STORAGE, PHI_ELECTRICITY_STORAGE;
-
+	
+	public static ItemStack MAGNESIUM_SALT, MAGNESIUM_GENERATOR;
+	
 	static {
 		try {
 			ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5ZjM1NmY1ZmU3ZDFiYzkyY2RkZmFlYmEzZWU3NzNhYzlkZjFjYzRkMWMyZjhmZTVmNDcwMTMwMzJjNTUxZCJ9fX0="),"&6无尽发电机&r", "", "&r当接收到红石信号时工作", "", "&5创造发电机", "&8⇨ &e⚡ &7发电效率由接收到的红石信号强度决定");
@@ -98,7 +100,10 @@ public class UGItems {
 			// Hidden Items (Encoded to prevent freely editing)
 			KAPA_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 15), Utils.db64s("JjAmbEtBUEEmMC3OuiAmMOeUteWKm+WtmOWCqOacuiZy"), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcyMDk3MTUyMCBKIOWuuemHjw=="), "", Utils.db64s("Jjgmb0ZyZWV6ZV9Eb2xwaGluIOW5tuS4jeaJk+eul+atouatpeS6juatpC4uLg=="));
 			PHI_ELECTRICITY_STORAGE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS), Utils.db64s("JmYmbFAmNyZsSCZmJmxJJjctJmbPhiAmN+eUtSZm5YqbJjflrZgmZuWCqCY35py6JnI="), "", Utils.db64s("JmPlvakmZeibiyZh54mpJmLlk4Emcg=="), "", "&4终极电力存储机", Utils.db64s("Jjjih6ggJmXimqEgJjcxNjc3NzIxNjAgSiDlrrnph48="), "", Utils.db64s("Jmbov5novrnlu7rorq7mg7PopoHlvZPmnI3pnLjnmoTlhYjmiorov5nlgqjnlLXmnLrlhYXmu6HnlLU="));
-
+			
+			MAGNESIUM_SALT = new CustomItem(new UniversalMaterial(Material.SUGAR), "&f镁盐&r");
+			MAGNESIUM_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 8), "&f镁发电机&r", "", "&f高端的程序员", "&f往往采用最朴素的编程方式", "&f(指 'Ctrl + C / V')", "", "&a中级发电机", "&8\u21E8 &e\u26A1 &7128 J 缓存", "&8\u21E8 &e\u26A1 &736 J/s");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

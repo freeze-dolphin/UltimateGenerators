@@ -10,6 +10,7 @@ import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
+import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
@@ -86,6 +87,10 @@ class UGImplementor {
 				))).register(false);
 
 		(new SlimefunItem(Categories.RESOURCES, UGItems.DIESEL_BUCKET, "DIESEL_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c柴油精炼器&r", "&a在柴油精炼器里将石油精炼为柴油")), Utils.buildRecipe())).register(false);
+
+		(new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER, Utils.buildRecipe(
+				SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT
+				))).register(false);
 
 	}
 
@@ -590,10 +595,16 @@ class UGImplementor {
 
 		}.registerUnrechargeableBlock(true, 256);
 
+		(new MagnesiumGenerator(UGCategories.SINGLE_GENERATOR, UGItems.MAGNESIUM_GENERATOR, "MAGNESIUM_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
+				null, SlimefunItems.ELECTRIC_MOTOR, null, SlimefunItems.COMPRESSED_CARBON, new ItemStack(Material.WATER_BUCKET), SlimefunItems.COMPRESSED_CARBON, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT
+				), Loader.getDisplaySw())).registerChargeableBlock(false, 128);
+
 	}
 
 	public void implementModularGenerators() {
-
+		
+		
+		
 		/*
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 
