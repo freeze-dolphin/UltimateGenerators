@@ -40,6 +40,10 @@ public class UGItems {
 	
 	public static ItemStack QUANTUM_SOLAR_GENERATOR;
 	
+	public static ItemStack MODULAR_GENERATOR_REGULATOR;
+	
+	public static ItemStack ENDER_CRYSTAL_GENERATOR, ENDER_CRYSTAL_GENERATOR_BASE, ENDER_CRYSTAL_STABILIZER;
+	
 	static {
 		try {
 			ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5ZjM1NmY1ZmU3ZDFiYzkyY2RkZmFlYmEzZWU3NzNhYzlkZjFjYzRkMWMyZjhmZTVmNDcwMTMwMzJjNTUxZCJ9fX0="),"&6无尽发电机&r", "", "&r当接收到红石信号时工作", "", "&5创造发电机", "&8⇨ &e⚡ &7发电效率由接收到的红石信号强度决定");
@@ -60,25 +64,11 @@ public class UGItems {
 
 			REACTION_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 13), "&2反应发电机&r", "", "&r无需冷却的小型核反应发电机", "&r直接消耗低能核燃料发电", "&r但此发电方式的燃料利用率较低", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &716 J/s");
 
-			/*
-			 * 末影水晶发电机的构想很好, 奈何本人能力有限写不出这种配合实体的多方块发电机
-			 * 哦不, 不是能力有限, 是懒(
-			 * 
-			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
+			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ 4096 J/s");
 			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&f末影水晶发电机基座&r");
-			ENDER_CYRSTAL_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN), "&5末影水晶稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s/PTL");
-
-			ENDERIUM_EXTRACTOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTM4ZmZlN2Q2MDdkMTBiYzk3MTJkY2IxOWU4YjVkZjFlNTlkNGQ3MWQ1N2NlOTNlYWRiYTFhYzc2NmI3MTA2ZSJ9fX0="), "&5末影之尘精炼机&r", "", "&6高级机器", "&8⇨ &e⚡ &732 J/s");
-
-			ENDERIUM_DUST = new CustomItem(new UniversalMaterial(Material.SUGAR), "&5末影之尘&r");
-			ENDERIUM_DUST.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-			ENDERIUM_DUST.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			ENDERIUM_INGOT = new CustomItem(new UniversalMaterial(Material.IRON_INGOT), "&5末影锭&r");
-			ENDERIUM_INGOT.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-			ENDERIUM_INGOT.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			ENDER_CRYSTAL_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN), "&5末影水晶稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
 
 			MODULAR_GENERATOR_REGULATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGI4NzM2ZmY0MmJjNjhjMTFlZGU4ZDg3NGIxNTEyZDI5ZjJlOGM1ZjZmZWJlOGY1OGRmY2Q5YTBhNTFkNmRlZSJ9fX0="), "&b模块化发电机核心&r");
-			 */
 
 			SOLID_STORAGE_EXPANSION = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRmY2M5ODlmMDMzOTQ3YmYyYjc1NDE2ZDRjZTk0YTUxOGNmN2MyYmRiNTdjNDMyNDBlODdkN2FlMjY2MzI3OSJ9fX0="), "&f固体储存拓展&r");
 			LIQUID_STORAGE_EXPANSION = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTZiY2QxODBiMWM4ZmM0Y2EzOWNmNDY3YzM0NWFlODNjYzE2YjYzY2IyNTU3MDM0NjAxMDNhM2VlYmE0NTcifX19"), "&f流体储存拓展&r");

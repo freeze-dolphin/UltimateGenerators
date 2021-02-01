@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.List;
 
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -66,4 +67,8 @@ public class Utils {
 		return null;
 	}
 
+	public static Location locModify(Location orig, float xOffset, float yOffset, float zOffset) {
+		return new Location(orig.getWorld(), orig.getX() + xOffset, orig.getY() + yOffset, orig.getZ() + zOffset);
+	}
+	
 }
