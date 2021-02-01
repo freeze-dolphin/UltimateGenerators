@@ -20,6 +20,7 @@ import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
 class UGImplementor {
@@ -599,12 +600,35 @@ class UGImplementor {
 				null, SlimefunItems.ELECTRIC_MOTOR, null, SlimefunItems.COMPRESSED_CARBON, new ItemStack(Material.WATER_BUCKET), SlimefunItems.COMPRESSED_CARBON, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT
 				), Loader.getDisplaySw())).registerChargeableBlock(false, 128);
 
+		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.QUANTUM_SOLAR_GENERATOR, "QUANTUM_SOLAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+				SlimefunItems.SOLAR_GENERATOR_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.SOLAR_GENERATOR_3, 
+				SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ELECTRO_MAGNET, SlimefunItems.BLISTERING_INGOT_3,
+				SlimefunItems.SOLAR_GENERATOR_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.SOLAR_GENERATOR_3
+		})).registerChargeableBlock(false, 65536, new ItemHandler[] { new EnergyTicker() {
+
+			@Override
+			public double generateEnergy(Location l, SlimefunItem item, Config data) {
+				if ((!l.getWorld().isChunkLoaded(l.getBlockX() >> 4, l.getBlockZ() >> 4)) || (l.getBlock().getLightFromSky() != 15)) {
+					return 0.0D;
+				}
+				if ((l.getWorld().getTime() < 12300L) || (l.getWorld().getTime() > 23850L)) {
+					return 1024.0D;
+				}
+				return 512.0D;
+			}
+
+			@Override
+			public boolean explode(Location l) {
+				return false;
+			}
+		}});
+
 	}
 
 	public void implementModularGenerators() {
-		
-		
-		
+
+
+
 		/*
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 

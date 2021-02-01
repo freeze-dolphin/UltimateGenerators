@@ -38,6 +38,8 @@ public class UGItems {
 	
 	public static ItemStack MAGNESIUM_SALT, MAGNESIUM_GENERATOR;
 	
+	public static ItemStack QUANTUM_SOLAR_GENERATOR;
+	
 	static {
 		try {
 			ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y5ZjM1NmY1ZmU3ZDFiYzkyY2RkZmFlYmEzZWU3NzNhYzlkZjFjYzRkMWMyZjhmZTVmNDcwMTMwMzJjNTUxZCJ9fX0="),"&6无尽发电机&r", "", "&r当接收到红石信号时工作", "", "&5创造发电机", "&8⇨ &e⚡ &7发电效率由接收到的红石信号强度决定");
@@ -103,6 +105,8 @@ public class UGItems {
 			
 			MAGNESIUM_SALT = new CustomItem(new UniversalMaterial(Material.SUGAR), "&f镁盐&r");
 			MAGNESIUM_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 8), "&f镁发电机&r", "", "&f高端的程序员", "&f往往采用最朴素的编程方式", "&f(指 'Ctrl + C / V')", "", "&a中级发电机", "&8\u21E8 &e\u26A1 &7128 J 缓存", "&8\u21E8 &e\u26A1 &736 J/s");
+			
+			QUANTUM_SOLAR_GENERATOR = new CustomItem(new ItemStack(Material.DAYLIGHT_DETECTOR), "&d量子太阳能发电机&r", new String[]{"", "&9可在夜晚发电", "", "&4终极发电机", "&8⇨ &e⚡ &765536 J 缓存", "&8⇨ &e⚡ &72048 J/s (白天)", "&8⇨ &e⚡ &71024 J/s (夜晚)"});
 			
 		} catch (Exception e) {
 			e.printStackTrace();
