@@ -33,6 +33,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -43,7 +46,7 @@ import io.freeze_dolphin.ultimate_generators.Utils;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
-public class EnderCrystalGenerator extends SlimefunItem {
+public abstract class EnderCrystalGenerator extends SlimefunItem {
 
 	public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
 	public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
@@ -81,13 +84,11 @@ public class EnderCrystalGenerator extends SlimefunItem {
 	protected static final int structureInfo = 44;
 
 	private final String ID;
-	private final boolean displayMachineInfo;
 
-	public EnderCrystalGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, boolean displayMachineInfo) {
+	public EnderCrystalGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, id, recipeType, recipe);
 
 		ID = id;
-		this.displayMachineInfo = displayMachineInfo;
 
 		new BlockMenuPreset(id, getInventoryTitle()) {
 
@@ -199,8 +200,8 @@ public class EnderCrystalGenerator extends SlimefunItem {
 			}
 
 		});
-		
-		preset.addItem(machineInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), new MenuClickHandler() {
+
+		preset.addItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构完整性: &4&l✘&r", "&d已连接水晶: &f0"), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -211,15 +212,11 @@ public class EnderCrystalGenerator extends SlimefunItem {
 	}
 
 	private void registerDefaultRecipes() {
-
+		registerFuel(new MachineFuel(3600, UGItems.RUNE_COMPLEX_ENDER, SlimefunItems.STONE_CHUNK));
 	}
 
 	private String getInventoryTitle() {
 		return "&d末影水晶发电机";
-	}
-	
-	private int getSpeed() {
-		return 1;
 	}
 
 	private ItemStack getProgressBar() {
@@ -234,6 +231,10 @@ public class EnderCrystalGenerator extends SlimefunItem {
 
 	public boolean isProcessing(Location l) {
 		return progress.containsKey(l);
+	}
+
+	private void registerFuel(MachineFuel fuel) {
+		this.recipes.add(fuel);
 	}
 
 	private boolean checkStructure(Block b) {
@@ -267,15 +268,34 @@ public class EnderCrystalGenerator extends SlimefunItem {
 
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
+				
+				int cryNum = 0;
+				for (Entity ety : l.getWorld().getNearbyEntities(l, 7D, 7D, 7D)) {
+					if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
+						EnderCrystal ec = (EnderCrystal) ety;
+
+						try {
+							if (ec.hasMetadata("crystal-status") && ec.getMetadata("crystal-status").get(0).asString().equals("stable")) {
+								ec.setBeamTarget(l);
+								cryNum++;
+							} else {
+								ec.setBeamTarget(null);
+							}
+						} catch (Exception ex) {
+							ec.setBeamTarget(null);
+						}
+
+					}
+				}
 
 				if (l.getBlock().isBlockPowered()) { return 0D; }
 
 				if (!checkStructure(l.getBlock())) {
-					BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构不完整"));
+					BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构完整性: &4&l✘&r", "&d已连接水晶: &f" + cryNum));
 					return 0D;
 				}
-				
-				BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构不完整"));
+
+				BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 5), "&a结构完整性: &2&l✔&r", "&d已连接水晶: &f" + cryNum));
 				
 				if (isProcessing(l)) {
 					int timeleft = progress.get(l);
@@ -294,8 +314,8 @@ public class EnderCrystalGenerator extends SlimefunItem {
 						BlockStorage.getInventory(l).replaceExistingItem(indicator, item);
 
 						if (ChargableBlock.isChargable(l)) {
-							if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= getEnergyProduction()) {
-								ChargableBlock.addCharge(l, getEnergyProduction());
+							if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= getEnergyProductionPerCrystal() * cryNum) {
+								ChargableBlock.addCharge(l, getEnergyProductionPerCrystal() * cryNum);
 								progress.put(l, timeleft - 1);
 								return ChargableBlock.getCharge(l);
 							}
@@ -303,7 +323,7 @@ public class EnderCrystalGenerator extends SlimefunItem {
 						}
 						else {
 							progress.put(l, timeleft - 1);
-							return getEnergyProduction();
+							return getEnergyProductionPerCrystal() * cryNum;
 						}
 					}
 					else {
@@ -366,6 +386,8 @@ public class EnderCrystalGenerator extends SlimefunItem {
 
 		super.register(slimefun);
 	}
+
+	public abstract int getEnergyProductionPerCrystal();
 
 	public Set<MachineFuel> getFuelTypes() {
 		return this.recipes;

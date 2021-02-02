@@ -1,7 +1,12 @@
 package io.freeze_dolphin.ultimate_generators.lists;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
+
 import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
@@ -43,6 +48,7 @@ public class UGItems {
 	public static ItemStack MODULAR_GENERATOR_REGULATOR;
 	
 	public static ItemStack ENDER_CRYSTAL_GENERATOR, ENDER_CRYSTAL_GENERATOR_BASE, ENDER_CRYSTAL_STABILIZER;
+	public static ItemStack RUNE_COMPLEX_ENDER, ENDER_LUMP_4;
 	
 	static {
 		try {
@@ -64,7 +70,7 @@ public class UGItems {
 
 			REACTION_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 13), "&2反应发电机&r", "", "&r无需冷却的小型核反应发电机", "&r直接消耗低能核燃料发电", "&r但此发电方式的燃料利用率较低", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &716 J/s");
 
-			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ 4096 J/s");
+			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
 			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&f末影水晶发电机基座&r");
 			ENDER_CRYSTAL_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN), "&5末影水晶稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
 
@@ -97,6 +103,15 @@ public class UGItems {
 			MAGNESIUM_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 8), "&f镁发电机&r", "", "&f高端的程序员", "&f往往采用最朴素的编程方式", "&f(指 'Ctrl + C / V')", "", "&a中级发电机", "&8\u21E8 &e\u26A1 &7128 J 缓存", "&8\u21E8 &e\u26A1 &736 J/s");
 			
 			QUANTUM_SOLAR_GENERATOR = new CustomItem(new ItemStack(Material.DAYLIGHT_DETECTOR), "&d量子太阳能发电机&r", new String[]{"", "&9可在夜晚发电", "", "&4终极发电机", "&8⇨ &e⚡ &765536 J 缓存", "&8⇨ &e⚡ &72048 J/s (白天)", "&8⇨ &e⚡ &71024 J/s (夜晚)"});
+			
+			ItemStack itemRCE = new ItemStack(Material.FIREWORK_CHARGE);
+			FireworkEffectMeta imRCE = (FireworkEffectMeta) itemRCE.getItemMeta();
+			imRCE.setEffect(FireworkEffect.builder().with(FireworkEffect.Type.BURST).withColor(Color.fromRGB(85, 0, 255)).build());
+			imRCE.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&7远古符文 &8&l[&b&l终界&8&l]"));
+			itemRCE.setItemMeta(imRCE);
+			RUNE_COMPLEX_ENDER = itemRCE;
+			
+			ENDER_LUMP_4 = new CustomItem(Material.GOLD_NUGGET, "&5末影结晶 &7- &eIV", 0, new String[]{"", "&c品级: IV"});
 			
 		} catch (Exception e) {
 			e.printStackTrace();

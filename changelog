@@ -7,9 +7,13 @@
 2021.1.29 [v1.0.0]: 
 - initial release
 
-? [v1.0.?]: 
+? [v1.0.1]: 
+- bug fixes
+
+? [v1.0.2]: 
 - changed project license from GGPL-3.0 to AGPL-3.0 (2021.1.29-16:40)
 - fixed the display name of ALPHA_ELECTRICITY_STORAGE (2021.1.29-17:52)
 - fixed a repeated recipe in BIOMASS_EXTRACTION_MACHINE (2021.1.30-13:06)
 - add MAGNESIUM_GENERATOR and MAGNESIUM_SALT (2021.1.31-21:32)
 - add QUANTUM_SOLAR_GENERATOR (2021.2.1-17:47)
+- add ENDER_CRYSTAL_GENERATOR and ENDER_CRYSTAL_GENERATOR_BASE and ENDER_CRYSTAL_STABILIZER (2021.2.2-11:09)

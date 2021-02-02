@@ -12,6 +12,8 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
+import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalGenerator;
+import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.SlimefunStartup;
@@ -92,6 +94,18 @@ class UGImplementor {
 		(new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER, Utils.buildRecipe(
 				SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT
 				))).register(false);
+
+		(new SlimefunItem(Categories.LUMPS_AND_MAGIC, UGItems.ENDER_LUMP_4, "ENDER_LUMP_4", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3, 
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3, 
+				SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3, SlimefunItems.ENDER_LUMP_3
+		})).register(false);
+
+		(new SlimefunItem(Categories.LUMPS_AND_MAGIC, UGItems.RUNE_COMPLEX_ENDER, "RUNE_COMPLEX_ENDER", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+				SlimefunItems.RUNE_ENDER, SlimefunItems.GOLD_24K, SlimefunItems.RUNE_ENDER, 
+				UGItems.ENDER_LUMP_4, SlimefunItems.STONE_CHUNK, UGItems.ENDER_LUMP_4, 
+				SlimefunItems.RUNE_ENDER, SlimefunItems.GOLD_24K, SlimefunItems.RUNE_ENDER
+		})).register(false);
 
 	}
 
@@ -627,8 +641,30 @@ class UGImplementor {
 
 	public void implementModularGenerators() {
 
+		(new EnderCrystalGenerator(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR, "ENDER_CRYSTAL_GENERATOR", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+				SlimefunItems.RUNE_ENDER, SlimefunItems.HOLOGRAM_PROJECTOR, SlimefunItems.RUNE_ENDER, 
+				SlimefunItems.COOLER, SlimefunItems.CARBONADO_EDGED_CAPACITOR, UGItems.MODULAR_GENERATOR_REGULATOR, 
+				SlimefunItems.RUNE_ENDER, SlimefunItems.NUCLEAR_REACTOR, SlimefunItems.RUNE_ENDER
+		}) {
 
+			@Override
+			public int getEnergyProductionPerCrystal() {
+				return 64;
+			}
+		}).registerChargeableBlock(false, 14336);
+		
+		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+				SlimefunItems.ENDER_LUMP_2, mat(Material.END_BRICKS), SlimefunItems.ENDER_LUMP_2, 
+				mat(Material.END_BRICKS), SlimefunItems.ANCIENT_PEDESTAL, mat(Material.END_BRICKS), 
+				SlimefunItems.ENDER_LUMP_2, mat(Material.END_BRICKS), SlimefunItems.ENDER_LUMP_2
+		})).register(false);
 
+		(new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_STABILIZER, "ENDER_CRYSTAL_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), null, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), 
+				SlimefunItems.MAGIC_LUMP_2, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_2, 
+				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.ENDER_LUMP_3, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1)
+		})).registerChargeableBlock(false, 256);
+		
 		/*
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 
