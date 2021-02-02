@@ -37,7 +37,7 @@ public class Utils {
 		ItemStack[] itArr = new ItemStack[] {null, null, null, null, null, null, null, null, null};
 		if (itemStacks.length <= 0) return itArr;
 		if (itemStacks.length > 9) return itArr;
-		for (int i = 0; i < itArr.length; i++) {
+		for (int i = 0; i < itemStacks.length; i++) {
 			itArr[i] = itemStacks[i];
 		}
 		return itArr;
