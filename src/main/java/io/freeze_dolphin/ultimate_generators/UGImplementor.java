@@ -649,7 +649,12 @@ class UGImplementor {
 
 			@Override
 			public int getEnergyProductionPerCrystal() {
-				return 64;
+				return 32;
+			}
+
+			@Override
+			public int getWarningCrystalNum() {
+				return 0;
 			}
 		}).registerChargeableBlock(false, 14336);
 		
@@ -659,7 +664,7 @@ class UGImplementor {
 				SlimefunItems.ENDER_LUMP_2, mat(Material.END_BRICKS), SlimefunItems.ENDER_LUMP_2
 		})).register(false);
 
-		(new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_STABILIZER, "ENDER_CRYSTAL_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
+		(new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_STABILIZER, "ENDER_CRYSTAL_GENERATOR_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
 				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), null, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), 
 				SlimefunItems.MAGIC_LUMP_2, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_2, 
 				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.ENDER_LUMP_3, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1)

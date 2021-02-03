@@ -29,6 +29,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -55,8 +56,8 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
 	private static final int[] border = 
 		{
-				0,                             8, 
-				9,                             17, 
+				0,                               8, 
+				9,                              17, 
 				18, 19, 20, 21,     23, 24, 25, 26, 
 				27,                             35, 
 				36
@@ -201,7 +202,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
 		});
 
-		preset.addItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构完整性: &4&l✘&r", "&d已连接水晶: &f0"), new MenuClickHandler() {
+		preset.addItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e0", "&3机器状态: &e无"), new MenuClickHandler() {
 
 			@Override
 			public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
@@ -246,14 +247,15 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 		ll.add(Utils.locModify(l, -1, -1, 0));
 		ll.add(Utils.locModify(l, -1, -1, 1));
 		ll.add(Utils.locModify(l, 0, -1, -1));
-		ll.add(Utils.locModify(l, 0, -1, 0));
 		ll.add(Utils.locModify(l, 0, -1, 1));
 		ll.add(Utils.locModify(l, 1, -1, -1));
 		ll.add(Utils.locModify(l, 1, -1, 0));
 		ll.add(Utils.locModify(l, 1, -1, 1));
 
+		if (!BlockStorage.checkID(Utils.locModify(l, 0, -1, 0)).equals("ENDER_CRYSTAL_GENERATOR_STABILIZER")) return false;
+
 		for (Location lc : ll) {
-			if (!BlockStorage.checkID(lc).equals("ENDER_CRYSTAL_GENERATOR_BASE")) {
+			if (BlockStorage.checkID(lc) == null || !BlockStorage.checkID(lc).equals("ENDER_CRYSTAL_GENERATOR_BASE")) {
 				return false;
 			}
 		}
@@ -268,14 +270,14 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
-				
+
 				int cryNum = 0;
-				for (Entity ety : l.getWorld().getNearbyEntities(l, 7D, 7D, 7D)) {
+				for (Entity ety : l.getWorld().getNearbyEntities(l, 4D, 4D, 4D)) {
 					if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
 						EnderCrystal ec = (EnderCrystal) ety;
 
 						try {
-							if (ec.hasMetadata("crystal-status") && ec.getMetadata("crystal-status").get(0).asString().equals("stable")) {
+							if (!ec.isShowingBottom() && ec.getBeamTarget() == null) {
 								ec.setBeamTarget(l);
 								cryNum++;
 							} else {
@@ -291,13 +293,23 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 				if (l.getBlock().isBlockPowered()) { return 0D; }
 
 				if (!checkStructure(l.getBlock())) {
-					BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 14), "&c结构完整性: &4&l✘&r", "&d已连接水晶: &f" + cryNum));
+					BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e" + cryNum, "&3机器状态: &a正常"));
 					return 0D;
 				}
 
-				BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 5), "&a结构完整性: &2&l✔&r", "&d已连接水晶: &f" + cryNum));
-				
 				if (isProcessing(l)) {
+
+					if (cryNum > getWarningCrystalNum()) {
+						int warn = getWarningCrystalNum() - cryNum;
+						if (RandomUtils.nextInt(0, 1000) < warn) {
+							l.getWorld().createExplosion(l, RandomUtils.nextFloat(4F, 12F), RandomUtils.nextBoolean());
+						} else {
+							BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r", "&3已连接水晶: &e" + cryNum, "&3机器状态: &c超负荷运载 &e(堆芯溶解几率 - " + (warn / 1000F) + ")"));
+						}
+					} else {
+						BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r", "&3已连接水晶: &e" + cryNum, "&3机器状态: &a正常"));
+					}
+
 					int timeleft = progress.get(l);
 					if (timeleft > 0) {
 						ItemStack item = getProgressBar().clone();
@@ -354,6 +366,9 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 					}
 				}
 				else {
+
+					BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r", "&3已连接水晶: &e" + cryNum, "&3机器状态: &a正常"));
+
 					MachineFuel r = null;
 					Map<Integer, Integer> found = new HashMap<Integer, Integer>();
 					outer:
@@ -388,6 +403,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 	}
 
 	public abstract int getEnergyProductionPerCrystal();
+	public abstract int getWarningCrystalNum();
 
 	public Set<MachineFuel> getFuelTypes() {
 		return this.recipes;
