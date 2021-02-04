@@ -90,6 +90,8 @@ class UGImplementor {
 				))).register(false);
 
 		(new SlimefunItem(Categories.RESOURCES, UGItems.DIESEL_BUCKET, "DIESEL_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&c柴油精炼器&r", "&a在柴油精炼器里将石油精炼为柴油")), Utils.buildRecipe())).register(false);
+		(new SlimefunItem(Categories.RESOURCES, UGItems.BIOMASS_BUCKET, "BIOMASS_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 5), "&a生物质萃取机&r", "&a在生物质萃取机里提取一些作物中的生物质")), Utils.buildRecipe())).register(false);
+		(new SlimefunItem(Categories.RESOURCES, UGItems.BIOFUEL_BUCKET, "BIOFUEL_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&2生物燃油精炼器&r", "&a在生物燃油精炼器里将生物质精炼为生物燃油")), Utils.buildRecipe())).register(false);
 
 		(new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER, Utils.buildRecipe(
 				SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT
@@ -169,7 +171,7 @@ class UGImplementor {
 
 			@Override
 			public String getInventoryTitle() {
-				return "&&a生物质萃取机";
+				return "&a生物质萃取机";
 			}
 
 			@Override

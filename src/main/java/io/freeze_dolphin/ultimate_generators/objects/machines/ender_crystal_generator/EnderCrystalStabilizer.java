@@ -36,7 +36,7 @@ public class EnderCrystalStabilizer extends SlimefunItem {
 
 			@Override
 			public boolean isSynchronized() {
-				return false;
+				return true;
 			}
 		});
 
@@ -54,7 +54,7 @@ public class EnderCrystalStabilizer extends SlimefunItem {
 		if (ChargableBlock.getCharge(b) < getEnergyConsumption()) {
 			b.setType(Material.LAVA);
 			BlockStorage.clearBlockInfo(b);
-			if (RandomUtils.nextFloat(1, 100) < 2) {
+			if (RandomUtils.nextBoolean()) {
 				b.getWorld().createExplosion(Utils.locModify(b.getLocation(), 0.5F, 0.5F, 0.5F), RandomUtils.nextFloat(1F, 8F), RandomUtils.nextBoolean());
 			}
 		} else {

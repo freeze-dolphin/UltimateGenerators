@@ -252,7 +252,8 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 		ll.add(Utils.locModify(l, 1, -1, 0));
 		ll.add(Utils.locModify(l, 1, -1, 1));
 
-		if (!BlockStorage.checkID(Utils.locModify(l, 0, -1, 0)).equals("ENDER_CRYSTAL_GENERATOR_STABILIZER")) return false;
+		Location lll = Utils.locModify(l, 0, -1, 0);
+		if (BlockStorage.checkID(lll) == null || !BlockStorage.checkID(lll).equals("ENDER_CRYSTAL_GENERATOR_STABILIZER") || lll.getBlock().isBlockPowered()) return false;
 
 		for (Location lc : ll) {
 			if (BlockStorage.checkID(lc) == null || !BlockStorage.checkID(lc).equals("ENDER_CRYSTAL_GENERATOR_BASE")) {
@@ -276,12 +277,11 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 					if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
 						EnderCrystal ec = (EnderCrystal) ety;
 
+						Location genL = Utils.locModify(l.getBlock().getLocation(), 0.5F, -1.5F, 0.5F);
 						try {
 							if (!ec.isShowingBottom() && ec.getBeamTarget() == null) {
-								ec.setBeamTarget(l);
+								ec.setBeamTarget(genL);
 								cryNum++;
-							} else {
-								ec.setBeamTarget(null);
 							}
 						} catch (Exception ex) {
 							ec.setBeamTarget(null);

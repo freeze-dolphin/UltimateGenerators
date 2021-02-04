@@ -18,3 +18,6 @@
 - add QUANTUM_SOLAR_GENERATOR (2021.2.1-17:47)
 - add ENDER_CRYSTAL_GENERATOR and ENDER_CRYSTAL_GENERATOR_BASE and ENDER_CRYSTAL_STABILIZER (2021.2.2-11:09)
 - fix a bug in Utils.buildRecipe() (2021.2.2-11:14)
+- change ENDER_CRYSTAL_STABILIZER to ENDER_CRYSTAL_GENERATOR_STABILIZER (2021.2.3-11:15)
+- fix a machine container title displaying bug in UGImplementor (2021.2.4-20:57)
+- change version tag to '1.0.3' (2021.2.4-20:57)
