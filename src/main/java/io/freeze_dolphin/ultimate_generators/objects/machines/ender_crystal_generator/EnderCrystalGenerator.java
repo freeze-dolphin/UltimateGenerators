@@ -138,6 +138,23 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 						}
 					}
 				}
+
+				for (Entity ety : b.getWorld().getNearbyEntities(b.getLocation(), 4D, 4D, 4D)) {
+					if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
+						EnderCrystal ec = (EnderCrystal) ety;
+
+						try {
+							if (!ec.isShowingBottom() && ec.getBeamTarget() != null) {
+								ec.setBeamTarget(null);
+								continue;
+							}
+						} catch (Exception ex) {
+							ec.setBeamTarget(null);
+						}
+
+					}
+				}
+
 				progress.remove(b.getLocation());
 				processing.remove(b.getLocation());
 				return true;
@@ -282,6 +299,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 							if (!ec.isShowingBottom() && ec.getBeamTarget() == null) {
 								ec.setBeamTarget(genL);
 								cryNum++;
+								continue;
 							}
 						} catch (Exception ex) {
 							ec.setBeamTarget(null);
