@@ -291,6 +291,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
 				Location genL = Utils.locModify(l.getBlock().getLocation(), 0.5F, -1.5F, 0.5F);
+				Location partL = Utils.locModify(genL, 0F, 2F, 0F);
 				
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), new Runnable() {
 
@@ -339,7 +340,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 						public void run() {
 							
 							try {
-								ParticleEffect.END_ROD.display(genL, 0F, 0F, 0F, 0.3F, RandomUtils.nextInt(2, 5));
+								ParticleEffect.END_ROD.display(partL, 0F, 0F, 0F, 0.1F, RandomUtils.nextInt(1, getConnectedCrystalNum(l.getBlock())));
 							} catch (Exception e) {}
 							
 							if (getConnectedCrystalNum(l.getBlock()) > getWarningCrystalNum()) {
@@ -352,13 +353,13 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 								} else {
 									BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r", "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &c超负荷运载 &e(堆芯溶解几率 - " + (warn / 100000F) + ")"));
 									try {
-										ParticleEffect.VILLAGER_ANGRY.display(genL, 0F, 0F, 0F, 1F, RandomUtils.nextInt(1, 1 + warn));
+										ParticleEffect.VILLAGER_ANGRY.display(partL, 0F, 0F, 0F, 0.1F, RandomUtils.nextInt(1, 1 + warn));
 									} catch (Exception e) {}
 								}
 							} else {
 								BlockStorage.getInventory(l).replaceExistingItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r", "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常"));
 								try {
-									ParticleEffect.DRAGON_BREATH.display(genL, 0F, 0F, 0F, 0.5F, RandomUtils.nextInt(1, 3));
+									ParticleEffect.DRAGON_BREATH.display(partL, 0F, 0F, 0F, 0.3F, RandomUtils.nextInt(1, 3));
 								} catch (Exception e) {}
 							}
 						}

@@ -619,9 +619,9 @@ class UGImplementor {
 				), Loader.getDisplaySw())).registerChargeableBlock(false, 128);
 
 		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.QUANTUM_SOLAR_GENERATOR, "QUANTUM_SOLAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-				SlimefunItems.SOLAR_GENERATOR_4, ALUI, SlimefunItems.SOLAR_GENERATOR_4, 
-				ALUI, SlimefunItems.ADVANCED_CIRCUIT_BOARD, ALUI, 
-				SlimefunItems.SOLAR_GENERATOR_4, ALUI, SlimefunItems.SOLAR_GENERATOR_4
+				SlimefunItems.SOLAR_GENERATOR_4, SlimefunItems.SOLAR_GENERATOR_4, SlimefunItems.SOLAR_GENERATOR_4, 
+				SlimefunItems.SOLAR_GENERATOR_4, SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.SOLAR_GENERATOR_4, 
+				SlimefunItems.SOLAR_GENERATOR_4, SlimefunItems.SOLAR_GENERATOR_4, SlimefunItems.SOLAR_GENERATOR_4
 		})).registerChargeableBlock(false, 65536, new ItemHandler[] { new EnergyTicker() {
 
 			@Override
