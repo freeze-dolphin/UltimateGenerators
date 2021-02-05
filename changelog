@@ -21,3 +21,6 @@
 - change ENDER_CRYSTAL_STABILIZER to ENDER_CRYSTAL_GENERATOR_STABILIZER (2021.2.3-11:15)
 - fix a machine container title displaying bug in UGImplementor (2021.2.4-20:57)
 - change version tag to '1.0.3' (2021.2.4-20:57)
+- add ENDER_CRYSTAL_ENHANCER_POTION (2021.2.5-11:56)
+- fix plenty of bugs to make ENDER_CRYSTAL_GENERATOR and related machines to work properly (2021.2.5-11:57)
+- add particle effect to ENDER_CRYSTAL_GENERATOR (2021.2.5-11:58)

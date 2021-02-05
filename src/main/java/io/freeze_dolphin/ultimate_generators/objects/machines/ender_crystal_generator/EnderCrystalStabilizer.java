@@ -9,10 +9,12 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
+import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
 
 public class EnderCrystalStabilizer extends SlimefunItem {
@@ -36,7 +38,7 @@ public class EnderCrystalStabilizer extends SlimefunItem {
 
 			@Override
 			public boolean isSynchronized() {
-				return true;
+				return false;
 			}
 		});
 
@@ -48,15 +50,21 @@ public class EnderCrystalStabilizer extends SlimefunItem {
 	}
 
 	protected void tick(Block b) {
-		
+
 		if (b.isBlockPowered()) return;
-		
+
 		if (ChargableBlock.getCharge(b) < getEnergyConsumption()) {
-			b.setType(Material.LAVA);
-			BlockStorage.clearBlockInfo(b);
-			if (RandomUtils.nextBoolean()) {
-				b.getWorld().createExplosion(Utils.locModify(b.getLocation(), 0.5F, 0.5F, 0.5F), RandomUtils.nextFloat(1F, 8F), RandomUtils.nextBoolean());
-			}
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), new Runnable() {
+
+				@Override
+				public void run() {
+					BlockStorage.clearBlockInfo(b);
+					b.setType(Material.AIR);
+					b.getWorld().createExplosion(Utils.locModify(b.getLocation(), 0.5F, 0.5F, 0.5F), 0F, false);
+					if (RandomUtils.nextBoolean()) b.setType(Material.LAVA);
+					if (RandomUtils.nextBoolean()) b.getWorld().createExplosion(Utils.locModify(b.getLocation(), 0.5F, 0.5F, 0.5F), RandomUtils.nextFloat(1F, 8F), RandomUtils.nextBoolean());
+				}
+			});
 		} else {
 			ChargableBlock.addCharge(b, -getEnergyConsumption());
 		}

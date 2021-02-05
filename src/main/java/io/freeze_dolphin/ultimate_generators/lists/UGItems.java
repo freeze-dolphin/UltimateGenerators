@@ -6,11 +6,14 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomPotion;
 import me.mrCookieSlime.CSCoreLibPlugin.general.World.CustomSkull;
 
 public class UGItems {
@@ -47,7 +50,7 @@ public class UGItems {
 	
 	public static ItemStack MODULAR_GENERATOR_REGULATOR;
 	
-	public static ItemStack ENDER_CRYSTAL_GENERATOR, ENDER_CRYSTAL_GENERATOR_BASE, ENDER_CRYSTAL_GENERATOR_STABILIZER;
+	public static ItemStack ENDER_CRYSTAL_GENERATOR, ENDER_CRYSTAL_GENERATOR_BASE, ENDER_CRYSTAL_GENERATOR_STABILIZER, ENDER_CRYSTAL_ENHANCER;
 	public static ItemStack RUNE_COMPLEX_ENDER, ENDER_LUMP_4;
 	
 	static {
@@ -71,9 +74,10 @@ public class UGItems {
 			REACTION_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 13), "&2反应发电机&r", "", "&r无需冷却的小型核反应发电机", "&r直接消耗低能核燃料发电", "&r但此发电方式的燃料利用率较低", "", "&6高级发电机", "&8⇨ &e⚡ &7256 J 缓存", "&8⇨ &e⚡ &716 J/s");
 
 			ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r", "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
-			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&f末影水晶发电机基座&r");
+			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&b末影水晶发电机基座&r");
 			ENDER_CRYSTAL_GENERATOR_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN), "&5末影水晶发电机稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
-
+			ENDER_CRYSTAL_ENHANCER = new CustomPotion("&9末影水晶强化药剂&r", Color.fromRGB(85, 0, 255), new PotionEffect(PotionEffectType.HUNGER, 0, 10));
+			
 			MODULAR_GENERATOR_REGULATOR = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGI4NzM2ZmY0MmJjNjhjMTFlZGU4ZDg3NGIxNTEyZDI5ZjJlOGM1ZjZmZWJlOGY1OGRmY2Q5YTBhNTFkNmRlZSJ9fX0="), "&b模块化发电机核心&r");
 
 			SOLID_STORAGE_EXPANSION = new CustomItem(CustomSkull.getItem("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRmY2M5ODlmMDMzOTQ3YmYyYjc1NDE2ZDRjZTk0YTUxOGNmN2MyYmRiNTdjNDMyNDBlODdkN2FlMjY2MzI3OSJ9fX0="), "&f固体储存拓展&r");

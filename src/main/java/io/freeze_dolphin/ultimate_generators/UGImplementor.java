@@ -40,12 +40,10 @@ class UGImplementor {
 
 	public void implementIngredients() {
 
-		/*
 		(new SlimefunItem(UGCategories.TECH_MISC, UGItems.MODULAR_GENERATOR_REGULATOR, "MODULAR_GENERATOR_REGULATOR", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				SlimefunItems.BILLON_INGOT, SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.COBALT_INGOT, 
 				SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.ENERGY_REGULATOR, SlimefunItems.ADVANCED_CIRCUIT_BOARD, 
 				SlimefunItems.COBALT_INGOT, SlimefunItems.ADVANCED_CIRCUIT_BOARD, SlimefunItems.BILLON_INGOT))).register(false);
-		 */
 
 		(new SlimefunItem(UGCategories.TECH_MISC, UGItems.SOLID_STORAGE_EXPANSION, "SOLID_STORAGE_EXPANSION", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				null, SlimefunItems.CARGO_OUTPUT, null, 
@@ -107,6 +105,10 @@ class UGImplementor {
 				SlimefunItems.RUNE_ENDER, SlimefunItems.GOLD_24K, SlimefunItems.RUNE_ENDER, 
 				UGItems.ENDER_LUMP_4, SlimefunItems.STONE_CHUNK, UGItems.ENDER_LUMP_4, 
 				SlimefunItems.RUNE_ENDER, SlimefunItems.GOLD_24K, SlimefunItems.RUNE_ENDER
+		})).register(false);
+
+		(new SlimefunItem(Categories.MISC, UGItems.ENDER_CRYSTAL_ENHANCER, "ENERGY_ACUMULATED_ENDER_CRYSTAL", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
+
 		})).register(false);
 
 	}
@@ -617,9 +619,9 @@ class UGImplementor {
 				), Loader.getDisplaySw())).registerChargeableBlock(false, 128);
 
 		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.QUANTUM_SOLAR_GENERATOR, "QUANTUM_SOLAR_GENERATOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {
-				SlimefunItems.SOLAR_GENERATOR_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.SOLAR_GENERATOR_3, 
-				SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.ELECTRO_MAGNET, SlimefunItems.BLISTERING_INGOT_3,
-				SlimefunItems.SOLAR_GENERATOR_3, SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.SOLAR_GENERATOR_3
+				SlimefunItems.SOLAR_GENERATOR_4, ALUI, SlimefunItems.SOLAR_GENERATOR_4, 
+				ALUI, SlimefunItems.ADVANCED_CIRCUIT_BOARD, ALUI, 
+				SlimefunItems.SOLAR_GENERATOR_4, ALUI, SlimefunItems.SOLAR_GENERATOR_4
 		})).registerChargeableBlock(false, 65536, new ItemHandler[] { new EnergyTicker() {
 
 			@Override
@@ -656,10 +658,10 @@ class UGImplementor {
 
 			@Override
 			public int getWarningCrystalNum() {
-				return 0;
+				return 9;
 			}
 		}).registerChargeableBlock(false, 14336);
-		
+
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
 				SlimefunItems.ENDER_LUMP_2, mat(Material.END_BRICKS), SlimefunItems.ENDER_LUMP_2, 
 				mat(Material.END_BRICKS), SlimefunItems.ANCIENT_PEDESTAL, mat(Material.END_BRICKS), 
@@ -671,7 +673,7 @@ class UGImplementor {
 				SlimefunItems.MAGIC_LUMP_2, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_2, 
 				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.ENDER_LUMP_3, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1)
 		})).registerChargeableBlock(false, 256);
-		
+
 		/*
 		(new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE, "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(
 				mat(Material.END_BRICKS), mat(Material.END_BRICKS), mat(Material.END_BRICKS), 

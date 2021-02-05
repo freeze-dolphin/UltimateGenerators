@@ -16,6 +16,7 @@ class UGListenersRegister {
 		 */
 		
 		plug.getServer().getPluginManager().registerEvents(new UltimateElectricityStorageCraftingListener(), Loader.getImplement());
+		plug.getServer().getPluginManager().registerEvents(new EnderCrystalEnhancerListener(), Loader.getImplement());
 	}
 	
 }
