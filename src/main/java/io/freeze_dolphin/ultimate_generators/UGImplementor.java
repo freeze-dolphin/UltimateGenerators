@@ -108,7 +108,9 @@ class UGImplementor {
 		})).register(false);
 
 		(new SlimefunItem(Categories.MISC, UGItems.ENDER_CRYSTAL_ENHANCER, "ENERGY_ACUMULATED_ENDER_CRYSTAL", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
-
+				mat(Material.GLASS), mat(Material.GLASS), mat(Material.GLASS), 
+				mat(Material.GLASS), UGItems.ENDER_LUMP_4, mat(Material.GLASS), 
+				mat(Material.GLASS), mat(Material.GLASS), mat(Material.GLASS)
 		})).register(false);
 
 	}
