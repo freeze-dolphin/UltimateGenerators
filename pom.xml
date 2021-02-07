@@ -5,7 +5,7 @@
 
 	<groupId>io.freeze-dolphin</groupId>
 	<artifactId>ultimate-generators</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.2</version>
 
 	<name>UltimateGenerators</name>
 
@@ -18,14 +18,14 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>nexus-aliyun</id>
-			<url>https://maven.aliyun.com/repository/public</url>
+			<url>https://maven.aliyun.com/repository/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
 	<repositories>
 		<repository>
 			<id>nexus-aliyun</id>
-			<url>https://maven.aliyun.com/repository/public</url>
+			<url>https://maven.aliyun.com/repository/public/</url>
 		</repository>
 		<repository>
 			<id>taboolib</id>
