@@ -22,8 +22,8 @@ public class EnderCrystalEnhancerListener implements Listener {
 
 			Player p = e.getPlayer();
 			if (SlimefunManager.isItemSimiliar(p.getInventory().getItemInMainHand(), UGItems.ENDER_CRYSTAL_ENHANCER, true)) {
-				p.getInventory().setItemInMainHand(InvUtils.decreaseItem(p.getInventory().getItemInMainHand(), 1));
 				if (!ec.isShowingBottom() && (ec.getCustomName() == null || ec.getCustomName().equals(""))) {
+					p.getInventory().setItemInMainHand(InvUtils.decreaseItem(p.getInventory().getItemInMainHand(), 1));
 					ec.setCustomName(ChatColor.translateAlternateColorCodes('&', "&d&l强化末影水晶&r"));
 					ec.setCustomNameVisible(false);
 				}

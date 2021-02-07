@@ -25,5 +25,5 @@
 - fix plenty of bugs to make ENDER_CRYSTAL_GENERATOR and related machines to work properly (2021.2.5-11:57)
 - add particle effect to ENDER_CRYSTAL_GENERATOR (2021.2.5-11:58)
 - change version tag to '1.0.2' (2021.2.7-18:46) # I think I wrongly changed the version tag by accident :(
-- change recipe of MAGNESIUM_SALT (2021.2.7-18:53)
+- change the recipe of MAGNESIUM_SALT (2021.2.7-18:53)
 
