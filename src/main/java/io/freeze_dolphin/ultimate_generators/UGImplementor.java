@@ -92,7 +92,7 @@ class UGImplementor {
 		(new SlimefunItem(Categories.RESOURCES, UGItems.BIOFUEL_BUCKET, "BIOFUEL_BUCKET", new RecipeType(new CustomItem(new UniversalMaterial(Material.PISTON_BASE), "&2生物燃油精炼器&r", "&a在生物燃油精炼器里将生物质精炼为生物燃油")), Utils.buildRecipe())).register(false);
 
 		(new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER, Utils.buildRecipe(
-				SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT
+				SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT
 				))).register(false);
 
 		(new SlimefunItem(Categories.LUMPS_AND_MAGIC, UGItems.ENDER_LUMP_4, "ENDER_LUMP_4", RecipeType.ANCIENT_ALTAR, new ItemStack[] {
