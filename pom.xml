@@ -24,17 +24,12 @@
 
 	<repositories>
 		<repository>
-			<id>nexus-aliyun</id>
-			<url>https://maven.aliyun.com/repository/public/</url>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
 			<id>taboolib</id>
 			<url>http://ptms.ink:8081/repository/maven-public/</url>
-		</repository>
-		<repository>
-			<id>lss233-minecraft</id>
-			<name>Lss233's Minecraft Repository</name>
-			<url>http://lss233.littleservice.cn/repositories/minecraft/</url>
 		</repository>
 	</repositories>
 
@@ -54,11 +49,10 @@
 			<systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>me.mrCookieSlime</groupId>
+			<groupId>com.github.TheBusyBiscuit</groupId>
 			<artifactId>CS-CoreLib</artifactId>
-			<version>1.5.18</version>
-			<scope>system</scope>
-			<systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
+			<version>v1.5.18</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
