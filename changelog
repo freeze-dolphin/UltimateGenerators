@@ -10,7 +10,7 @@
 ? [v1.0.1]: 
 - bug fixes
 
-? [v1.0.2]: 
+2021.2.8 [v1.0.2]: 
 - change project license from GGPL-3.0 to AGPL-3.0 (2021.1.29-16:40)
 - fix the display name of ALPHA_ELECTRICITY_STORAGE (2021.1.29-17:52)
 - fix a repeated recipe in BIOMASS_EXTRACTION_MACHINE (2021.1.30-13:06)
@@ -28,3 +28,6 @@
 - change the recipe of MAGNESIUM_SALT (2021.2.7-18:53)
 - fix a bug in EnderCrystalEnhancerListener (2021.2.7-19:01)
 
+2021.2.8 [v1.0.3]: 
+- change the recipe of ENDER_CRYSTAL_GENERATOR (2021.2.8-11:17)
+- attach wiki website in the Slimefun Guide page of some machines (2021.2.8-11:18)

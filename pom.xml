@@ -15,18 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus-aliyun</id>
-			<url>https://maven.aliyun.com/repository/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
 		<repository>
 			<id>taboolib</id>
 			<url>http://ptms.ink:8081/repository/maven-public/</url>
@@ -49,10 +38,11 @@
 			<systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.github.TheBusyBiscuit</groupId>
+			<groupId>me.mrCookieSlime</groupId>
 			<artifactId>CS-CoreLib</artifactId>
-			<version>v1.5.18</version>
-			<scope>provided</scope>
+			<version>1.5.18</version>
+			<scope>system</scope>
+			<systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
 		</dependency>
 	</dependencies>
 
