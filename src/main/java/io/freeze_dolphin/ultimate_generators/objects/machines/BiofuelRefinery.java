@@ -61,7 +61,7 @@ public abstract class BiofuelRefinery extends BContainer {
 
 	protected void tick(Block b) {
 
-		if (b.isBlockPowered()) { return; }
+		if (b.getBlockPower() > 1) { return; }
 
 		if (isProcessing(b)) {
 			int timeleft = progress.get(b);

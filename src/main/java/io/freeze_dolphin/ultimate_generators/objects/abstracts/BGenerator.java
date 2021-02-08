@@ -249,7 +249,7 @@ public abstract class BGenerator extends SlimefunItem {
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
 				
-				if (l.getBlock().isBlockPowered()) { return 0D; }
+				if (l.getBlock().getBlockPower() > 1) { return 0D; }
 				
 				if (isProcessing(l)) {
 					int timeleft = progress.get(l);

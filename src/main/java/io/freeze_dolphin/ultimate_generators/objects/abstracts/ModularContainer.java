@@ -269,7 +269,7 @@ public abstract class ModularContainer extends SlimefunItem {
 
 	protected void tick(Block b) {
 
-		if (b.isBlockPowered()) { return; }
+		if (b.getBlockPower() > 1) { return; }
 
 		if (!checkStructure(b)) { return; }
 

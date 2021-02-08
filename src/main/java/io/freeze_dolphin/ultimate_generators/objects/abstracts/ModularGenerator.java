@@ -251,7 +251,7 @@ public abstract class ModularGenerator extends SlimefunItem {
 			@Override
 			public double generateEnergy(Location l, SlimefunItem sf, Config data) {
 
-				if (l.getBlock().isBlockPowered()) { return 0D; }
+				if (l.getBlock().getBlockPower() > 1) { return 0D; }
 
 				if (!checkStructure(l.getBlock())) { return 0D; }
 
