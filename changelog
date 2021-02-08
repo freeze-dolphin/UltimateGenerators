@@ -26,4 +26,5 @@
 - add particle effect to ENDER_CRYSTAL_GENERATOR (2021.2.5-11:58)
 - change version tag to '1.0.2' (2021.2.7-18:46) # I think I wrongly changed the version tag by accident :(
 - change the recipe of MAGNESIUM_SALT (2021.2.7-18:53)
+- fix a bug in EnderCrystalEnhancerListener (2021.2.7-19:01)
 
