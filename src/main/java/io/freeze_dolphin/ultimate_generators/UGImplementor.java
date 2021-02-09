@@ -363,7 +363,7 @@ class UGImplementor {
 
 			@Override
 			public void registerDefaultRecipes() {
-				registerFuel(new MachineFuel(30, mat(Material.NETHER_STAR)));
+				registerFuel(new MachineFuel(120, mat(Material.NETHER_STAR)));
 			}
 
 			@Override
@@ -770,11 +770,9 @@ class UGImplementor {
 		(new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_STABILIZER,
 				"ENDER_CRYSTAL_GENERATOR_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE,
 				new ItemStack[] { new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), null,
-						new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.MAGIC_LUMP_2,
-						SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_2,
-						new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.ENDER_LUMP_3,
-						new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1) }))
-								.registerChargeableBlock(false, 256);
+						new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.MAGIC_LUMP_3,
+						SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.RAINBOW_GLASS,
+						UGItems.ENDER_LUMP_4, SlimefunItems.RAINBOW_GLASS })).registerChargeableBlock(false, 256);
 
 		Slimefun.addWikiPage("ENDER_CRYSTAL_GENERATOR_STABILIZER",
 				"https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
@@ -824,7 +822,6 @@ class UGImplementor {
 
 			@Override
 			public void extraTick(Location l) {
-
 			}
 		}).registerChargeableBlock(false, 16384);
 

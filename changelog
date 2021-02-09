@@ -37,3 +37,4 @@
 - fix a small bug of redstone control (2021.2.8-19:18)
 - add HEAVY_WATER and THERMAL_NEUTRON_REACTOR and some related items (2021.2.9-19:50)
 - update version tag to '1.0.4' in 'pom.xml' (2021.2.9-19:50)
+- change some recipes and display name and machine fuel information (2021.2.9-20:31)

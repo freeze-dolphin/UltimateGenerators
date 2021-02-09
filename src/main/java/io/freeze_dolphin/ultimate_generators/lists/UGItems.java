@@ -197,7 +197,7 @@ public class UGItems {
 
 			HEAVY_WATER_BUCKET = new CustomItem(CustomSkull.getItem(
 					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTFlNWRhMGM1NmNmOWQ4OTNkOWJkM2I3Y2E0MGYwODFjMTFhMDAzZWZiNzc2MjQzNDYwYzJiYThiYTVjMzUyYSJ9fX0="),
-					"&7桶装重水&r");
+					"&f桶装重水&r");
 			HEAVY_WATER_REFINING_MACHINE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 7), "&7重水提炼机&r",
 					"", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
 
