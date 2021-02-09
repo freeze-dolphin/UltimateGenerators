@@ -6,6 +6,7 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -57,6 +58,11 @@ public class UGItems {
 			ENDER_CRYSTAL_ENHANCER;
 	public static ItemStack RUNE_COMPLEX_ENDER, ENDER_LUMP_4;
 
+	public static ItemStack HEAVY_WATER_BUCKET, HEAVY_WATER_REFINING_MACHINE;
+
+	public static ItemStack THERMAL_NEUTRON_REACTOR, THERMAL_NEUTRON_REACTOR_COOLANT_CELL;
+	public static ItemStack NEUTRON_MODERATOR;
+
 	static {
 		try {
 			ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem(
@@ -100,8 +106,12 @@ public class UGItems {
 			ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&b末影水晶发电机基座&r");
 			ENDER_CRYSTAL_GENERATOR_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN),
 					"&5末影水晶发电机稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
-			ENDER_CRYSTAL_ENHANCER = new CustomPotion("&9末影水晶强化药剂&r", Color.fromRGB(85, 0, 255),
-					new PotionEffect(PotionEffectType.HUNGER, 0, 10));
+			ItemStack itemECE = new CustomItem(new UniversalMaterial(Material.POTION), "&9末影水晶强化药剂&r");
+			PotionMeta imECE = (PotionMeta) itemECE.getItemMeta();
+			imECE.clearCustomEffects();
+			imECE.setColor(Color.fromRGB(85, 0, 255));
+			itemECE.setItemMeta(imECE);
+			ENDER_CRYSTAL_ENHANCER = itemECE;
 
 			MODULAR_GENERATOR_REGULATOR = new CustomItem(CustomSkull.getItem(
 					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGI4NzM2ZmY0MmJjNjhjMTFlZGU4ZDg3NGIxNTEyZDI5ZjJlOGM1ZjZmZWJlOGY1OGRmY2Q5YTBhNTFkNmRlZSJ9fX0="),
@@ -184,6 +194,27 @@ public class UGItems {
 			RUNE_COMPLEX_ENDER = itemRCE;
 
 			ENDER_LUMP_4 = new CustomItem(Material.GOLD_NUGGET, "&5末影结晶 &7- &eIV", 0, new String[] { "", "&c品级: IV" });
+
+			HEAVY_WATER_BUCKET = new CustomItem(CustomSkull.getItem(
+					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTFlNWRhMGM1NmNmOWQ4OTNkOWJkM2I3Y2E0MGYwODFjMTFhMDAzZWZiNzc2MjQzNDYwYzJiYThiYTVjMzUyYSJ9fX0="),
+					"&7桶装重水&r");
+			HEAVY_WATER_REFINING_MACHINE = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 7), "&7重水提炼机&r",
+					"", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
+
+			ItemStack itemNM = new CustomItem(new UniversalMaterial(Material.POTION), "&9中子慢化剂&r");
+			PotionMeta imNM = (PotionMeta) itemNM.getItemMeta();
+			imNM.clearCustomEffects();
+			imNM.setColor(Color.BLACK);
+			itemNM.setItemMeta(imNM);
+			NEUTRON_MODERATOR = itemNM;
+
+			THERMAL_NEUTRON_REACTOR = new CustomItem(CustomSkull.getItem(
+					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTM0M2NlNThkYTU0Yzc5OTI0YTJjOTMzMWNmYzQxN2ZlOGNjYmJlYTliZTQ1YTdhYzg1ODYwYTZjNzMwIn19fQ=="),
+					"&c热中子核能反应器&r", new String[] { "", "&r需要冷却!", "&8⇨ &b必须完全浸入水中", "&8⇨ &b必须配备热中子核能反应器冷却单元", "",
+							"&4终极发电机", "&8⇨ &e⚡ &716384 J 缓存", "&8⇨ &e⚡ &7896 J/s" });
+			THERMAL_NEUTRON_REACTOR_COOLANT_CELL = new CustomItem(CustomSkull.getItem(
+					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM3NjBjNTc2YTA4OGNiMjljZWIyNmUzMTQzYjdmM2M0NDZjZDZlNWM1MGJmMzMxNTE2NjFjZTYzNmQwNTk3ZSJ9fX0="),
+					"&c热中子核能反应器冷却单元&r");
 
 		} catch (Exception e) {
 			e.printStackTrace();

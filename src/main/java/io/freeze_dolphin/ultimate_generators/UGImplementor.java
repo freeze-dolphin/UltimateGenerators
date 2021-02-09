@@ -21,6 +21,7 @@ import me.mrCookieSlime.Slimefun.Lists.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AReactor;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.Slimefun;
@@ -122,6 +123,21 @@ class UGImplementor {
 						mat(Material.GLASS) })).register(false);
 		Slimefun.addWikiPage("ENERGY_ACUMULATED_ENDER_CRYSTAL",
 				"https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
+
+		(new SlimefunItem(Categories.RESOURCES, UGItems.HEAVY_WATER_BUCKET, "HEAVY_WATER_BUCKET", new RecipeType(
+				new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 7), "&7重水提炼机&r", "&a在重水提炼机里提取水中的重水")),
+				Utils.buildRecipe())).register(false);
+
+		(new SlimefunItem(Categories.MISC, UGItems.NEUTRON_MODERATOR, "NEUTRON_MODERATOR",
+				RecipeType.ENHANCED_CRAFTING_TABLE,
+				new ItemStack[] { mat(Material.GLASS), UGItems.HEAVY_WATER_BUCKET, mat(Material.GLASS),
+						UGItems.HEAVY_WATER_BUCKET, SlimefunItems.CARBON_CHUNK, UGItems.HEAVY_WATER_BUCKET,
+						mat(Material.GLASS), UGItems.HEAVY_WATER_BUCKET, mat(Material.GLASS) })).register(false);
+
+		(new SlimefunItem(Categories.TECH_MISC, UGItems.THERMAL_NEUTRON_REACTOR_COOLANT_CELL,
+				"THERMAL_NEUTRON_REACTOR_COOLANT_CELL", RecipeType.ENHANCED_CRAFTING_TABLE,
+				new ItemStack[] { null, null, UGItems.HEAVY_WATER_BUCKET, null, SlimefunItems.REACTOR_COOLANT_CELL,
+						null, UGItems.HEAVY_WATER_BUCKET, null, null })).register(false);
 
 	}
 
@@ -285,6 +301,34 @@ class UGImplementor {
 		SlimefunStartup.getItemCfg().setValue("PHI_ELECTRICITY_STORAGE.hide-in-guide", true);
 		(new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.PHI_ELECTRICITY_STORAGE, "PHI_ELECTRICITY_STORAGE",
 				UGRecipeType.NULL, new ItemStack[] {})).registerDistibutingCapacitor(false, 167772160);
+
+		(new BContainer(UGCategories.MACHINES, UGItems.HEAVY_WATER_REFINING_MACHINE, "HEAVY_WATER_REFINING_MACHINE",
+				RecipeType.ENHANCED_CRAFTING_TABLE,
+				new ItemStack[] { HGLASS, null, HGLASS, COIL, SlimefunItems.ELECTRIC_DUST_WASHER_2, COIL, BCIRCUIT,
+						SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT },
+				Loader.getDisplaySw()) {
+
+			@Override
+			public void registerDefaultRecipes() {
+				registerRecipe(120, new ItemStack[] { mat(Material.WATER_BUCKET) },
+						new ItemStack[] { UGItems.HEAVY_WATER_BUCKET });
+			}
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.WATER_BUCKET);
+			}
+
+			@Override
+			public String getInventoryTitle() {
+				return "&7重水提炼机";
+			}
+
+			@Override
+			public int getEnergyConsumption() {
+				return 9;
+			}
+		}).registerChargeableBlock(false, 256);
 
 	}
 
@@ -744,6 +788,45 @@ class UGImplementor {
 		 * mat(Material.END_BRICKS), SlimefunItems.HARDENED_METAL_INGOT,
 		 * mat(Material.END_BRICKS)))).register(false);
 		 */
+
+		(new AReactor(UGCategories.MODULAR_GENERATOR, UGItems.THERMAL_NEUTRON_REACTOR, "THERMAL_NEUTRON_REACTOR",
+				RecipeType.ENHANCED_CRAFTING_TABLE,
+				new ItemStack[] { SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.CARBONADO_EDGED_CAPACITOR,
+						SlimefunItems.BLISTERING_INGOT_3, SlimefunItems.REINFORCED_PLATE, UGItems.NEUTRON_MODERATOR,
+						SlimefunItems.REINFORCED_PLATE, UGItems.NEUTRON_MODERATOR, SlimefunItems.REINFORCED_PLATE,
+						UGItems.NEUTRON_MODERATOR }) {
+
+			@Override
+			public void registerDefaultRecipes() {
+				registerFuel(new MachineFuel(1200, SlimefunItems.URANIUM, SlimefunItems.NEPTUNIUM));
+
+			}
+
+			@Override
+			public ItemStack getProgressBar() {
+				return mat(Material.FLINT_AND_STEEL);
+			}
+
+			@Override
+			public String getInventoryTitle() {
+				return "&c热中子核能反应器";
+			}
+
+			@Override
+			public int getEnergyProduction() {
+				return 448;
+			}
+
+			@Override
+			public ItemStack getCoolant() {
+				return UGItems.THERMAL_NEUTRON_REACTOR_COOLANT_CELL;
+			}
+
+			@Override
+			public void extraTick(Location l) {
+
+			}
+		}).registerChargeableBlock(false, 16384);
 
 	}
 
