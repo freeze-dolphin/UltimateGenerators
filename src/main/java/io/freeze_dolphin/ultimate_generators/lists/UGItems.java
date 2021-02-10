@@ -7,12 +7,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock.BlockColor;
+import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock.StainedBlockType;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomPotion;
 import me.mrCookieSlime.CSCoreLibPlugin.general.World.CustomSkull;
@@ -62,6 +63,9 @@ public class UGItems {
 
 	public static ItemStack THERMAL_NEUTRON_REACTOR, THERMAL_NEUTRON_REACTOR_COOLANT_CELL;
 	public static ItemStack NEUTRON_MODERATOR;
+
+	public static ItemStack RAINBOW_BLOCK, REINFORCED_RAINBOW_GLASS;
+	public static ItemStack RAINBOW_REACTOR, RAINBOW_BEAM_RECEIVER;
 
 	static {
 		try {
@@ -216,6 +220,16 @@ public class UGItems {
 					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM3NjBjNTc2YTA4OGNiMjljZWIyNmUzMTQzYjdmM2M0NDZjZDZlNWM1MGJmMzMxNTE2NjFjZTYzNmQwNTk3ZSJ9fX0="),
 					"&c热中子核能反应器冷却单元&r");
 
+			RAINBOW_BLOCK = new CustomItem(CustomSkull.getItem(
+					"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFmZTI3YTEzYzVmYzE3NTE1Y2FlNjk1ODUyNzE2MzI2YjJiNWRmNDdkOGQ2Yjk1YTc4OWFlMzhjYWM3YjEifX19"),
+					"&d彩虹方块&r");
+			REINFORCED_RAINBOW_GLASS = new StainedBlock(BlockColor.MAGENTA, StainedBlockType.GLASS, "&d强化彩虹玻璃");
+
+			RAINBOW_REACTOR = new StainedBlock(BlockColor.PURPLE, StainedBlockType.GLASS, "&d彩虹反应器", "",
+					"&8⇨ &b必须被双层强化彩虹玻璃包裹", "&8⇨ &b必须配备完整的彩虹光束接收器", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
+					"&8⇨ &e⚡ &72048 J/s");
+			RAINBOW_BEAM_RECEIVER = new CustomItem(CustomSkull.getItem(""), "&a彩虹光束接收器&r");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

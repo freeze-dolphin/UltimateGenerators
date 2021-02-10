@@ -39,3 +39,5 @@
 - update version tag to '1.0.4' in 'pom.xml' (2021.2.9-19:50)
 - change some recipes and display name and machine fuel information (2021.2.9-20:31)
 
+? [v1.0.5]: 
+- set the particle number of ENDER_CRYSTAL_GENERATOR to higher (2021.2.10-21:21)
