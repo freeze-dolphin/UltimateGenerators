@@ -33,8 +33,9 @@
 - attach wiki websites in the Slimefun Guide pages of some machines (2021.2.8-11:18)
 - change version tag to '1.0.3' (2021.2.8-11:31)
 
-? [v1.0.4]: 
+2021.2.10 [v1.0.4]: 
 - fix a small bug of redstone control (2021.2.8-19:18)
 - add HEAVY_WATER and THERMAL_NEUTRON_REACTOR and some related items (2021.2.9-19:50)
 - update version tag to '1.0.4' in 'pom.xml' (2021.2.9-19:50)
 - change some recipes and display name and machine fuel information (2021.2.9-20:31)
+
