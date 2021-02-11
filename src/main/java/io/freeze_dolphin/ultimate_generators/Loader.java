@@ -1,9 +1,12 @@
 package io.freeze_dolphin.ultimate_generators;
 
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.logging.Logger;
 
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,86 +17,116 @@ import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 public class Loader extends JavaPlugin {
 
 	private static Plugin plug;
-	
-	private static Logger logger;
-	
+
+	private Logger logger;
+	private Properties pp;
+
 	@Override
 	public void onEnable() {
 
 		plug = this;
 		logger = getLogger();
-		
+
+		// load configuration
+		try {
+
+			File ppf = new File(getDataFolder().getPath() + File.separatorChar + "config.properties");
+			if (!ppf.exists()) {
+				info("Configuration is not exist, creating one...");
+				InputStream is = this.getClass().getClassLoader().getResourceAsStream("/config.properties");
+				FileOutputStream fos = new FileOutputStream(ppf);
+				byte[] b = new byte[is.available()];
+				while (is.read(b) != -1) {
+					fos.write(b);
+				}
+				fos.close();
+			}
+			info("Sucessfully created the default configuration!");
+
+			pp = new Properties();
+			pp.load(new FileReader(ppf));
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			severe("Cannot initialize the configuration, self-disabling...");
+			this.setEnabled(false);
+			return;
+		}
+
 		// load
 		try {
 			new UGItems(this);
 			new UGRecipeType();
 			new UGCategories(this);
-			
-			UGImplementor implementor = new UGImplementor();
+
+			UGImplementor implementor = new UGImplementor(this);
 			implementor.implementIngredients();
 			implementor.implementMachines();
 			implementor.implementSingleGenerators();
 			implementor.implementModularGenerators();
-			
+
 			UGListenersRegister register = new UGListenersRegister(this);
 			register.registerAll();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			severe("Cannot initialize the plugin, self-disabling...");
 			this.setEnabled(false);
+			return;
 		}
 
 		// initialize configurations
-		/* (Deprecated)
-		try {
-			Class<?> ugItemClass = Class.forName("io.github.freeze_dolphin.ultimate_generators.lists.UGItems");
-			for (Field f : ugItemClass.getFields()) {
-				if (f.isAnnotationPresent(MachineItemStack.class)) {
-					if (SlimefunItem.getByID(f.getName()) == null) {
-						severe("An unexpected error occurred: Item '" + f.getName() + "' is not loaded!");
-						continue;
-					} else {
-						getUGConfig().setMachineValue(f.getName(), "speed", 1);
-					}
-				} else {
-					continue;
-				}
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
-			this.setEnabled(false);
-		}
+		/*
+		 * (Deprecated) try { Class<?> ugItemClass =
+		 * Class.forName("io.github.freeze_dolphin.ultimate_generators.lists.UGItems");
+		 * for (Field f : ugItemClass.getFields()) { if
+		 * (f.isAnnotationPresent(MachineItemStack.class)) { if
+		 * (SlimefunItem.getByID(f.getName()) == null) {
+		 * severe("An unexpected error occurred: Item '" + f.getName() +
+		 * "' is not loaded!"); continue; } else {
+		 * getUGConfig().setMachineValue(f.getName(), "speed", 1); } } else { continue;
+		 * } } } catch (ClassNotFoundException e) { e.printStackTrace();
+		 * severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
+		 * this.setEnabled(false); }
 		 */
 
 	}
 
-	public static Plugin getImplement() { return plug; }
+	public static Plugin getImplement() {
+		return plug;
+	}
 
-	public static void info(String msg) {
+	public void info(String msg) {
 		logger.info(msg);
 	}
 
-	public static void warn(String msg) {
+	public void warn(String msg) {
 		logger.warning(msg);
 	}
 
-	public static void severe(String msg) {
+	public void severe(String msg) {
 		logger.severe(msg);
 	}
-	
-	public static boolean getDisplaySw() {
-		YamlConfiguration pdf = new YamlConfiguration();
-		try {
-			pdf.load(new InputStreamReader(Loader.class.getClassLoader().getResourceAsStream("plugin.yml")));
-		} catch (Exception e) {
-			e.printStackTrace();
-			plug.getLogger().severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling...");
-			plug.getServer().getPluginManager().disablePlugin(plug);
-		}
-		
-		return pdf.contains("show-machine-indicator") && pdf.isBoolean("show-machine-indicator") && pdf.getBoolean("show-machine-indicator");
-		
+
+	public Properties getProperties() {
+		return pp;
 	}
-	
+
+	public boolean getDisplaySw() {
+
+		return getProperties().contains("show-machine-indicator") && pp.get("show-machine-indicator").equals("true");
+
+		/*
+		 * YamlConfiguration pdf = new YamlConfiguration(); try { pdf.load(new
+		 * InputStreamReader(Loader.class.getClassLoader().getResourceAsStream(
+		 * "plugin.yml"))); } catch (Exception e) { e.printStackTrace();
+		 * plug.getLogger()
+		 * .severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling..."
+		 * ); plug.getServer().getPluginManager().disablePlugin(plug); }
+		 * 
+		 * return pdf.contains("show-machine-indicator") &&
+		 * pdf.isBoolean("show-machine-indicator") &&
+		 * pdf.getBoolean("show-machine-indicator");
+		 */
+	}
+
 }

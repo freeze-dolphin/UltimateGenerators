@@ -14,6 +14,7 @@ import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator
 import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
+import io.freeze_dolphin.ultimate_generators.objects.tasks.ReinforcedRainbowTicker;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.SlimefunStartup;
@@ -38,7 +39,10 @@ class UGImplementor {
 	private static final ItemStack ALUI = SlimefunItems.ALUMINUM_INGOT;
 	private static final ItemStack COPPI = SlimefunItems.COPPER_INGOT;
 
-	public UGImplementor() {
+	private final Loader plug;
+
+	public UGImplementor(Loader plug) {
+		this.plug = plug;
 	}
 
 	public void implementIngredients() {
@@ -139,6 +143,19 @@ class UGImplementor {
 				new ItemStack[] { null, null, UGItems.HEAVY_WATER_BUCKET, null, SlimefunItems.REACTOR_COOLANT_CELL,
 						null, UGItems.HEAVY_WATER_BUCKET, null, null })).register(false);
 
+		(new SlimefunItem(Categories.RESOURCES, UGItems.RAINBOW_ALLOY, "RAINBOW_ALLOY", RecipeType.SMELTERY,
+				Utils.buildRecipe(SlimefunItems.REDSTONE_ALLOY, SlimefunItems.CORINTHIAN_BRONZE_INGOT,
+						SlimefunItems.COBALT_INGOT, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.RUNE_RAINBOW)))
+								.register(false);
+
+		(new SlimefunItem(Categories.MAGIC, UGItems.REINFORCED_RAINBOW_GLASS, "REINFORCED_RAINBOW_GLASS",
+				RecipeType.ANCIENT_ALTAR,
+				new ItemStack[] { SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
+						SlimefunItems.REINFORCED_ALLOY_INGOT, UGItems.RAINBOW_ALLOY,
+						SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
+						SlimefunItems.RAINBOW_GLASS })).register(false,
+								new ItemHandler[] { new ReinforcedRainbowTicker() });
+
 	}
 
 	public void implementMachines() {
@@ -180,7 +197,7 @@ class UGImplementor {
 		(new BContainer(UGCategories.MACHINES, UGItems.BIOMASS_EXTRACTION_MACHINE, "BIOMASS_EXTRACTION_MACHINE",
 				RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(ALUI, mat(Material.PISTON_BASE), ALUI, HGLASS,
 						COIL, HGLASS, COIL, mat(Material.HOPPER), COIL),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -306,7 +323,7 @@ class UGImplementor {
 				RecipeType.ENHANCED_CRAFTING_TABLE,
 				new ItemStack[] { HGLASS, null, HGLASS, COIL, SlimefunItems.ELECTRIC_DUST_WASHER_2, COIL, BCIRCUIT,
 						SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT },
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public void registerDefaultRecipes() {
@@ -354,7 +371,7 @@ class UGImplementor {
 						SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.PLASTIC_SHEET,
 						SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.PLASTIC_SHEET, SlimefunItems.WITHER_PROOF_GLASS,
 						SlimefunItems.BIG_CAPACITOR, SlimefunItems.WITHER_PROOF_GLASS),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -387,7 +404,7 @@ class UGImplementor {
 				Utils.buildRecipe(null, SlimefunItems.DURALUMIN_INGOT, null, SlimefunItems.DURALUMIN_INGOT,
 						SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL,
 						SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			public ItemStack getProgressBar() {
 				return mat(Material.FLINT_AND_STEEL);
@@ -419,7 +436,7 @@ class UGImplementor {
 				Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL,
 						SlimefunItems.BILLON_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.BILLON_INGOT,
 						SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			public ItemStack getProgressBar() {
 				return mat(Material.MAGMA_CREAM);
@@ -451,7 +468,7 @@ class UGImplementor {
 				Utils.buildRecipe(COIL, SlimefunItems.HARDENED_GLASS, COIL, SlimefunItems.PLASTIC_SHEET,
 						SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, SlimefunItems.ENDER_LUMP_3,
 						SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -483,7 +500,7 @@ class UGImplementor {
 				RecipeType.ENHANCED_CRAFTING_TABLE,
 				Utils.buildRecipe(SlimefunItems.LEAD_INGOT, MOTOR, SlimefunItems.LEAD_INGOT, COIL,
 						SlimefunItems.HARDENED_GLASS, COIL, BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT),
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public ItemStack getProgressBar() {
@@ -516,7 +533,7 @@ class UGImplementor {
 		new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.COAL_GENERATOR, "ENLARGED_COAL_GENERATOR",
 				RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] { null, UGItems.SOLID_STORAGE_EXPANSION, null, ALUI,
 						SlimefunItems.COAL_GENERATOR, ALUI, null, UGItems.SOLID_STORAGE_EXPANSION, null },
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public void registerDefaultRecipes() {
@@ -567,7 +584,7 @@ class UGImplementor {
 		new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIO_REACTOR, "ENLARGED_BIO_REACTOR",
 				RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] { null, UGItems.SOLID_STORAGE_EXPANSION, null, ALUI,
 						SlimefunItems.BIO_REACTOR, ALUI, null, UGItems.SOLID_STORAGE_EXPANSION, null },
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public void registerDefaultRecipes() {
@@ -636,7 +653,7 @@ class UGImplementor {
 		new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.LAVA_GENERATOR, "ENLARGED_LAVA_GENERATOR",
 				RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] { null, UGItems.LIQUID_STORAGE_EXPANSION, null,
 						ALUI, SlimefunItems.LAVA_GENERATOR, ALUI, null, UGItems.LIQUID_STORAGE_EXPANSION, null },
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public void registerDefaultRecipes() {
@@ -668,7 +685,7 @@ class UGImplementor {
 		new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.COMBUSTION_REACTOR, "ENLARGED_COMBUSTION_REACTOR",
 				RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] { null, UGItems.LIQUID_STORAGE_EXPANSION, null,
 						ALUI, SlimefunItems.COMBUSTION_REACTOR, ALUI, null, UGItems.LIQUID_STORAGE_EXPANSION, null },
-				Loader.getDisplaySw()) {
+				plug.getDisplaySw()) {
 
 			@Override
 			public void registerDefaultRecipes() {
@@ -703,7 +720,7 @@ class UGImplementor {
 				Utils.buildRecipe(null, SlimefunItems.ELECTRIC_MOTOR, null, SlimefunItems.COMPRESSED_CARBON,
 						new ItemStack(Material.WATER_BUCKET), SlimefunItems.COMPRESSED_CARBON,
 						SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT),
-				Loader.getDisplaySw())).registerChargeableBlock(false, 128);
+				plug.getDisplaySw())).registerChargeableBlock(false, 128);
 
 		(new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.QUANTUM_SOLAR_GENERATOR, "QUANTUM_SOLAR_GENERATOR",
 				RecipeType.ENHANCED_CRAFTING_TABLE,

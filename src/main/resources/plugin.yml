@@ -2,14 +2,6 @@ name: UltimateGenerators
 main: io.freeze_dolphin.ultimate_generators.Loader
 version: ${project.version}
 author: Freeze_Dolphin
+website: https://github.com/freeze-dolphin/UltimateGenerators/
 
 depend: [Slimefun, CS-CoreLib]
-
-
-
-# ----------------------------
-# Internal Configurations
-# ----------------------------
-
-show-machine-indicator: true # Default: true
-# Whether to show the machine status indicator in machines' GUI
