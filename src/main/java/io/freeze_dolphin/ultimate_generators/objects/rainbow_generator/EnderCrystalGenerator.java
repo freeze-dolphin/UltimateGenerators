@@ -9,7 +9,6 @@ import java.util.Set;
 
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.AdvancedMenuClickHandler;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.MenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
@@ -37,7 +36,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -55,7 +53,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
     public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
     public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
 
-    private Set<MachineFuel> recipes = new HashSet<MachineFuel>();
+    private Set<MachineFuel> recipes = new HashSet<>();
 
     private static final int[] border = {0, 8, 9, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 35, 36};
     private static final int[] border_in = {1, 7, 10, 11, 12, 13, 14, 15, 16};
@@ -69,8 +67,8 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
         return new int[]{38, 39, 40, 41, 42};
     }
 
-    protected static final int indicator = 22;
-    protected static final int structureInfo = 44;
+    protected static final int INDICATOR = 22;
+    protected static final int STRUCTURE_INFO = 44;
 
     private final String ID;
 
@@ -131,24 +129,19 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                     }
                 }
 
-                for (Entity ety : b.getWorld().getNearbyEntities(b.getLocation(), 4D, 4D, 4D)) {
-                    if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
-                        EnderCrystal ec = (EnderCrystal) ety;
-                        try {
-                            if (!ec.isShowingBottom() && ec.getCustomName()
-                                    .equals(ChatColor.translateAlternateColorCodes('&', "&d&l强化末影水晶&r"))) {
-                                if (ec.getBeamTarget().getBlock().getLocation().distance(Utils
-                                        .locModify(b.getLocation(), 0.5F, -1.5F, 0.5F).getBlock().getLocation()) == 0D) {
-                                    ec.setBeamTarget(null);
-                                }
-                                continue;
+                b.getWorld().getNearbyEntities(b.getLocation(), 4D, 4D, 4D).stream().filter(ety -> (ety.getType().equals(EntityType.ENDER_CRYSTAL))).map(ety -> (EnderCrystal) ety).forEachOrdered(ec -> {
+                    try {
+                        if (!ec.isShowingBottom() && ec.getCustomName()
+                                .equals(ChatColor.translateAlternateColorCodes('&', "&d&l强化末影水晶&r"))) {
+                            if (ec.getBeamTarget().getBlock().getLocation().distance(Utils
+                                    .locModify(b.getLocation(), 0.5F, -1.5F, 0.5F).getBlock().getLocation()) == 0D) {
+                                ec.setBeamTarget(null);
                             }
-                        } catch (Exception ex) {
-                            ec.setBeamTarget(null);
                         }
-
+                    } catch (Exception ex) {
+                        ec.setBeamTarget(null);
                     }
-                }
+                });
 
                 progress.remove(b.getLocation());
                 processing.remove(b.getLocation());
@@ -160,37 +153,13 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
     private void constructMenu(BlockMenuPreset preset) {
         for (int i : border) {
-            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "),
-                    new MenuClickHandler() {
-
-                @Override
-                public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-                    return false;
-                }
-
-            });
+            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
         for (int i : border_in) {
-            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " "),
-                    new MenuClickHandler() {
-
-                @Override
-                public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-                    return false;
-                }
-
-            });
+            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
         for (int i : border_out) {
-            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " "),
-                    new MenuClickHandler() {
-
-                @Override
-                public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-                    return false;
-                }
-
-            });
+            preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
 
         for (int i : getOutputSlots()) {
@@ -209,25 +178,10 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
             });
         }
 
-        preset.addItem(indicator, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "),
-                new MenuClickHandler() {
+        preset.addItem(INDICATOR, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
 
-            @Override
-            public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-                return false;
-            }
-
-        });
-
-        preset.addItem(structureInfo, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
-                "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e0", "&3机器状态: &e无"), new MenuClickHandler() {
-
-            @Override
-            public boolean onClick(Player arg0, int arg1, ItemStack arg2, ClickAction arg3) {
-                return false;
-            }
-
-        });
+        preset.addItem(STRUCTURE_INFO, new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
+                "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e0", "&3机器状态: &e无"), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
     }
 
     private void registerDefaultRecipes() {
@@ -278,14 +232,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
             return false;
         }
 
-        for (Location lc : ll) {
-            if (BlockStorage.checkID(lc) == null || !BlockStorage.checkID(lc).equals("ENDER_CRYSTAL_GENERATOR_BASE")) {
-                return false;
-            }
-        }
-
-        return true;
-
+        return ll.stream().noneMatch(lc -> (BlockStorage.checkID(lc) == null || !BlockStorage.checkID(lc).equals("ENDER_CRYSTAL_GENERATOR_BASE")));
     }
 
     @Override
@@ -297,36 +244,26 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                 Location genL = Utils.locModify(l.getBlock().getLocation(), 0.5F, -1.5F, 0.5F);
                 Location partL = Utils.locModify(genL, 0F, 2F, 0F);
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), new Runnable() {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), () -> {
+                    List<EnderCrystal> ecc = new ArrayList<>();
 
-                    @Override
-                    public void run() {
-
-                        List<EnderCrystal> ecc = new ArrayList<>();
-
-                        for (Entity ety : l.getWorld().getNearbyEntities(l, 4D, 4D, 4D)) {
-                            if (ety.getType().equals(EntityType.ENDER_CRYSTAL)) {
-                                EnderCrystal ec = (EnderCrystal) ety;
-                                try {
-                                    if (!ec.isShowingBottom() && ec.getCustomName()
-                                            .equals(ChatColor.translateAlternateColorCodes('&', "&d&l强化末影水晶&r"))) {
-                                        if (ec.getBeamTarget() == null) {
-                                            ec.setBeamTarget(genL);
-                                        }
-                                        if (ec.getBeamTarget().getBlock().getLocation()
-                                                .distance(genL.getBlock().getLocation()) == 0D) {
-                                            ecc.add(ec);
-                                        }
-                                        continue;
-                                    }
-                                } catch (Exception ex) {
-                                    ec.setBeamTarget(null);
+                    l.getWorld().getNearbyEntities(l, 4D, 4D, 4D).stream().filter(ety -> (ety.getType().equals(EntityType.ENDER_CRYSTAL))).map(ety -> (EnderCrystal) ety).forEachOrdered(ec -> {
+                        try {
+                            if (!ec.isShowingBottom() && ec.getCustomName()
+                                    .equals(ChatColor.translateAlternateColorCodes('&', "&d&l强化末影水晶&r"))) {
+                                if (ec.getBeamTarget() == null) {
+                                    ec.setBeamTarget(genL);
                                 }
-
+                                if (ec.getBeamTarget().getBlock().getLocation()
+                                        .distance(genL.getBlock().getLocation()) == 0D) {
+                                    ecc.add(ec);
+                                }
                             }
+                        } catch (Exception ex) {
+                            ec.setBeamTarget(null);
                         }
-                        setConnectedCrystalNum(l.getBlock(), ecc.size());
-                    }
+                    });
+                    setConnectedCrystalNum(l.getBlock(), ecc.size());
                 });
 
                 if (l.getBlock().isBlockPowered()) {
@@ -334,62 +271,52 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                 }
 
                 if (!checkStructure(l.getBlock())) {
-                    Utils.asyncDelay(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            BlockStorage.getInventory(l).replaceExistingItem(structureInfo,
-                                    new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
-                                            "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()),
-                                            "&3机器状态: &a正常"));
-                        }
+                    Utils.asyncDelay(() -> {
+                        BlockStorage.getInventory(l).replaceExistingItem(STRUCTURE_INFO,
+                                new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
+                                        "&3结构完整性: &4&l✘&r", "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()),
+                                        "&3机器状态: &a正常"));
                     });
                     return 0D;
                 }
 
                 if (isProcessing(l)) {
 
-                    Utils.asyncDelay(new Runnable() {
+                    Utils.asyncDelay(() -> {
+                        try {
+                            ParticleEffect.END_ROD.display(partL, 0F, 0F, 0F, 0.1F,
+                                    RandomUtils.nextInt(2, getConnectedCrystalNum(l.getBlock()) + 2));
+                        } catch (Exception e) {
+                        }
 
-                        @Override
-                        public void run() {
-
-                            try {
-                                ParticleEffect.END_ROD.display(partL, 0F, 0F, 0F, 0.1F,
-                                        RandomUtils.nextInt(2, getConnectedCrystalNum(l.getBlock()) + 2));
-                            } catch (Exception e) {
-                            }
-
-                            if (getConnectedCrystalNum(l.getBlock()) > getWarningCrystalNum()) {
-                                int warn = getConnectedCrystalNum(l.getBlock()) - getWarningCrystalNum();
-                                if (RandomUtils.nextInt(0, 100000) < warn) {
-                                    BlockStorage.clearBlockInfo(l);
-                                    l.getBlock().setType(Material.AIR);
-                                    l.getWorld().createExplosion(l, RandomUtils.nextFloat(4F, 12F),
-                                            RandomUtils.nextBoolean());
-                                    return;
-                                } else {
-                                    BlockStorage.getInventory(l).replaceExistingItem(structureInfo,
-                                            new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
-                                                    "&3结构完整性: &2&l✔&r",
-                                                    "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()),
-                                                    "&3机器状态: &c超负荷运载 &e(堆芯溶解几率 - " + (warn / 100000F) + ")"));
-                                    try {
-                                        ParticleEffect.VILLAGER_ANGRY.display(partL, 0F, 0F, 0F, 0.1F,
-                                                RandomUtils.nextInt(1, warn + 2));
-                                    } catch (Exception e) {
-                                    }
-                                }
+                        if (getConnectedCrystalNum(l.getBlock()) > getWarningCrystalNum()) {
+                            int warn = getConnectedCrystalNum(l.getBlock()) - getWarningCrystalNum();
+                            if (RandomUtils.nextInt(0, 100000) < warn) {
+                                BlockStorage.clearBlockInfo(l);
+                                l.getBlock().setType(Material.AIR);
+                                l.getWorld().createExplosion(l, RandomUtils.nextFloat(4F, 12F),
+                                        RandomUtils.nextBoolean());
                             } else {
-                                BlockStorage.getInventory(l).replaceExistingItem(structureInfo,
+                                BlockStorage.getInventory(l).replaceExistingItem(STRUCTURE_INFO,
                                         new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
                                                 "&3结构完整性: &2&l✔&r",
-                                                "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常"));
+                                                "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()),
+                                                "&3机器状态: &c超负荷运载 &e(堆芯溶解几率 - " + (warn / 100000F) + ")"));
                                 try {
-                                    ParticleEffect.DRAGON_BREATH.display(partL, 0F, 0F, 0F, 0.3F,
-                                            RandomUtils.nextInt(1, 3));
+                                    ParticleEffect.VILLAGER_ANGRY.display(partL, 0F, 0F, 0F, 0.1F,
+                                            RandomUtils.nextInt(1, warn + 2));
                                 } catch (Exception e) {
                                 }
+                            }
+                        } else {
+                            BlockStorage.getInventory(l).replaceExistingItem(STRUCTURE_INFO,
+                                    new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息",
+                                            "&3结构完整性: &2&l✔&r",
+                                            "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常"));
+                            try {
+                                ParticleEffect.DRAGON_BREATH.display(partL, 0F, 0F, 0F, 0.3F,
+                                        RandomUtils.nextInt(1, 3));
+                            } catch (Exception e) {
                             }
                         }
                     });
@@ -400,14 +327,14 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                         item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(l).getTicks()));
                         ItemMeta im = item.getItemMeta();
                         im.setDisplayName(" ");
-                        List<String> lore = new ArrayList<String>();
+                        List<String> lore = new ArrayList<>();
                         lore.add(MachineHelper.getProgress(timeleft, processing.get(l).getTicks()));
                         lore.add("");
                         lore.add(MachineHelper.getTimeLeft(timeleft / 2));
                         im.setLore(lore);
                         item.setItemMeta(im);
 
-                        BlockStorage.getInventory(l).replaceExistingItem(indicator, item);
+                        BlockStorage.getInventory(l).replaceExistingItem(INDICATOR, item);
 
                         if (ChargableBlock.isChargable(l)) {
                             if (ChargableBlock.getMaxCharge(l)
@@ -438,7 +365,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.DIESEL_BUCKET, true)) {
                             pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         }
-                        BlockStorage.getInventory(l).replaceExistingItem(indicator,
+                        BlockStorage.getInventory(l).replaceExistingItem(INDICATOR,
                                 new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
 
                         progress.remove(l);
@@ -447,12 +374,12 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                     }
                 } else {
 
-                    BlockStorage.getInventory(l).replaceExistingItem(structureInfo,
+                    BlockStorage.getInventory(l).replaceExistingItem(STRUCTURE_INFO,
                             new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &2&l✔&r",
                                     "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常"));
 
                     MachineFuel r = null;
-                    Map<Integer, Integer> found = new HashMap<Integer, Integer>();
+                    Map<Integer, Integer> found = new HashMap<>();
                     outer:
                     for (MachineFuel recipe : recipes) {
                         for (int slot : getInputSlots()) {
@@ -466,10 +393,10 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                     }
 
                     if (r != null) {
-                        for (Map.Entry<Integer, Integer> entry : found.entrySet()) {
+                        found.entrySet().forEach(entry -> {
                             BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(
                                     BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
-                        }
+                        });
                         processing.put(l, r);
                         progress.put(l, r.getTicks());
                     }
