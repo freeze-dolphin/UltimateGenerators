@@ -25,87 +25,93 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class BiofuelRefinery extends BContainer {
 
-	public BiofuelRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
-		super(category, item, name, recipeType, recipe, Loader.getDisplaySw());
-	}
+    public BiofuelRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
+        super(category, item, name, recipeType, recipe, Loader.getDisplaySw());
+    }
 
-	@Override
-	public ItemStack getProgressBar() {
-		return new ItemStack(Material.SLIME_BALL);
-	}
+    @Override
+    public ItemStack getProgressBar() {
+        return new ItemStack(Material.SLIME_BALL);
+    }
 
-	@Override
-	public void registerDefaultRecipes() {
-		registerRecipe(40, new ItemStack[] {UGItems.BIOMASS_BUCKET}, new ItemStack[] {UGItems.BIOFUEL_BUCKET});
-	}
+    @Override
+    public void registerDefaultRecipes() {
+        registerRecipe(40, new ItemStack[]{UGItems.BIOMASS_BUCKET}, new ItemStack[]{UGItems.BIOFUEL_BUCKET});
+    }
 
-	@Override
-	public String getMachineIdentifier() {
-		return "BIOMASS_REFINERY";
-	}
+    @Override
+    public String getMachineIdentifier() {
+        return "BIOMASS_REFINERY";
+    }
 
-	@Override
-	public String getInventoryTitle() {
-		return "&2生物燃油精炼器";
-	}
+    @Override
+    public String getInventoryTitle() {
+        return "&2生物燃油精炼器";
+    }
 
-	@Override
-	public int getEnergyConsumption() {
-		return 18;
-	}
+    @Override
+    public int getEnergyConsumption() {
+        return 18;
+    }
 
-	@Override
-	public int getSpeed() {
-		return 1;
-	}
+    @Override
+    public int getSpeed() {
+        return 1;
+    }
+    
+    @Override
+    protected void tick(Block b) {
 
-	protected void tick(Block b) {
+        if (b.getBlockPower() > 1) {
+            return;
+        }
 
-		if (b.getBlockPower() > 1) { return; }
+        if (isProcessing(b)) {
+            int timeleft = progress.get(b);
+            if (timeleft > 0) {
+                ItemStack item = getProgressBar().clone();
+                item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(b).getTicks()));
+                ItemMeta im = item.getItemMeta();
+                im.setDisplayName(" ");
+                List<String> lore = new ArrayList<>();
+                lore.add(MachineHelper.getProgress(timeleft, processing.get(b).getTicks()));
+                lore.add("");
+                lore.add(MachineHelper.getTimeLeft(timeleft / 2));
+                im.setLore(lore);
+                item.setItemMeta(im);
 
-		if (isProcessing(b)) {
-			int timeleft = progress.get(b);
-			if (timeleft > 0) {
-				ItemStack item = getProgressBar().clone();
-				item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(b).getTicks()));
-				ItemMeta im = item.getItemMeta();
-				im.setDisplayName(" ");
-				List<String> lore = new ArrayList<String>();
-				lore.add(MachineHelper.getProgress(timeleft, processing.get(b).getTicks()));
-				lore.add("");
-				lore.add(MachineHelper.getTimeLeft(timeleft / 2));
-				im.setLore(lore);
-				item.setItemMeta(im);
+                BlockStorage.getInventory(b).replaceExistingItem(22, item);
 
-				BlockStorage.getInventory(b).replaceExistingItem(22, item);
+                if (ChargableBlock.isChargable(b)) {
+                    if (ChargableBlock.getCharge(b) < getEnergyConsumption()) {
+                        return;
+                    }
+                    ChargableBlock.addCharge(b, -getEnergyConsumption());
+                    progress.put(b, timeleft - 1);
+                } else {
+                    progress.put(b, timeleft - 1);
+                }
+            } else {
+                BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, (byte) 15), " "));
+                pushItems(b, processing.get(b).getOutput());
 
-				if (ChargableBlock.isChargable(b)) {
-					if (ChargableBlock.getCharge(b) < getEnergyConsumption()) return;
-					ChargableBlock.addCharge(b, -getEnergyConsumption());
-					progress.put(b, timeleft - 1);
-				}
-				else progress.put(b, timeleft - 1);
-			}
-			else {
-				BlockStorage.getInventory(b).replaceExistingItem(22, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, (byte) 15), " "));
-				pushItems(b, processing.get(b).getOutput());
-
-				progress.remove(b);
-				processing.remove(b);
-			}
-		}
-		else {
-			for (int slot: getInputSlots()) {
-				if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(b).getItemInSlot(slot), UGItems.BIOMASS_BUCKET, true)) {
-					MachineRecipe r = new MachineRecipe(40, new ItemStack[0], new ItemStack[] { UGItems.BIOFUEL_BUCKET });
-					if (!fits(b, r.getOutput())) return;
-					BlockStorage.getInventory(b).replaceExistingItem(slot, InvUtils.decreaseItem(BlockStorage.getInventory(b).getItemInSlot(slot), 1));
-					processing.put(b, r);
-					progress.put(b, r.getTicks());
-					break;
-				}
-			}
-		}
-	}
+                progress.remove(b);
+                processing.remove(b);
+            }
+        } else {
+            for (int slot : getInputSlots()) {
+                if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(b).getItemInSlot(slot), UGItems.BIOMASS_BUCKET, true)) {
+                    MachineRecipe r = new MachineRecipe(40, new ItemStack[0], new ItemStack[]{UGItems.BIOFUEL_BUCKET});
+                    if (!fits(b, r.getOutput())) {
+                        return;
+                    }
+                    BlockStorage.getInventory(b).replaceExistingItem(slot, InvUtils.decreaseItem(BlockStorage.getInventory(b).getItemInSlot(slot), 1));
+                    processing.put(b, r);
+                    progress.put(b, r.getTicks());
+                    break;
+                }
+            }
+        }
+    }
 
 }

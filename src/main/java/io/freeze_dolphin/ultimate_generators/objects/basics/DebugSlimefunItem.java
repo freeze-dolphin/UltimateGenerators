@@ -16,39 +16,43 @@ import org.bukkit.inventory.ItemStack;
 @Deprecated
 public class DebugSlimefunItem extends SlimefunItem {
 
-	public DebugSlimefunItem(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
-		super(category, item, id, recipeType, recipe);
-	}
+    public DebugSlimefunItem(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
+        super(category, item, id, recipeType, recipe);
+    }
 
-	@Override
-	public void load() {
-		try {
-			if (!isHidden()) getCategory().add(this);
-			ItemStack output = getItem().clone();
-			if (getRecipeOutput() != null) output = getRecipeOutput().clone();
+    @Override
+    public void load() {
+        try {
+            if (!isHidden()) {
+                getCategory().add(this);
+            }
+            ItemStack output = getItem().clone();
+            if (getRecipeOutput() != null) {
+                output = getRecipeOutput().clone();
+            }
 
-			if (getRecipeType().toItem().isSimilar(RecipeType.MOB_DROP.toItem())) {
-				try {
-					EntityType entity = EntityType.valueOf(ChatColor.stripColor(getRecipe()[4].getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_"));
-					List<ItemStack> dropping = new ArrayList<ItemStack>();
-					if (SlimefunManager.drops.containsKey(entity)) dropping = SlimefunManager.drops.get(entity);
-					dropping.add(output);
-					SlimefunManager.drops.put(entity, dropping);
-				} catch(Exception x) {
-					x.printStackTrace();
-				}
-			}
-			else if (getRecipeType().toItem().isSimilar(RecipeType.ANCIENT_ALTAR.toItem())) {
-				new AltarRecipe(Arrays.asList(getRecipe()), output);
-			}
-			else if (getRecipeType().getMachine() != null && getByID(getRecipeType().getMachine().getID()) instanceof SlimefunMachine) {
-				((SlimefunMachine) getByID(getRecipeType().getMachine().getID())).addRecipe(getRecipe(), output);
-			}
-			install();
-		} catch(Exception x) {
-			x.printStackTrace();
-			System.err.println("[Slimefun] An item Initialization failed");
-		}
-	}
+            if (getRecipeType().toItem().isSimilar(RecipeType.MOB_DROP.toItem())) {
+                try {
+                    EntityType entity = EntityType.valueOf(ChatColor.stripColor(getRecipe()[4].getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_"));
+                    List<ItemStack> dropping = new ArrayList<ItemStack>();
+                    if (SlimefunManager.drops.containsKey(entity)) {
+                        dropping = SlimefunManager.drops.get(entity);
+                    }
+                    dropping.add(output);
+                    SlimefunManager.drops.put(entity, dropping);
+                } catch (Exception x) {
+                    x.printStackTrace();
+                }
+            } else if (getRecipeType().toItem().isSimilar(RecipeType.ANCIENT_ALTAR.toItem())) {
+                new AltarRecipe(Arrays.asList(getRecipe()), output);
+            } else if (getRecipeType().getMachine() != null && getByID(getRecipeType().getMachine().getID()) instanceof SlimefunMachine) {
+                ((SlimefunMachine) getByID(getRecipeType().getMachine().getID())).addRecipe(getRecipe(), output);
+            }
+            install();
+        } catch (Exception x) {
+            x.printStackTrace();
+            System.err.println("[Slimefun] An item Initialization failed");
+        }
+    }
 
 }
