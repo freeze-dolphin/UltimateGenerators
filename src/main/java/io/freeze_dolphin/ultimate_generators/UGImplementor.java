@@ -199,7 +199,7 @@ class UGImplementor {
         (new BContainer(UGCategories.MACHINES, UGItems.BIOMASS_EXTRACTION_MACHINE, "BIOMASS_EXTRACTION_MACHINE",
                 RecipeType.ENHANCED_CRAFTING_TABLE, Utils.buildRecipe(ALUI, mat(Material.PISTON_BASE), ALUI, HGLASS,
                         COIL, HGLASS, COIL, mat(Material.HOPPER), COIL),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public ItemStack getProgressBar() {
@@ -324,7 +324,7 @@ class UGImplementor {
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{HGLASS, null, HGLASS, COIL, SlimefunItems.ELECTRIC_DUST_WASHER_2, COIL, BCIRCUIT,
                     SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT},
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -372,7 +372,7 @@ class UGImplementor {
                         SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.PLASTIC_SHEET,
                         SlimefunItems.WITHER_PROOF_GLASS, SlimefunItems.PLASTIC_SHEET, SlimefunItems.WITHER_PROOF_GLASS,
                         SlimefunItems.BIG_CAPACITOR, SlimefunItems.WITHER_PROOF_GLASS),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public ItemStack getProgressBar() {
@@ -405,8 +405,9 @@ class UGImplementor {
                 Utils.buildRecipe(null, SlimefunItems.DURALUMIN_INGOT, null, SlimefunItems.DURALUMIN_INGOT,
                         SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL,
                         SlimefunItems.DURALUMIN_INGOT, SlimefunItems.HEATING_COIL),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
+            @Override
             public ItemStack getProgressBar() {
                 return mat(Material.FLINT_AND_STEEL);
             }
@@ -437,8 +438,9 @@ class UGImplementor {
                 Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL,
                         SlimefunItems.BILLON_INGOT, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.BILLON_INGOT,
                         SlimefunItems.HEATING_COIL, SlimefunItems.BILLON_INGOT, SlimefunItems.HEATING_COIL),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
+            @Override
             public ItemStack getProgressBar() {
                 return mat(Material.MAGMA_CREAM);
             }
@@ -469,7 +471,7 @@ class UGImplementor {
                 Utils.buildRecipe(COIL, SlimefunItems.HARDENED_GLASS, COIL, SlimefunItems.PLASTIC_SHEET,
                         SlimefunItems.RUNE_ENDER, SlimefunItems.PLASTIC_SHEET, SlimefunItems.ENDER_LUMP_3,
                         SlimefunItems.MEDIUM_CAPACITOR, ACIRCUIT),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public ItemStack getProgressBar() {
@@ -501,7 +503,7 @@ class UGImplementor {
                 RecipeType.ENHANCED_CRAFTING_TABLE,
                 Utils.buildRecipe(SlimefunItems.LEAD_INGOT, MOTOR, SlimefunItems.LEAD_INGOT, COIL,
                         SlimefunItems.HARDENED_GLASS, COIL, BCIRCUIT, SlimefunItems.MEDIUM_CAPACITOR, BCIRCUIT),
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public ItemStack getProgressBar() {
@@ -534,7 +536,7 @@ class UGImplementor {
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.COAL_GENERATOR, "ENLARGED_COAL_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.SOLID_STORAGE_EXPANSION, null, ALUI,
                     SlimefunItems.COAL_GENERATOR, ALUI, null, UGItems.SOLID_STORAGE_EXPANSION, null},
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -585,7 +587,7 @@ class UGImplementor {
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIO_REACTOR, "ENLARGED_BIO_REACTOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.SOLID_STORAGE_EXPANSION, null, ALUI,
                     SlimefunItems.BIO_REACTOR, ALUI, null, UGItems.SOLID_STORAGE_EXPANSION, null},
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -654,7 +656,7 @@ class UGImplementor {
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.LAVA_GENERATOR, "ENLARGED_LAVA_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.LIQUID_STORAGE_EXPANSION, null,
                     ALUI, SlimefunItems.LAVA_GENERATOR, ALUI, null, UGItems.LIQUID_STORAGE_EXPANSION, null},
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -686,7 +688,7 @@ class UGImplementor {
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.COMBUSTION_REACTOR, "ENLARGED_COMBUSTION_REACTOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.LIQUID_STORAGE_EXPANSION, null,
                     ALUI, SlimefunItems.COMBUSTION_REACTOR, ALUI, null, UGItems.LIQUID_STORAGE_EXPANSION, null},
-                plug.getDisplaySw()) {
+                Loader.getDisplaySw()) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -721,7 +723,7 @@ class UGImplementor {
                 Utils.buildRecipe(null, SlimefunItems.ELECTRIC_MOTOR, null, SlimefunItems.COMPRESSED_CARBON,
                         new ItemStack(Material.WATER_BUCKET), SlimefunItems.COMPRESSED_CARBON,
                         SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT, SlimefunItems.DURALUMIN_INGOT),
-                plug.getDisplaySw())).registerChargeableBlock(false, 128);
+                Loader.getDisplaySw())).registerChargeableBlock(false, 128);
 
         (new SlimefunItem(UGCategories.SINGLE_GENERATOR, UGItems.QUANTUM_SOLAR_GENERATOR, "QUANTUM_SOLAR_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE,
