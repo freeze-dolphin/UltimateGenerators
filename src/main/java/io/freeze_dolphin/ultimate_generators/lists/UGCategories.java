@@ -29,8 +29,7 @@ public class UGCategories {
             5);
 
     public UGCategories(Loader plug) {
-        if (Loader.getProperties().contains("hide-author-name-in-category")
-                && Loader.getProperties().get("hide-author-name-in-category").equals("true")) {
+        if (Boolean.getBoolean(Loader.getProperties().getProperty("hide-author-name-in-category", "false"))) {
             MACHINES = new Category(
                     new CustomItem(new UniversalMaterial(Material.PAPER), "&d终极发电机 &7- &9机器&r", "", "&a> 点击打开"), 4);
             SINGLE_GENERATOR = new Category(new CustomItem(new UniversalMaterial(Material.TRIPWIRE_HOOK),

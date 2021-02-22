@@ -66,7 +66,7 @@ public class UGItems {
     public static ItemStack NEUTRON_MODERATOR;
 
     public static ItemStack RAINBOW_ALLOY, REINFORCED_RAINBOW_GLASS;
-    public static ItemStack RAINBOW_REACTOR, RAINBOW_BEAM_RECEIVER;
+    public static ItemStack RAINBOW_REACTOR;
 
     static {
         try {
@@ -227,11 +227,8 @@ public class UGItems {
             REINFORCED_RAINBOW_GLASS = new StainedBlock(BlockColor.MAGENTA, StainedBlockType.GLASS, "&d强化彩虹玻璃");
 
             RAINBOW_REACTOR = new StainedBlock(BlockColor.PURPLE, StainedBlockType.GLASS, "&d彩虹反应器", "",
-                    "&8⇨ &b必须被双层强化彩虹玻璃包裹", "&8⇨ &b必须配备完整的彩虹光束接收器", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
-                    "&8⇨ &e⚡ &72048 J/s");
-            RAINBOW_BEAM_RECEIVER = new CustomItem(CustomSkull.getItem(
-                    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRlYmNmZTQxNDNhMTFlNjFkMzkzMTc5OWZiMzIyZTVhYTJhZTczMjc1YzUzYzJjNjc0MTYxNzhkMTQ5ZTE1MiJ9fX0="),
-                    "&a彩虹光束接收器&r");
+                    "&8⇨ &b必须建造完整的结构", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
+                    "&8⇨ &e⚡ &7512 J/s");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -239,7 +236,6 @@ public class UGItems {
     }
 
     public UGItems(Loader plug) {
-
     }
 
 }

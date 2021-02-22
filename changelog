@@ -43,3 +43,7 @@
 - set the particle number of ENDER_CRYSTAL_GENERATOR to higher (2021.2.10-21:21)
 - optimize the codes (2021.2.11-13:51)
 - change the configuration container from 'plugin.yml' to 'config.properties' (2021.2.11-13:51)
+- refactory codes (2021.2.21-20:41)
+- add RAINBOW_ALLOY, REINFORCED_RAINBOW_GLASS, RAINBOW_GENERATOR (2021.2.21-20:41)
+- add check update feature (2021.2.21-20:42)
+

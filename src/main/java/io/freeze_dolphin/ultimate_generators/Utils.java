@@ -3,6 +3,7 @@ package io.freeze_dolphin.ultimate_generators;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -77,6 +78,20 @@ public class Utils {
 
     public static void asyncDelay(Runnable r) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), r);
+    }
+
+    public static int getRandomMetaExcept(int except) {
+
+        Random rd = new Random();
+        while (true) {
+            int n = rd.nextInt(16);
+            if (n != except) {
+                return n;
+            } else {
+                rd.nextInt(16);
+            }
+        }
+
     }
 
 }

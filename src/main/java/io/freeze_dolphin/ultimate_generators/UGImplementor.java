@@ -9,6 +9,7 @@ import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
+import io.freeze_dolphin.ultimate_generators.objects.abstracts.ModularGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator;
@@ -29,6 +30,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.Slimefun;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
+import org.bukkit.block.Block;
 
 class UGImplementor {
 
@@ -765,12 +767,12 @@ class UGImplementor {
 
             @Override
             public int getEnergyProductionPerCrystal() {
-                return 32;
+                return (Integer.parseInt(String.valueOf(Loader.getProperties().get("generation-per-crystal"))));
             }
 
             @Override
             public int getWarningCrystalNum() {
-                return 9;
+                return (Integer.parseInt(String.valueOf(Loader.getProperties().get("warning-crystal-number"))));
             }
         }).registerChargeableBlock(false, 14336);
 
@@ -790,8 +792,8 @@ class UGImplementor {
         (new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_STABILIZER,
                 "ENDER_CRYSTAL_GENERATOR_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), null,
-                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), SlimefunItems.MAGIC_LUMP_3,
-                    SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.RAINBOW_GLASS,
+                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), 1), UGItems.ENDER_LUMP_4,
+                    SlimefunItems.ELECTRIC_MOTOR, UGItems.ENDER_LUMP_4, SlimefunItems.RAINBOW_GLASS,
                     UGItems.ENDER_LUMP_4, SlimefunItems.RAINBOW_GLASS})).registerChargeableBlock(false, 256);
 
         Slimefun.addWikiPage("ENDER_CRYSTAL_GENERATOR_STABILIZER",
@@ -843,6 +845,43 @@ class UGImplementor {
             public void extraTick(Location l) {
             }
         }).registerChargeableBlock(false, 16384);
+
+        (new ModularGenerator(UGCategories.MODULAR_GENERATOR, UGItems.RAINBOW_REACTOR, "RAINBOW_REACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            UGItems.RAINBOW_ALLOY, UGItems.REINFORCED_RAINBOW_GLASS, UGItems.RAINBOW_ALLOY,
+            SlimefunItems.SOLAR_GENERATOR, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.SOLAR_GENERATOR,
+            UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY
+        }, Loader.getDisplaySw()) {
+
+            @Override
+            public void registerDefaultRecipes() {
+                registerFuel(new MachineFuel(3600, UGItems.RAINBOW_ALLOY, SlimefunItems.MAGNESIUM_DUST));
+            }
+
+            @Override
+            public String getInventoryTitle() {
+                return "&d彩虹反应器";
+            }
+
+            @Override
+            public int getEnergyProduction() {
+                return 256;
+            }
+
+            @Override
+            public int getSpeed() {
+                return 1;
+            }
+
+            @Override
+            public ItemStack getProgressBar() {
+                return UGItems.REINFORCED_RAINBOW_GLASS;
+            }
+
+            @Override
+            public boolean checkStructure(Block b) {
+                return true;
+            }
+        }).registerChargeableBlock(false, 32768);
 
     }
 

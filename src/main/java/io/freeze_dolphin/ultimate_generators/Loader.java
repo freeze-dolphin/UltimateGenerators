@@ -4,16 +4,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dom4j.DocumentException;
 
+import io.freeze_dolphin.api.updating_server.UpdatingServerUtils;
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
-
-import java.io.IOException;
 
 public class Loader extends JavaPlugin {
 
@@ -39,8 +40,8 @@ public class Loader extends JavaPlugin {
                         fos.write(b);
                     }
                 }
+                info("Sucessfully created the default configuration!");
             }
-            info("Sucessfully created the default configuration!");
 
             pp = new Properties();
             pp.load(new FileReader(ppf));
@@ -54,9 +55,9 @@ public class Loader extends JavaPlugin {
 
         // load
         try {
-            UGItems ugItems = new UGItems(this);
-            UGRecipeType ugRecipeType = new UGRecipeType();
-            UGCategories ugCategories = new UGCategories(this);
+            new UGItems(this);
+            new UGRecipeType();
+            new UGCategories(this);
 
             UGImplementor implementor = new UGImplementor(this);
             implementor.implementIngredients();
@@ -86,6 +87,19 @@ public class Loader extends JavaPlugin {
 		 * severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
 		 * this.setEnabled(false); }
          */
+        if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
+            try {
+                String latest = UpdatingServerUtils.getLatestVersion(plug.getName());
+                String current = plug.getDescription().getVersion();
+                if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
+                    info("Update detected: v" + latest + "(" + UpdatingServerUtils.getVersionInfo(plug.getName(), latest) + ")" + " [Current: v" + current + "]");
+                }
+            } catch (IOException ex) {
+                warn("Unable to check updates! Make sure that you can visit raw.github.com and try again by restarting the server!");
+            } catch (DocumentException | NumberFormatException | NullPointerException ex) {
+                warn("Unable to check updates! Please contact the plugin author to fix the updating-server bug, or you can temporarily disable the update checker by setting 'enable-update-notification' to 'false' in 'config.properties'");
+            }
+        }
     }
 
     public static Plugin getImplement() {
@@ -110,7 +124,7 @@ public class Loader extends JavaPlugin {
 
     public static boolean getDisplaySw() {
 
-        return getProperties().contains("show-machine-indicator") && pp.get("show-machine-indicator").equals("true");
+        return Boolean.parseBoolean(getProperties().getProperty("show-machine-indicator", "true"));
 
         /*
 		 * YamlConfiguration pdf = new YamlConfiguration(); try { pdf.load(new
