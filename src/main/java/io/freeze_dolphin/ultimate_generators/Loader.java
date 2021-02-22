@@ -15,6 +15,11 @@ import io.freeze_dolphin.api.updating_server.UpdatingServerUtils;
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Loader extends JavaPlugin {
 
@@ -33,7 +38,11 @@ public class Loader extends JavaPlugin {
             File ppf = new File(getDataFolder().getPath() + File.separatorChar + "config.properties");
             if (!ppf.exists()) {
                 info("Configuration is not exist, creating one...");
-                InputStream is = this.getClass().getClassLoader().getResourceAsStream("/config.properties");
+
+                if (!ppf.getParentFile().exists()) {
+                    ppf.getParentFile().mkdirs();
+                }
+                InputStream is = this.getClass().getClassLoader().getResourceAsStream("config.properties");
                 try (FileOutputStream fos = new FileOutputStream(ppf)) {
                     byte[] b = new byte[is.available()];
                     while (is.read(b) != -1) {
@@ -87,16 +96,22 @@ public class Loader extends JavaPlugin {
 		 * severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
 		 * this.setEnabled(false); }
          */
+        
         if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
+            info("Checking Updates...");
             try {
                 String latest = UpdatingServerUtils.getLatestVersion(plug.getName());
                 String current = plug.getDescription().getVersion();
                 if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
                     info("Update detected: v" + latest + "(" + UpdatingServerUtils.getVersionInfo(plug.getName(), latest) + ")" + " [Current: v" + current + "]");
+                } else {
+                    info("You are now in the latest version!");
                 }
-            } catch (IOException ex) {
-                warn("Unable to check updates! Make sure that you can visit raw.github.com and try again by restarting the server!");
-            } catch (DocumentException | NumberFormatException | NullPointerException ex) {
+            } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+                warn("Unable to check updates! Make sure that you can visit raw.githubusercontent.com and try again by restarting the server!");
+            } catch (DocumentException | NumberFormatException | NullPointerException | NoSuchProviderException ex) {
+                ex.printStackTrace();
                 warn("Unable to check updates! Please contact the plugin author to fix the updating-server bug, or you can temporarily disable the update checker by setting 'enable-update-notification' to 'false' in 'config.properties'");
             }
         }
