@@ -9,13 +9,13 @@ import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.ModularGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
+import io.freeze_dolphin.ultimate_generators.objects.machines.rainbow_generator.RainbowGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.tasks.ReinforcedRainbowTicker;
 
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -30,7 +30,6 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.Slimefun;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
-import org.bukkit.block.Block;
 
 class UGImplementor {
 
@@ -147,17 +146,19 @@ class UGImplementor {
                 new ItemStack[]{null, null, UGItems.HEAVY_WATER_BUCKET, null, SlimefunItems.REACTOR_COOLANT_CELL,
                     null, UGItems.HEAVY_WATER_BUCKET, null, null})).register(false);
 
+        SlimefunStartup.getItemCfg().setValue("RAINBOW_ALLOY.allow-disenchanting", false);
         (new SlimefunItem(Categories.RESOURCES, UGItems.RAINBOW_ALLOY, "RAINBOW_ALLOY", RecipeType.SMELTERY,
                 Utils.buildRecipe(SlimefunItems.REDSTONE_ALLOY, SlimefunItems.CORINTHIAN_BRONZE_INGOT,
                         SlimefunItems.COBALT_INGOT, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.RUNE_RAINBOW)))
                 .register(false);
 
+        SlimefunStartup.getItemCfg().setValue("REINFORCED_RAINBOW_GLASS.allow-disenchanting", false);
         (new SlimefunItem(Categories.MAGIC, UGItems.REINFORCED_RAINBOW_GLASS, "REINFORCED_RAINBOW_GLASS",
                 RecipeType.ANCIENT_ALTAR,
                 new ItemStack[]{SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, UGItems.RAINBOW_ALLOY,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
-                    SlimefunItems.RAINBOW_GLASS})).register(false,
+                    SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, 3))).register(false,
                 new ItemHandler[]{new ReinforcedRainbowTicker()});
 
     }
@@ -169,16 +170,6 @@ class UGImplementor {
                 Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL,
                         SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS,
                         SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS)) {
-
-            @Override
-            public String getInventoryTitle() {
-                return "&c柴油精炼机";
-            }
-
-            @Override
-            public int getSpeed() {
-                return 1;
-            }
         }).registerChargeableBlock(false, 256);
 
         (new BiofuelRefinery(UGCategories.MACHINES, UGItems.BIOFUEL_REFINERY, "BIOFUEL_REFINERY",
@@ -186,16 +177,6 @@ class UGImplementor {
                 Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL,
                         SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS,
                         SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL)) {
-
-            @Override
-            public String getInventoryTitle() {
-                return "&2生物燃油精炼机";
-            }
-
-            @Override
-            public int getSpeed() {
-                return 1;
-            }
         }).registerChargeableBlock(false, 256);
 
         (new BContainer(UGCategories.MACHINES, UGItems.BIOMASS_EXTRACTION_MACHINE, "BIOMASS_EXTRACTION_MACHINE",
@@ -818,7 +799,6 @@ class UGImplementor {
             @Override
             public void registerDefaultRecipes() {
                 registerFuel(new MachineFuel(1200, SlimefunItems.URANIUM, SlimefunItems.NEPTUNIUM));
-
             }
 
             @Override
@@ -846,7 +826,7 @@ class UGImplementor {
             }
         }).registerChargeableBlock(false, 16384);
 
-        (new ModularGenerator(UGCategories.MODULAR_GENERATOR, UGItems.RAINBOW_REACTOR, "RAINBOW_REACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+        (new RainbowGenerator(UGCategories.MODULAR_GENERATOR, UGItems.RAINBOW_REACTOR, "RAINBOW_REACTOR", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
             UGItems.RAINBOW_ALLOY, UGItems.REINFORCED_RAINBOW_GLASS, UGItems.RAINBOW_ALLOY,
             SlimefunItems.SOLAR_GENERATOR, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.SOLAR_GENERATOR,
             UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY
@@ -864,12 +844,7 @@ class UGImplementor {
 
             @Override
             public int getEnergyProduction() {
-                return 256;
-            }
-
-            @Override
-            public int getSpeed() {
-                return 1;
+                return 512;
             }
 
             @Override
@@ -878,8 +853,8 @@ class UGImplementor {
             }
 
             @Override
-            public boolean checkStructure(Block b) {
-                return true;
+            public int getSpeed() {
+                return 1;
             }
         }).registerChargeableBlock(false, 32768);
 

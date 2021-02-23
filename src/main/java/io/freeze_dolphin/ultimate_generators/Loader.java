@@ -103,7 +103,8 @@ public class Loader extends JavaPlugin {
                 String latest = UpdatingServerUtils.getLatestVersion(plug.getName());
                 String current = plug.getDescription().getVersion();
                 if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
-                    info("Update detected: v" + latest + "(" + UpdatingServerUtils.getVersionInfo(plug.getName(), latest) + ")" + " [Current: v" + current + "]");
+                    UpdatingServerUtils.VersionInfo vi = UpdatingServerUtils.getVersionInfo(plug.getName(), latest);
+                    info("Update detected: v" + latest + " (Current: v" + current + ")" + "\n\t· " + vi.getName() + "\n\t· " + vi.getDescription() + "\n\t· " + vi.getURL());
                 } else {
                     info("You are now in the latest version!");
                 }

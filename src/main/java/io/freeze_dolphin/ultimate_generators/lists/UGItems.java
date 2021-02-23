@@ -17,6 +17,9 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock.Stained
 
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.World.CustomSkull;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @SuppressWarnings("CallToPrintStackTrace")
 public class UGItems {
@@ -221,14 +224,25 @@ public class UGItems {
                     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM3NjBjNTc2YTA4OGNiMjljZWIyNmUzMTQzYjdmM2M0NDZjZDZlNWM1MGJmMzMxNTE2NjFjZTYzNmQwNTk3ZSJ9fX0="),
                     "&c热中子核能反应器冷却单元&r");
 
-            RAINBOW_ALLOY = new CustomItem(CustomSkull.getItem(
+            ItemStack itemRA = new CustomItem(CustomSkull.getItem(
                     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFmZTI3YTEzYzVmYzE3NTE1Y2FlNjk1ODUyNzE2MzI2YjJiNWRmNDdkOGQ2Yjk1YTc4OWFlMzhjYWM3YjEifX19"),
                     "&d彩虹合金&r");
-            REINFORCED_RAINBOW_GLASS = new StainedBlock(BlockColor.MAGENTA, StainedBlockType.GLASS, "&d强化彩虹玻璃");
+            ItemMeta imRA = itemRA.getItemMeta();
+            imRA.addEnchant(Enchantment.DURABILITY, 1, true);
+            imRA.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemRA.setItemMeta(imRA);
+            RAINBOW_ALLOY = itemRA;
+
+            ItemStack itemRRG = new StainedBlock(BlockColor.MAGENTA, StainedBlockType.GLASS, "&d强化彩虹玻璃");
+            ItemMeta imRRG = itemRRG.getItemMeta();
+            imRA.addEnchant(Enchantment.DURABILITY, 1, true);
+            imRA.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemRA.setItemMeta(imRRG);
+            REINFORCED_RAINBOW_GLASS = itemRRG;
 
             RAINBOW_REACTOR = new StainedBlock(BlockColor.PURPLE, StainedBlockType.GLASS, "&d彩虹反应器", "",
                     "&8⇨ &b必须建造完整的结构", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
-                    "&8⇨ &e⚡ &7512 J/s");
+                    "&8⇨ &e⚡ &71024 J/s", "&8⇨ &e⚡ &7所在世界处于雷暴天气时发电量翻 1.5倍");
 
         } catch (Exception e) {
             e.printStackTrace();

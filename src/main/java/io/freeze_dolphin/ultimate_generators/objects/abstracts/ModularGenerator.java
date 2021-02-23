@@ -47,7 +47,7 @@ public abstract class ModularGenerator extends SlimefunItem {
     public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
     public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
 
-    private Set<MachineFuel> recipes = new HashSet<>();
+    public Set<MachineFuel> recipes = new HashSet<>();
 
     private static final int[] border
             = {

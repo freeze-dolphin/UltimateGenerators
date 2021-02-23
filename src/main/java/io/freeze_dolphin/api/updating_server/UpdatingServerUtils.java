@@ -26,7 +26,7 @@ import org.dom4j.io.SAXReader;
 
 public class UpdatingServerUtils {
 
-    private static String DEFAULT_URL = "https://raw.githubusercontent.com/freeze-dolphin/updating-server/master/content.xml";
+    private static String DEFAULT_URL = "https://raw.fastgit.org/freeze-dolphin/updating-server/master/content.xml";
     private static String UA = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0";
 
     public static String setDefaultURL(String newDefaultUrl) {
@@ -55,29 +55,54 @@ public class UpdatingServerUtils {
     public static String getLatestVersion(String contentUrl, String repositoryName) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
         SAXReader reader = new SAXReader();
         Document d = reader.read(getVersionFile(contentUrl, repositoryName));
-        return d.elementByID("latest").getStringValue();
+        Element root = d.getRootElement();
+        return root.element("latest").getStringValue();
     }
 
     public static String getLatestVersion(String repositoryName) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
         return getLatestVersion(DEFAULT_URL, repositoryName);
     }
 
-    public static String getVersionInfo(String contentUrl, String repositoryName, String versionKey) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
+    public static VersionInfo getVersionInfo(String contentUrl, String repositoryName, String versionKey) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
         SAXReader reader = new SAXReader();
         Document d = reader.read(getVersionFile(contentUrl, repositoryName));
 
-        Element root = d.elementByID("versions");
-        for (Iterator<Element> it = root.elementIterator("version"); it.hasNext();) {
-            Element rp = it.next();
+        Element root = d.getRootElement();
+        for (Iterator<Element> it = root.elementIterator("versions"); it.hasNext();) {
+            Element rp = it.next().element("version");
             if (rp.attribute("key").getStringValue().equals(versionKey)) {
-                return rp.getStringValue();
+                return new VersionInfo(rp.element("name").getStringValue(), rp.element("desc").getStringValue(), rp.element("url").getStringValue());
             }
         }
         return null;
     }
 
-    public static String getVersionInfo(String repositoryName, String versionKey) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
+    public static VersionInfo getVersionInfo(String repositoryName, String versionKey) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
         return getVersionInfo(DEFAULT_URL, repositoryName, versionKey);
+    }
+
+    public static class VersionInfo {
+
+        private final String name, desc, url;
+
+        public VersionInfo(String versionName, String versionDescription, String url) {
+            this.name = versionName;
+            this.desc = versionDescription;
+            this.url = url;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDescription() {
+            return desc;
+        }
+
+        public String getURL() {
+            return url;
+        }
+
     }
 
     public static InputStream getVersionFile(String contentUrl, String repositoryName) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
@@ -92,9 +117,9 @@ public class UpdatingServerUtils {
         SAXReader reader = new SAXReader();
         Document d = reader.read(getFile(contentUrl));
 
-        Element root = d.elementByID("repositories");
-        for (Iterator<Element> it = root.elementIterator("repository"); it.hasNext();) {
-            Element rp = it.next();
+        Element root = d.getRootElement();
+        for (Iterator<Element> it = root.elementIterator("repositories"); it.hasNext();) {
+            Element rp = it.next().element("repository");
             if (rp.attribute("name").getStringValue().equals(repositoryName)) {
                 return rp.getStringValue();
             }
@@ -128,10 +153,6 @@ public class UpdatingServerUtils {
 
             InputStream inputStream = conn.getInputStream();
 
-            if (inputStream != null) {
-                inputStream.close();
-            }
-
             // log.log(Level.INFO, "Successfully downloaded: {0}", file.getName());
             return inputStream;
 
@@ -149,10 +170,6 @@ public class UpdatingServerUtils {
             conn.connect();
 
             InputStream inputStream = conn.getInputStream();
-
-            if (inputStream != null) {
-                inputStream.close();
-            }
 
             return inputStream;
         }

@@ -60,6 +60,7 @@ public abstract class OilRefinery extends BContainer {
         return 1;
     }
 
+    @Override
     protected void tick(Block b) {
 
         if (b.getBlockPower() > 1) {
@@ -73,7 +74,7 @@ public abstract class OilRefinery extends BContainer {
                 item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(b).getTicks()));
                 ItemMeta im = item.getItemMeta();
                 im.setDisplayName(" ");
-                List<String> lore = new ArrayList<String>();
+                List<String> lore = new ArrayList<>();
                 lore.add(MachineHelper.getProgress(timeleft, processing.get(b).getTicks()));
                 lore.add("");
                 lore.add(MachineHelper.getTimeLeft(timeleft / 2));
