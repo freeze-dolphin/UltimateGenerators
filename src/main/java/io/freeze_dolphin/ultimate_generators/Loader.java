@@ -75,8 +75,7 @@ public class Loader extends JavaPlugin {
             implementor.implementSingleGenerators();
             implementor.implementModularGenerators();
 
-            UGListenersRegister register = new UGListenersRegister(this);
-            register.registerAll();
+            new UGListenersRegister(this).registerAll();
         } catch (Exception ex) {
             ex.printStackTrace();
             severe("Cannot initialize the plugin, self-disabling...");

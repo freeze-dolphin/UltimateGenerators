@@ -224,14 +224,14 @@ public class UGItems {
                     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFmZTI3YTEzYzVmYzE3NTE1Y2FlNjk1ODUyNzE2MzI2YjJiNWRmNDdkOGQ2Yjk1YTc4OWFlMzhjYWM3YjEifX19"),
                     "&d彩虹合金&r");
 
-            ItemStack itemRRG = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&d强化彩虹玻璃", "", "&f不仅抗爆炸", "&f而且能如彩虹一般随机改变颜色");
+            ItemStack itemRRG = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&d强化彩虹玻璃&r", "", "&f能如彩虹一般随机改变颜色");
             itemRRG.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             ItemMeta imRRG = itemRRG.getItemMeta();
             imRRG.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             itemRRG.setItemMeta(imRRG);
             REINFORCED_RAINBOW_GLASS = itemRRG;
 
-            RAINBOW_REACTOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d彩虹反应器", "",
+            RAINBOW_REACTOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d彩虹反应器&r", "",
                     "&8⇨ &b必须建造完整的结构", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
                     "&8⇨ &e⚡ &71536 J/s", "&8⇨ &e⚡ &7所在世界处于雷暴天气时发电量翻 1.5倍");
 

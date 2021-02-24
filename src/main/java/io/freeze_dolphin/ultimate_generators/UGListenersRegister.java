@@ -11,12 +11,9 @@ class UGListenersRegister {
     }
 
     public void registerAll() {
-        /*
-		plug.getServer().getPluginManager().registerEvents(new EnderCrystalListener(), Loader.getImplement());
-         */
-
         plug.getServer().getPluginManager().registerEvents(new UltimateElectricityStorageCraftingListener(), Loader.getImplement());
         plug.getServer().getPluginManager().registerEvents(new EnderCrystalEnhancerListener(), Loader.getImplement());
+        // plug.getServer().getPluginManager().registerEvents(new ReinforcedRainbowGlassBlastProofListener(), Loader.getImplement());
     }
 
 }
