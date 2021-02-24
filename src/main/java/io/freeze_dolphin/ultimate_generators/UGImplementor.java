@@ -129,7 +129,7 @@ class UGImplementor {
                     UGItems.ENDER_LUMP_4, mat(Material.GLASS), mat(Material.GLASS), mat(Material.GLASS),
                     mat(Material.GLASS)})).register(false);
         Slimefun.addWikiPage("ENERGY_ACUMULATED_ENDER_CRYSTAL",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Ender-Crystal-Generator).md");
 
         (new SlimefunItem(Categories.RESOURCES, UGItems.HEAVY_WATER_BUCKET, "HEAVY_WATER_BUCKET", new RecipeType(
                 new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 7), "&7重水提炼机&r", "&a在重水提炼机里提取水中的重水")),
@@ -146,7 +146,6 @@ class UGImplementor {
                 new ItemStack[]{null, null, UGItems.HEAVY_WATER_BUCKET, null, SlimefunItems.REACTOR_COOLANT_CELL,
                     null, UGItems.HEAVY_WATER_BUCKET, null, null})).register(false);
 
-        SlimefunStartup.getItemCfg().setValue("RAINBOW_ALLOY.allow-disenchanting", false);
         (new SlimefunItem(Categories.RESOURCES, UGItems.RAINBOW_ALLOY, "RAINBOW_ALLOY", RecipeType.SMELTERY,
                 Utils.buildRecipe(SlimefunItems.REDSTONE_ALLOY, SlimefunItems.CORINTHIAN_BRONZE_INGOT,
                         SlimefunItems.COBALT_INGOT, SlimefunItems.MAGIC_LUMP_3, SlimefunItems.RUNE_RAINBOW)))
@@ -160,6 +159,8 @@ class UGImplementor {
                     SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                     SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer.parseInt(Loader.getProperties().getProperty("reinforced-rainbow-glass-crafting-number-on-once", "1"))))).register(false,
                 new ItemHandler[]{Boolean.parseBoolean(Loader.getProperties().getProperty("reinforced-rainbow-glass-twiknling-randomly", "false")) ? new ReinforcedRainbowTicker.Fancy() : new ReinforcedRainbowTicker.Fast()});
+
+        Slimefun.addWikiPage("REINFORCED_RAINBOW_GLASS", "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Rainbow-Reactor).md");
 
     }
 
@@ -223,7 +224,7 @@ class UGImplementor {
         }).registerChargeableBlock(false, 128);
 
         Slimefun.addWikiPage("BIOMASS_EXTRACTION_MACHINE",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Machine-(Biomass-Extraction-Machine)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Machine-(Biomass-Extraction-Machine).md");
 
         /*
 		 * (new BContainer(UGCategories.MACHINES, UGItems.ENDERIUM_EXTRACTOR,
@@ -292,7 +293,7 @@ class UGImplementor {
                     UGItems.GAMMA_ELECTRICITY_STORAGE})).registerDistibutingCapacitor(true, 2621440);
 
         Slimefun.addWikiPage("LAMBDA_ELECTRICITY_STORAGE",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Easter-(Electricity-Storage)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Easter-(Electricity-Storage).md");
 
         SlimefunStartup.getItemCfg().setValue("KAPA_ELECTRICITY_STORAGE.hide-in-guide", true);
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.KAPA_ELECTRICITY_STORAGE,
@@ -758,7 +759,7 @@ class UGImplementor {
         }).registerChargeableBlock(false, 14336);
 
         Slimefun.addWikiPage("ENDER_CRYSTAL_GENERATOR",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Ender-Crystal-Generator).md");
 
         (new SlimefunItem(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_BASE,
                 "ENDER_CRYSTAL_GENERATOR_BASE", RecipeType.ANCIENT_ALTAR,
@@ -768,7 +769,7 @@ class UGImplementor {
                 .register(false);
 
         Slimefun.addWikiPage("ENDER_CRYSTAL_GENERATOR_BASE",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Ender-Crystal-Generator).md");
 
         (new EnderCrystalStabilizer(UGCategories.MODULAR_GENERATOR, UGItems.ENDER_CRYSTAL_GENERATOR_STABILIZER,
                 "ENDER_CRYSTAL_GENERATOR_STABILIZER", RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -778,7 +779,7 @@ class UGImplementor {
                     UGItems.ENDER_LUMP_4, SlimefunItems.RAINBOW_GLASS})).registerChargeableBlock(false, 256);
 
         Slimefun.addWikiPage("ENDER_CRYSTAL_GENERATOR_STABILIZER",
-                "https://github.com/freeze-dolphin/UltimateGenerators/wiki/Generator-(Ender-Crystal-Generator)");
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Ender-Crystal-Generator).md");
 
         /*
 		 * (new SlimefunItem(UGCategories.MODULAR_GENERATOR,
@@ -830,7 +831,7 @@ class UGImplementor {
             UGItems.RAINBOW_ALLOY, UGItems.REINFORCED_RAINBOW_GLASS, UGItems.RAINBOW_ALLOY,
             SlimefunItems.SOLAR_GENERATOR, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.SOLAR_GENERATOR,
             UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY, UGItems.RAINBOW_ALLOY
-        }, Loader.getDisplaySw()) {
+        }) {
 
             @Override
             public void registerDefaultRecipes() {
@@ -857,6 +858,8 @@ class UGImplementor {
                 return 1;
             }
         }).registerChargeableBlock(false, 32768);
+
+        Slimefun.addWikiPage("RAINBOW_REACTOR", "https://gitee.com/freeze-dolphin/UltimateGenerators-Wiki/blob/master/Generator-(Rainbow-Reactor).md");
 
     }
 

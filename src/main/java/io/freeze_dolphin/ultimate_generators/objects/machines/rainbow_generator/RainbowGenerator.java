@@ -33,8 +33,8 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 public abstract class RainbowGenerator extends ModularGenerator {
 
     public RainbowGenerator(Category category, ItemStack item, String id, RecipeType recipeType,
-            ItemStack[] recipe, boolean sw) {
-        super(category, item, id, recipeType, recipe, sw);
+            ItemStack[] recipe) {
+        super(category, item, id, recipeType, recipe, false);
     }
 
     @Override
