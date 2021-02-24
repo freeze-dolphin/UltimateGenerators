@@ -108,7 +108,7 @@ class UGImplementor {
                 Utils.buildRecipe())).register(false);
 
         (new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER,
-                Utils.buildRecipe(SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_DUST, SlimefunItems.SALT)))
+                Utils.buildRecipe(SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_DUST, Boolean.parseBoolean(Loader.getProperties().getProperty("magnesium-salt-require-zinc-dust", "false")) ? SlimefunItems.ZINC_DUST : null)))
                 .register(false);
 
         (new SlimefunItem(Categories.LUMPS_AND_MAGIC, UGItems.ENDER_LUMP_4, "ENDER_LUMP_4", RecipeType.ANCIENT_ALTAR,
@@ -158,8 +158,8 @@ class UGImplementor {
                 new ItemStack[]{SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, UGItems.RAINBOW_ALLOY,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
-                    SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, 3))).register(false,
-                new ItemHandler[]{new ReinforcedRainbowTicker()});
+                    SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer.parseInt(Loader.getProperties().getProperty("reinforced-rainbow-glass-crafting-number-on-once", "1"))))).register(false,
+                new ItemHandler[]{Boolean.parseBoolean(Loader.getProperties().getProperty("reinforced-rainbow-glass-twiknling-randomly", "false")) ? new ReinforcedRainbowTicker.Fancy() : new ReinforcedRainbowTicker.Fast()});
 
     }
 
@@ -834,7 +834,7 @@ class UGImplementor {
 
             @Override
             public void registerDefaultRecipes() {
-                registerFuel(new MachineFuel(3600, UGItems.RAINBOW_ALLOY, SlimefunItems.MAGNESIUM_DUST));
+                registerFuel(new MachineFuel(600, UGItems.RAINBOW_ALLOY, SlimefunItems.MAGNESIUM_DUST));
             }
 
             @Override
@@ -844,7 +844,7 @@ class UGImplementor {
 
             @Override
             public int getEnergyProduction() {
-                return 512;
+                return 768;
             }
 
             @Override

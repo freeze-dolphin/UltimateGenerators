@@ -1,5 +1,6 @@
 package io.freeze_dolphin.ultimate_generators;
 
+import io.freeze_dolphin.api.updating_server.UpdatingServerUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -9,17 +10,17 @@ import java.util.Properties;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.dom4j.DocumentException;
 
-import io.freeze_dolphin.api.updating_server.UpdatingServerUtils;
+import io.freeze_dolphin.api.updating_server.UpdatingServerUtils.VersionInfo;
+import static io.freeze_dolphin.api.updating_server.UpdatingServerUtils.getLatestVersion;
+import static io.freeze_dolphin.api.updating_server.UpdatingServerUtils.getVersionInfo;
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.dom4j.DocumentException;
 
 public class Loader extends JavaPlugin {
 
@@ -96,26 +97,28 @@ public class Loader extends JavaPlugin {
 		 * severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
 		 * this.setEnabled(false); }
          */
-        
-        if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
-            info("Checking Updates...");
-            try {
-                String latest = UpdatingServerUtils.getLatestVersion(plug.getName());
-                String current = plug.getDescription().getVersion();
-                if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
-                    UpdatingServerUtils.VersionInfo vi = UpdatingServerUtils.getVersionInfo(plug.getName(), latest);
-                    info("Update detected: v" + latest + " (Current: v" + current + ")" + "\n\t· " + vi.getName() + "\n\t· " + vi.getDescription() + "\n\t· " + vi.getURL());
-                } else {
-                    info("You are now in the latest version!");
+        Utils.asyncDelay(() -> {
+            if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
+                info("Checking Updates...");
+                try {
+                    UpdatingServerUtils.setTimeOut(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
+                    String latest = getLatestVersion(Loader.getImplement().getName());
+                    String current = Loader.getImplement().getDescription().getVersion();
+                    if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
+                        VersionInfo vi = getVersionInfo(Loader.getImplement().getName(), latest);
+                        warn("Update detected: v" + latest + " (Current: v" + current + ")" + "\n\t· " + vi.getName() + "\n\t· " + vi.getDescription() + "\n\t· " + vi.getURL());
+                    } else {
+                        info("You are now in the latest version!");
+                    }
+                } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
+                    // ex.printStackTrace();
+                    warn("Unable to check updates! Make sure that you have configured your Internet properly and try again by restarting the server!");
+                } catch (DocumentException | NumberFormatException | NullPointerException | NoSuchProviderException ex) {
+                    // ex.printStackTrace();
+                    warn("Unable to check updates! Please contact the plugin author to fix the updating-server bug, or you can temporarily disable the update checker by setting 'enable-update-notification' to 'false' in 'config.properties'");
                 }
-            } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
-                ex.printStackTrace();
-                warn("Unable to check updates! Make sure that you can visit raw.githubusercontent.com and try again by restarting the server!");
-            } catch (DocumentException | NumberFormatException | NullPointerException | NoSuchProviderException ex) {
-                ex.printStackTrace();
-                warn("Unable to check updates! Please contact the plugin author to fix the updating-server bug, or you can temporarily disable the update checker by setting 'enable-update-notification' to 'false' in 'config.properties'");
             }
-        }
+        });
     }
 
     public static Plugin getImplement() {

@@ -1,5 +1,6 @@
 package io.freeze_dolphin.api.updating_server;
 
+import io.freeze_dolphin.ultimate_generators.Loader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -26,9 +27,34 @@ import org.dom4j.io.SAXReader;
 
 public class UpdatingServerUtils {
 
-    private static String DEFAULT_URL = "https://raw.fastgit.org/freeze-dolphin/updating-server/master/content.xml";
+    private static String DEFAULT_URL = "https://cdn.jsdelivr.net/gh/freeze-dolphin/updating-server@master/content.xml";
     private static String UA = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:85.0) Gecko/20100101 Firefox/85.0";
+    private static int TIME_OUT = 9000;
 
+    /*
+     * This is the calling template
+     *  Utils.asyncDelay(() -> {
+            if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
+                info("Checking Updates...");
+                try {
+                    String latest = getLatestVersion(Loader.getImplement().getName());
+                    String current = Loader.getImplement().getDescription().getVersion();
+                    if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
+                        VersionInfo vi = getVersionInfo(Loader.getImplement().getName(), latest);
+                        warn("Update detected: v" + latest + " (Current: v" + current + ")" + "\n\t· " + vi.getName() + "\n\t· " + vi.getDescription() + "\n\t· " + vi.getURL());
+                    } else {
+                        info("You are now in the latest version!");
+                    }
+                } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                    warn("Unable to check updates! Make sure that you have configured your Internet properly and try again by restarting the server!");
+                } catch (DocumentException | NumberFormatException | NullPointerException | NoSuchProviderException ex) {
+                    ex.printStackTrace();
+                    warn("Unable to check updates! Please contact the plugin author to fix the updating-server bug, or you can temporarily disable the update checker by setting 'enable-update-notification' to 'false' in 'config.properties'");
+                }
+            }
+        });
+     */
     public static String setDefaultURL(String newDefaultUrl) {
         DEFAULT_URL = newDefaultUrl;
         return DEFAULT_URL;
@@ -47,9 +73,19 @@ public class UpdatingServerUtils {
         return UA;
     }
 
-    public static void init(String defaultUrl, String userAgent) {
+    public static int getTimeOut() {
+        return TIME_OUT;
+    }
+
+    public static int setTimeOut(int timeOut) {
+        TIME_OUT = timeOut;
+        return TIME_OUT;
+    }
+
+    public static void init(String defaultUrl, String userAgent, int timeOut) {
         setDefaultURL(defaultUrl);
         setUA(userAgent);
+        setTimeOut(timeOut);
     }
 
     public static String getLatestVersion(String contentUrl, String repositoryName) throws IOException, DocumentException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
@@ -148,6 +184,8 @@ public class UpdatingServerUtils {
         public static InputStream downLoadFromHttp(String urlStr) throws IOException {
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(TIME_OUT);
+            conn.setConnectTimeout(TIME_OUT);
             conn.setRequestProperty("User-Agent", UA);
             conn.connect();
 
@@ -164,6 +202,8 @@ public class UpdatingServerUtils {
             SSLSocketFactory ssf = sslContext.getSocketFactory();
             URL url = new URL(urlStr);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setReadTimeout(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
+            conn.setConnectTimeout(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
             conn.setRequestProperty("User-Agent", UA);
             conn.setHostnameVerifier(new TrustAnyHostnameVerifier());
             conn.setSSLSocketFactory(ssf);

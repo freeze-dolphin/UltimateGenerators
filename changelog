@@ -39,10 +39,13 @@
 - update version tag to '1.0.4' in 'pom.xml' (2021.2.9-19:50)
 - change some recipes and display name and machine fuel information (2021.2.9-20:31)
 
-? [v1.0.5]: 
+2021.2.24 [v1.0.5]: 
 - set the particle number of ENDER_CRYSTAL_GENERATOR to higher (2021.2.10-21:21)
 - optimize the codes (2021.2.11-13:51)
 - change the configuration container from 'plugin.yml' to 'config.properties' (2021.2.11-13:51)
 - refactory codes (2021.2.21-20:41)
 - add RAINBOW_ALLOY, REINFORCED_RAINBOW_GLASS, RAINBOW_GENERATOR (2021.2.21-20:41)
 - add check update feature (2021.2.21-20:42)
+- balance (2021.2.24-11:33)
+- debug (2021.2.24-11:33)
+

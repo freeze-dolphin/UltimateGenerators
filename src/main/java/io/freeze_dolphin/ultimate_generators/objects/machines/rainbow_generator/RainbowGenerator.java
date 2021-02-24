@@ -8,7 +8,6 @@ import java.util.Map;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.MC_1_8.ParticleEffect;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -20,19 +19,16 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 
-import org.apache.commons.lang3.RandomUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.ModularGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
-import java.awt.Color;
 
 public abstract class RainbowGenerator extends ModularGenerator {
 
@@ -137,7 +133,7 @@ public abstract class RainbowGenerator extends ModularGenerator {
         s.add(Utils.locModify(l, -1, 1, 2));
         s.add(Utils.locModify(l, 0, 1, -2));
         s.add(Utils.locModify(l, 0, 1, -1));
-        s.add(Utils.locModify(l, 0, 1, 0));
+        // s.add(Utils.locModify(l, 0, 1, 0));
         s.add(Utils.locModify(l, 0, 1, 1));
         s.add(Utils.locModify(l, 0, 1, 2));
         s.add(Utils.locModify(l, 1, 1, -2));
@@ -163,7 +159,7 @@ public abstract class RainbowGenerator extends ModularGenerator {
         s.add(Utils.locModify(l, -1, 2, 2));
         s.add(Utils.locModify(l, 0, 2, -2));
         s.add(Utils.locModify(l, 0, 2, -1));
-        s.add(Utils.locModify(l, 0, 2, 0));
+        // s.add(Utils.locModify(l, 0, 2, 0));
         s.add(Utils.locModify(l, 0, 2, 1));
         s.add(Utils.locModify(l, 0, 2, 2));
         s.add(Utils.locModify(l, 1, 2, -2));
@@ -198,27 +194,6 @@ public abstract class RainbowGenerator extends ModularGenerator {
 
                 if (isProcessing(l)) {
 
-                    Utils.asyncDelay(() -> {
-                        try {
-                            for (int i = 0; i < Integer.parseInt(Loader.getProperties().getProperty("rainbow-generator-max-particle-number", "6")); i++) {
-                                ParticleEffect.REDSTONE.displayColoredParticle(
-                                        Utils.locModify(
-                                                l,
-                                                RandomUtils.nextInt(-2, 2),
-                                                RandomUtils.nextInt(-2, 2),
-                                                RandomUtils.nextInt(-2, 2)
-                                        ),
-                                        Color.getHSBColor(
-                                                RandomUtils.nextFloat(0F, 255F),
-                                                RandomUtils.nextFloat(0F, 255F),
-                                                RandomUtils.nextFloat(0F, 255F)
-                                        )
-                                );
-                            }
-                        } catch (Exception ex) {
-                        }
-                    });
-
                     int timeleft = progress.get(l);
                     if (timeleft > 0) {
                         ItemStack item = getProgressBar().clone();
@@ -235,8 +210,8 @@ public abstract class RainbowGenerator extends ModularGenerator {
                         BlockStorage.getInventory(l).replaceExistingItem(INDICATOR, item);
 
                         if (ChargableBlock.isChargable(l)) {
-                            if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= getEnergyProduction()) {
-                                ChargableBlock.addCharge(l, getEnergyProduction());
+                            if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5 : getEnergyProduction())) {
+                                ChargableBlock.addCharge(l, (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5 : getEnergyProduction()));
                                 progress.put(l, timeleft - 1);
                                 return ChargableBlock.getCharge(l);
                             }
@@ -299,5 +274,5 @@ public abstract class RainbowGenerator extends ModularGenerator {
 
         super.register(slimefun);
     }
-    
+
 }

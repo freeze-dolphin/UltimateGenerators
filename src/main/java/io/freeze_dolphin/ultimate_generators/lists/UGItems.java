@@ -10,10 +10,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 
 import io.freeze_dolphin.ultimate_generators.Loader;
 import io.freeze_dolphin.ultimate_generators.Utils;
-import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
-import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock.BlockColor;
-import io.freeze_dolphin.ultimate_generators.objects.basics.StainedBlock.StainedBlockType;
 
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.CSCoreLibPlugin.general.World.CustomSkull;
@@ -110,7 +107,7 @@ public class UGItems {
                     "&8⇨ &e⚡ &716 J/s");
 
             ENDER_CRYSTAL_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 10), "&d末影水晶发电机&r",
-                    "", "&r连接并利用附近的稳定化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
+                    "", "&r连接并利用附近的强化末影水晶发电", "", "&4终极发电机", "&8⇨ &e⚡ &714336 J 缓存", "&8⇨ &e⚡ &70 ~ +∞ J/s");
             ENDER_CRYSTAL_GENERATOR_BASE = new CustomItem(new UniversalMaterial(Material.END_BRICKS), "&b末影水晶发电机基座&r");
             ENDER_CRYSTAL_GENERATOR_STABILIZER = new CustomItem(new UniversalMaterial(Material.OBSIDIAN),
                     "&5末影水晶发电机稳定机&r", "", "&6高级机器", "&8⇨ &e⚡ &718 J/s");
@@ -185,8 +182,7 @@ public class UGItems {
                     Utils.db64s("Jmbov5novrnlu7rorq7mg7PopoHlvZPmnI3pnLjnmoTlhYjmiorov5nlgqjnlLXmnLrlhYXmu6HnlLU="));
 
             MAGNESIUM_SALT = new CustomItem(new UniversalMaterial(Material.SUGAR), "&f镁盐&r");
-            MAGNESIUM_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 8), "&f镁发电机&r", "",
-                    "&f高端的程序员", "&f往往采用最朴素的编程方式", "&f(指 'Ctrl + C / V')", "", "&a中级发电机", "&8\u21E8 &e\u26A1 &7128 J 缓存",
+            MAGNESIUM_GENERATOR = new CustomItem(new UniversalMaterial(Material.STAINED_CLAY, 8), "&f镁发电机&r", "", "&a中级发电机", "&8\u21E8 &e\u26A1 &7128 J 缓存",
                     "&8\u21E8 &e\u26A1 &736 J/s");
 
             QUANTUM_SOLAR_GENERATOR = new CustomItem(new ItemStack(Material.DAYLIGHT_DETECTOR), "&d量子太阳能发电机&r",
@@ -224,25 +220,20 @@ public class UGItems {
                     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM3NjBjNTc2YTA4OGNiMjljZWIyNmUzMTQzYjdmM2M0NDZjZDZlNWM1MGJmMzMxNTE2NjFjZTYzNmQwNTk3ZSJ9fX0="),
                     "&c热中子核能反应器冷却单元&r");
 
-            ItemStack itemRA = new CustomItem(CustomSkull.getItem(
+            RAINBOW_ALLOY = new CustomItem(CustomSkull.getItem(
                     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFmZTI3YTEzYzVmYzE3NTE1Y2FlNjk1ODUyNzE2MzI2YjJiNWRmNDdkOGQ2Yjk1YTc4OWFlMzhjYWM3YjEifX19"),
                     "&d彩虹合金&r");
-            ItemMeta imRA = itemRA.getItemMeta();
-            imRA.addEnchant(Enchantment.DURABILITY, 1, true);
-            imRA.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            itemRA.setItemMeta(imRA);
-            RAINBOW_ALLOY = itemRA;
 
-            ItemStack itemRRG = new StainedBlock(BlockColor.MAGENTA, StainedBlockType.GLASS, "&d强化彩虹玻璃");
+            ItemStack itemRRG = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 2), "&d强化彩虹玻璃", "", "&f不仅抗爆炸", "&f而且能如彩虹一般随机改变颜色");
+            itemRRG.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
             ItemMeta imRRG = itemRRG.getItemMeta();
-            imRA.addEnchant(Enchantment.DURABILITY, 1, true);
-            imRA.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            itemRA.setItemMeta(imRRG);
+            imRRG.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            itemRRG.setItemMeta(imRRG);
             REINFORCED_RAINBOW_GLASS = itemRRG;
 
-            RAINBOW_REACTOR = new StainedBlock(BlockColor.PURPLE, StainedBlockType.GLASS, "&d彩虹反应器", "",
+            RAINBOW_REACTOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d彩虹反应器", "",
                     "&8⇨ &b必须建造完整的结构", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
-                    "&8⇨ &e⚡ &71024 J/s", "&8⇨ &e⚡ &7所在世界处于雷暴天气时发电量翻 1.5倍");
+                    "&8⇨ &e⚡ &71536 J/s", "&8⇨ &e⚡ &7所在世界处于雷暴天气时发电量翻 1.5倍");
 
         } catch (Exception e) {
             e.printStackTrace();
