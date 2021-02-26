@@ -252,39 +252,45 @@ class UGImplementor {
 		 * 
 		 * }).registerChargeableBlock(false, 256);
          */
+        (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.GLASS_ELECTRICITY_TRANSMITTER, "GLASS_ELECTRICITY_TRANSMITTER", RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{
+            null, ALUI, null, 
+            ALUI, UGItems.ELECTRICITY_STORAGE_UNIT, ALUI,
+            null, ALUI, null
+        }, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer.parseInt(DefaultConfig.getConfig("glass-electricity-transmitter-crafting-number-on-once"))))).registerDistibutingCapacitor(false, 16);
+
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.BASIC_ELECTRICITY_STORAGE,
                 "BASIC_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{SlimefunItems.BATTERY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.BATTERY,
                     SlimefunItems.REDSTONE_ALLOY, ALUI, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.BATTERY,
-                    SlimefunItems.REDSTONE_ALLOY, SlimefunItems.BATTERY})).registerDistibutingCapacitor(true, 640);
+                    SlimefunItems.REDSTONE_ALLOY, SlimefunItems.BATTERY})).registerDistibutingCapacitor(false, 640);
 
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.ADVANCED_ELECTRICITY_STORAGE,
                 "ADVANCED_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{UGItems.ADVANCED_BATTERY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, UGItems.BASIC_ELECTRICITY_STORAGE, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY, UGItems.ADVANCED_BATTERY}))
-                .registerDistibutingCapacitor(true, 2560);
+                .registerDistibutingCapacitor(false, 2560);
 
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.ALPHA_ELECTRICITY_STORAGE,
                 "ALPHA_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{UGItems.ALPHA_BATTERY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, UGItems.ADVANCED_ELECTRICITY_STORAGE,
                     SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY,
-                    UGItems.ALPHA_BATTERY})).registerDistibutingCapacitor(true, 5120);
+                    UGItems.ALPHA_BATTERY})).registerDistibutingCapacitor(false, 5120);
 
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.BETA_ELECTRICITY_STORAGE,
                 "BETA_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{UGItems.BETA_BATTERY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, UGItems.ALPHA_ELECTRICITY_STORAGE, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY, UGItems.BETA_BATTERY}))
-                .registerDistibutingCapacitor(true, 40960);
+                .registerDistibutingCapacitor(false, 40960);
 
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE,
                 "GAMMA_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
                 new ItemStack[]{UGItems.GAMMA_BATTERY, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, UGItems.BETA_ELECTRICITY_STORAGE, SlimefunItems.REDSTONE_ALLOY,
                     SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REDSTONE_ALLOY, UGItems.GAMMA_BATTERY}))
-                .registerDistibutingCapacitor(true, 327680);
+                .registerDistibutingCapacitor(false, 327680);
 
         (new SlimefunItem(UGCategories.ELECTRICITY_STORAGE, UGItems.LAMBDA_ELECTRICITY_STORAGE,
                 "LAMBDA_ELECTRICITY_STORAGE", RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -292,7 +298,7 @@ class UGImplementor {
                     UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE,
                     SlimefunItems.REDSTONE_ALLOY, UGItems.GAMMA_ELECTRICITY_STORAGE,
                     UGItems.GAMMA_ELECTRICITY_STORAGE, UGItems.GAMMA_ELECTRICITY_STORAGE,
-                    UGItems.GAMMA_ELECTRICITY_STORAGE})).registerDistibutingCapacitor(true, 2621440);
+                    UGItems.GAMMA_ELECTRICITY_STORAGE})).registerDistibutingCapacitor(false, 2621440);
 
         Slimefun.addWikiPage("LAMBDA_ELECTRICITY_STORAGE",
                 "https://gitee.com/freeze-dolphin/UltimateGenerators-wiki/blob/master/Easter-(Electricity-Storage).md");
@@ -417,7 +423,7 @@ class UGImplementor {
             public int getEnergyProduction() {
                 return 18;
             }
-        }).registerUnrechargeableBlock(true, 256);
+        }).registerUnrechargeableBlock(false, 256);
 
         (new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIOFUEL_GENERATOR, "BIOFUEL_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -450,7 +456,7 @@ class UGImplementor {
             public int getEnergyProduction() {
                 return 18;
             }
-        }).registerUnrechargeableBlock(true, 256);
+        }).registerUnrechargeableBlock(false, 256);
 
         (new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.DRAGON_BREATH_GENERATOR, "DRAGON_BREATH_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -568,7 +574,7 @@ class UGImplementor {
                 return 1;
             }
 
-        }.registerUnrechargeableBlock(true, 64);
+        }.registerUnrechargeableBlock(false, 64);
 
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.BIO_REACTOR, "ENLARGED_BIO_REACTOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.SOLID_STORAGE_EXPANSION, null, ALUI,
@@ -637,7 +643,7 @@ class UGImplementor {
                 return 1;
             }
 
-        }.registerUnrechargeableBlock(true, 128);
+        }.registerUnrechargeableBlock(false, 128);
 
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.LAVA_GENERATOR, "ENLARGED_LAVA_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.LIQUID_STORAGE_EXPANSION, null,
@@ -669,7 +675,7 @@ class UGImplementor {
                 return 1;
             }
 
-        }.registerUnrechargeableBlock(true, 512);
+        }.registerUnrechargeableBlock(false, 512);
 
         new BGenerator(UGCategories.SINGLE_GENERATOR, UGItems.COMBUSTION_REACTOR, "ENLARGED_COMBUSTION_REACTOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[]{null, UGItems.LIQUID_STORAGE_EXPANSION, null,
@@ -702,7 +708,7 @@ class UGImplementor {
                 return 1;
             }
 
-        }.registerUnrechargeableBlock(true, 256);
+        }.registerUnrechargeableBlock(false, 256);
 
         (new MagnesiumGenerator(UGCategories.SINGLE_GENERATOR, UGItems.MAGNESIUM_GENERATOR, "MAGNESIUM_GENERATOR",
                 RecipeType.ENHANCED_CRAFTING_TABLE,

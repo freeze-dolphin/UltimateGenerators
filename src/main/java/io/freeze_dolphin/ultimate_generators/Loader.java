@@ -62,8 +62,6 @@ public class Loader extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-
-        DefaultConfig.init();
         
         // load
         try {

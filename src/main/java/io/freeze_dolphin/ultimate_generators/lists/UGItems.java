@@ -68,6 +68,8 @@ public class UGItems {
     public static ItemStack RAINBOW_ALLOY, REINFORCED_RAINBOW_GLASS;
     public static ItemStack RAINBOW_REACTOR;
 
+    public static ItemStack GLASS_ELECTRICITY_TRANSMITTER;
+
     static {
         try {
             ENDLESS_GENERATOR = new CustomItem(CustomSkull.getItem(
@@ -234,6 +236,8 @@ public class UGItems {
             RAINBOW_REACTOR = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 6), "&d彩虹反应器&r", "",
                     "&8⇨ &b必须建造完整的结构", "", "&4终极发电机", "&8⇨ &e⚡ &732768 J 缓存",
                     "&8⇨ &e⚡ &71536 J/s", "&8⇨ &e⚡ &7所在世界处于雷暴天气时发电量翻 1.5倍");
+
+            GLASS_ELECTRICITY_TRANSMITTER = new CustomItem(new UniversalMaterial(Material.STAINED_GLASS, 9), "&2电力传递器&r", "", "&a玻璃电力传递器", "&8\u21E8 &e\u26A1 &716 J 容量");
 
         } catch (Exception e) {
             e.printStackTrace();
