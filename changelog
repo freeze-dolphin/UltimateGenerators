@@ -49,3 +49,8 @@
 - balance (2021.2.24-11:33)
 - debug (2021.2.24-11:33)
 
+2021.2.26 [v1.0.6]: 
+- fix configuration key referring bug # I wrongly spelled the word 'twinkling' (2021.2.26-20:30)
+- refactory configuration system (2021.2.26-20:30)
+- edit wiki (2021.2.26-20:30)
+

@@ -27,6 +27,7 @@ import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AReactor;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.Slimefun;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
@@ -108,7 +109,7 @@ class UGImplementor {
                 Utils.buildRecipe())).register(false);
 
         (new SlimefunItem(Categories.MISC, UGItems.MAGNESIUM_SALT, "MAGNESIUM_SALT", RecipeType.PRESSURE_CHAMBER,
-                Utils.buildRecipe(SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_DUST, Boolean.parseBoolean(Loader.getProperties().getProperty("magnesium-salt-require-zinc-dust", "false")) ? SlimefunItems.ZINC_DUST : null)))
+                Utils.buildRecipe(SlimefunItems.MAGNESIUM_DUST, SlimefunItems.MAGNESIUM_DUST, Boolean.parseBoolean(DefaultConfig.getConfig("magnesium-salt-require-zinc-dust")) ? SlimefunItems.ZINC_DUST : null)))
                 .register(false);
 
         (new SlimefunItem(Categories.LUMPS_AND_MAGIC, UGItems.ENDER_LUMP_4, "ENDER_LUMP_4", RecipeType.ANCIENT_ALTAR,
@@ -152,13 +153,14 @@ class UGImplementor {
                 .register(false);
 
         SlimefunStartup.getItemCfg().setValue("REINFORCED_RAINBOW_GLASS.allow-disenchanting", false);
+        BlockTicker fast = new ReinforcedRainbowTicker.Fast();
         (new SlimefunItem(Categories.MAGIC, UGItems.REINFORCED_RAINBOW_GLASS, "REINFORCED_RAINBOW_GLASS",
                 RecipeType.ANCIENT_ALTAR,
                 new ItemStack[]{SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, UGItems.RAINBOW_ALLOY,
                     SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
-                    SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer.parseInt(Loader.getProperties().getProperty("reinforced-rainbow-glass-crafting-number-on-once", "1"))))).register(false,
-                new ItemHandler[]{Boolean.parseBoolean(Loader.getProperties().getProperty("reinforced-rainbow-glass-twiknling-randomly", "false")) ? new ReinforcedRainbowTicker.Fancy() : new ReinforcedRainbowTicker.Fast()});
+                    SlimefunItems.RAINBOW_GLASS}, new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer.parseInt(DefaultConfig.getConfig("reinforced-rainbow-glass-crafting-number-on-once"))))).register(false,
+                new ItemHandler[]{Boolean.parseBoolean(DefaultConfig.getConfig("reinforced-rainbow-glass-twinkling-randomly")) ? new ReinforcedRainbowTicker.Fancy() : fast});
 
         Slimefun.addWikiPage("REINFORCED_RAINBOW_GLASS", "https://gitee.com/freeze-dolphin/UltimateGenerators-wiki/blob/master/Generator-(Rainbow-Reactor).md");
 

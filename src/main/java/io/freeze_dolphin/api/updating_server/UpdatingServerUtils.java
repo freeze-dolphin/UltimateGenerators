@@ -1,6 +1,6 @@
 package io.freeze_dolphin.api.updating_server;
 
-import io.freeze_dolphin.ultimate_generators.Loader;
+import io.freeze_dolphin.ultimate_generators.DefaultConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -202,8 +202,8 @@ public class UpdatingServerUtils {
             SSLSocketFactory ssf = sslContext.getSocketFactory();
             URL url = new URL(urlStr);
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setReadTimeout(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
-            conn.setConnectTimeout(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
+            conn.setReadTimeout(Integer.parseInt(DefaultConfig.getConfig("update-check-timeout")));
+            conn.setConnectTimeout(Integer.parseInt(DefaultConfig.getConfig("update-check-timeout")));
             conn.setRequestProperty("User-Agent", UA);
             conn.setHostnameVerifier(new TrustAnyHostnameVerifier());
             conn.setSSLSocketFactory(ssf);

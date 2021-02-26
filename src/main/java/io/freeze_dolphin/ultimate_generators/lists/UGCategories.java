@@ -1,5 +1,6 @@
 package io.freeze_dolphin.ultimate_generators.lists;
 
+import io.freeze_dolphin.ultimate_generators.DefaultConfig;
 import org.bukkit.Material;
 
 import io.freeze_dolphin.ultimate_generators.Loader;
@@ -29,7 +30,7 @@ public class UGCategories {
             5);
 
     public UGCategories(Loader plug) {
-        if (Boolean.getBoolean(Loader.getProperties().getProperty("hide-author-name-in-category", "false"))) {
+        if (Boolean.getBoolean(DefaultConfig.getConfig("hide-author-name-in-category"))) {
             MACHINES = new Category(
                     new CustomItem(new UniversalMaterial(Material.PAPER), "&d终极发电机 &7- &9机器&r", "", "&a> 点击打开"), 4);
             SINGLE_GENERATOR = new Category(new CustomItem(new UniversalMaterial(Material.TRIPWIRE_HOOK),

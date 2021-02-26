@@ -63,6 +63,8 @@ public class Loader extends JavaPlugin {
             return;
         }
 
+        DefaultConfig.init();
+        
         // load
         try {
             new UGItems(this);
@@ -100,7 +102,7 @@ public class Loader extends JavaPlugin {
             if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
                 info("Checking Updates...");
                 try {
-                    UpdatingServerUtils.setTimeOut(Integer.parseInt(Loader.getProperties().getProperty("update-check-timeout", "10000")));
+                    UpdatingServerUtils.setTimeOut(Integer.parseInt(DefaultConfig.getConfig("update-check-timeout")));
                     String latest = getLatestVersion(Loader.getImplement().getName());
                     String current = Loader.getImplement().getDescription().getVersion();
                     if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
