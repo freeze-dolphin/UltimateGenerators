@@ -53,7 +53,7 @@
 - [docs] edit wiki (2021.2.26-20:30)
 - [refactor] update version ntag to '1.0.6' in 'pom.xml' (2021.2.26-20:33)
 
-### Reborn (v1.0.7 | 2021.5.3)
+### Glass Electricity Transmitter (v1.0.7 | 2021.5.3)
 - [feat] add 'GLASS_ELECTRICITY_TRANSMITTER' (2021.?.?-?)
 - [docs] rewrite the 'CHANGELOG' file (2021.5.3-12:10)
 - [refactor] configure default configuration (2021.5.3-12:19)
