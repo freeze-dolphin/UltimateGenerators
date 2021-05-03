@@ -32,8 +32,7 @@ import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 
 public abstract class RainbowGenerator extends ModularGenerator {
 
-    public RainbowGenerator(Category category, ItemStack item, String id, RecipeType recipeType,
-            ItemStack[] recipe) {
+    public RainbowGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, id, recipeType, recipe, false);
     }
 
@@ -173,7 +172,8 @@ public abstract class RainbowGenerator extends ModularGenerator {
         s.add(Utils.locModify(l, 2, 2, 1));
         s.add(Utils.locModify(l, 2, 2, 2));
 
-        return s.stream().noneMatch(ll -> (ll.getBlock().getType().equals(Material.AIR) || !BlockStorage.check(ll, "REINFORCED_RAINBOW_GLASS")));
+        return s.stream().noneMatch(ll -> (ll.getBlock().getType().equals(Material.AIR)
+                || !BlockStorage.check(ll, "REINFORCED_RAINBOW_GLASS")));
 
     }
 
@@ -210,8 +210,12 @@ public abstract class RainbowGenerator extends ModularGenerator {
                         BlockStorage.getInventory(l).replaceExistingItem(INDICATOR, item);
 
                         if (ChargableBlock.isChargable(l)) {
-                            if (ChargableBlock.getMaxCharge(l) - ChargableBlock.getCharge(l) >= (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5 : getEnergyProduction())) {
-                                ChargableBlock.addCharge(l, (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5 : getEnergyProduction()));
+                            if (ChargableBlock.getMaxCharge(l) - ChargableBlock
+                                    .getCharge(l) >= (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5
+                                            : getEnergyProduction())) {
+                                ChargableBlock.addCharge(l,
+                                        (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5
+                                                : getEnergyProduction()));
                                 progress.put(l, timeleft - 1);
                                 return ChargableBlock.getCharge(l);
                             }
@@ -223,19 +227,20 @@ public abstract class RainbowGenerator extends ModularGenerator {
                     } else {
                         ItemStack fuel = processing.get(l).getInput();
                         if (SlimefunManager.isItemSimiliar(fuel, new ItemStack(Material.LAVA_BUCKET), true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_FUEL, true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_OIL, true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOFUEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOMASS_BUCKET, true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.DIESEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
+                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
                         }
-                        BlockStorage.getInventory(l).replaceExistingItem(INDICATOR, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
+                        BlockStorage.getInventory(l).replaceExistingItem(INDICATOR,
+                                new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
 
                         progress.remove(l);
                         processing.remove(l);
@@ -244,10 +249,10 @@ public abstract class RainbowGenerator extends ModularGenerator {
                 } else {
                     MachineFuel r = null;
                     Map<Integer, Integer> found = new HashMap<>();
-                    outer:
-                    for (MachineFuel recipe : recipes) {
+                    outer: for (MachineFuel recipe : recipes) {
                         for (int slot : getInputSlots()) {
-                            if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot), recipe.getInput(), true)) {
+                            if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot),
+                                    recipe.getInput(), true)) {
                                 found.put(slot, recipe.getInput().getAmount());
                                 r = recipe;
                                 break outer;
@@ -257,7 +262,8 @@ public abstract class RainbowGenerator extends ModularGenerator {
 
                     if (r != null) {
                         found.entrySet().forEach(entry -> {
-                            BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
+                            BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(
+                                    BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
                         });
                         processing.put(l, r);
                         progress.put(l, r.getTicks());

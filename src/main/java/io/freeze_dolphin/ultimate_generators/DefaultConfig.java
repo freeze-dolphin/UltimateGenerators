@@ -17,7 +17,7 @@ public class DefaultConfig {
         map.put("reinforced-rainbow-glass-twinkling-delay-in-ticks", "40");
         map.put("reinforced-rainbow-glass-twinkling-randomly", "true");
         map.put("reinforced-rainbow-glass-crafting-number-on-once", "1");
-        
+
         map.put("glass-electricity-transmitter-crafting-number-on-once", "12");
     }
 
