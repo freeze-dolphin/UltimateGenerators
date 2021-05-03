@@ -55,3 +55,4 @@
 
 ### Reborn (v1.0.7 | 2021.5.3)
 - [docs] rewrite the 'CHANGELOG' file (2021.5.3-12:10)
+- [refactor] configure default configuration (2021.5.3-12:19)
