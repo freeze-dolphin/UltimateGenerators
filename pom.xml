@@ -19,7 +19,7 @@
     <repositories>
         <repository>
             <id>taboolib</id>
-            <url>https://ptms.ink:8081/repository/maven-public/</url>
+            <url>https://repo.ptms.ink/repository/maven-releases/</url>
         </repository>
     </repositories>
 
