@@ -43,10 +43,7 @@ class UGImplementor {
     private static final ItemStack ALUI = SlimefunItems.ALUMINUM_INGOT;
     private static final ItemStack COPPI = SlimefunItems.COPPER_INGOT;
 
-    private final Loader plug;
-
     public UGImplementor(Loader plug) {
-        this.plug = plug;
     }
 
     public void implementIngredients() {
