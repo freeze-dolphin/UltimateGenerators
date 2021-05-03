@@ -1,8 +1,10 @@
-/target/
-/.settings/
+target/
+.settings/
 
 .classpath
 .project
 
 .netbeans_automatic_build
 
+.vscode/
+.theia/
