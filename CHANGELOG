@@ -1,0 +1,57 @@
+# Changelog
+
+## master
+
+### Initial Release (v1.0.0 | 2021.1.29)
+- [feat] initial release
+
+### Bug fixes (v1.0.1 | ?)
+- [fix] some bug fixes
+
+### Ender Crystal Generator! (v1.0.2 | 2021.2.8)
+- [refactor] change project license from GGPL-3.0 to AGPL-3.0 (2021.1.29-16:40)
+- [fix] fix the display name of ALPHA_ELECTRICITY_STORAGE (2021.1.29-17:52)
+- [fix] fix a repeated recipe in BIOMASS_EXTRACTION_MACHINE (2021.1.30-13:06)
+- [feat] add MAGNESIUM_GENERATOR and MAGNESIUM_SALT (2021.1.31-21:32)
+- [feat] add QUANTUM_SOLAR_GENERATOR (2021.2.1-17:47)
+- [feat] add ENDER_CRYSTAL_GENERATOR and ENDER_CRYSTAL_GENERATOR_BASE and ENDER_CRYSTAL_STABILIZER (2021.2.2-11:09)
+- [fix] fix a bug in Utils.buildRecipe() (2021.2.2-11:14)
+- [refactor] change ENDER_CRYSTAL_STABILIZER to ENDER_CRYSTAL_GENERATOR_STABILIZER (2021.2.3-11:15)
+- [fix] fix a machine container title displaying bug in UGImplementor (2021.2.4-20:57)
+- [refactor] change version tag to '1.0.3' (2021.2.4-20:57)
+- [feat] add ENDER_CRYSTAL_ENHANCER_POTION (2021.2.5-11:56)
+- [fix] fix plenty of bugs to make ENDER_CRYSTAL_GENERATOR and related machines to work properly (2021.2.5-11:57)
+- [feat] add particle effect to ENDER_CRYSTAL_GENERATOR (2021.2.5-11:58)
+- [refactor] change version tag to '1.0.2' (2021.2.7-18:46) # I think I wrongly changed the version tag by accident :(
+- [refactor] change the recipe of MAGNESIUM_SALT (2021.2.7-18:53)
+- [fix] fix a bug in EnderCrystalEnhancerListener (2021.2.7-19:01)
+
+### Bug Fixes (v1.0.3 | 2021.2.8)
+- [refactor] change the recipe of ENDER_CRYSTAL_GENERATOR (2021.2.8-11:17)
+- [docs] attach wiki websites in the Slimefun Guide pages of some machines (2021.2.8-11:18)
+- [refactor] change version tag to '1.0.3' (2021.2.8-11:31)
+
+### Thermal Neutron Nuclear Reactor (v1.0.4 | 2021.2.10)
+- [fix] fix a small bug of redstone control (2021.2.8-19:18)
+- [feat] add HEAVY_WATER and THERMAL_NEUTRON_REACTOR and some related items (2021.2.9-19:50)
+- [refactor] update version tag to '1.0.4' in 'pom.xml' (2021.2.9-19:50)
+- [refactor] change some recipes and display name and machine fuel information (2021.2.9-20:31)
+
+### Rainbow Generator (v1.0.5 | 2021.2.24)
+- [refactor] set the particle number of ENDER_CRYSTAL_GENERATOR to higher (2021.2.10-21:21)
+- [style] optimize the codes (2021.2.11-13:51)
+- [feat] change the configuration container from 'plugin.yml' to 'config.properties' (2021.2.11-13:51)
+- [style] refactory codes (2021.2.21-20:41)
+- [feat] add RAINBOW_ALLOY, REINFORCED_RAINBOW_GLASS, RAINBOW_GENERATOR (2021.2.21-20:41)
+- [feat] add check update feature (2021.2.21-20:42)
+- [refactor] balance the effects of the machines and generators (2021.2.24-11:33)
+- [?] debug (2021.2.24-11:33)
+
+### New Configuration (v1.0.6 | 2021.2.26)
+- [fix] fix configuration key referring bug # I wrongly spelled the word 'twinkling' (2021.2.26-20:30)
+- [refactor] refactory configuration system (2021.2.26-20:30)
+- [docs] edit wiki (2021.2.26-20:30)
+- [refactor] update version ntag to '1.0.6' in 'pom.xml' (2021.2.26-20:33)
+
+### Reborn (v1.0.7 | 2021.5.3)
+- [docs] rewrite the 'CHANGELOG' file (2021.5.3-12:10)
