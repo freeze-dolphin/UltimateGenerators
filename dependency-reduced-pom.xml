@@ -4,7 +4,7 @@
   <groupId>io.freeze-dolphin</groupId>
   <artifactId>ultimate-generators</artifactId>
   <name>UltimateGenerators</name>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
   <build>
     <resources>
       <resource>
@@ -49,7 +49,7 @@
   <repositories>
     <repository>
       <id>taboolib</id>
-      <url>https://ptms.ink:8081/repository/maven-public/</url>
+      <url>https://repo.ptms.ink/repository/maven-releases/</url>
     </repository>
   </repositories>
   <dependencies>
