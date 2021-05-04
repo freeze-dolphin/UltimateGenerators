@@ -3,27 +3,6 @@ package io.freeze_dolphin.ultimate_generators.objects.machines;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
-import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineHelper;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
-
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import io.freeze_dolphin.ultimate_generators.Loader;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
-
 public abstract class OilRefinery extends BContainer {
 
     public OilRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {

@@ -3,6 +3,7 @@ package io.freeze_dolphin.ultimate_generators.objects.basics;
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
+@Deprecated
 public class UniversalMaterial extends MaterialData {
 
     public UniversalMaterial(Material m) {

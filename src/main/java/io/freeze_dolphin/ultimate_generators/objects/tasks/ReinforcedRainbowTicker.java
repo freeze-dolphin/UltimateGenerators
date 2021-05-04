@@ -2,36 +2,102 @@ package io.freeze_dolphin.ultimate_generators.objects.tasks;
 
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.cscorelib2.collections.LoopIterator;
 
-import org.apache.commons.lang3.RandomUtils;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.math.RandomUtils;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.GlassPane;
+
+import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
+import io.github.thebusybiscuit.slimefun4.utils.ColoredMaterial;
 
 public class ReinforcedRainbowTicker {
 
     public static class Fast extends BlockTicker {
 
-        public int meta;
-        public int[] queue;
+        private final LoopIterator<Material> iterator;
+        private final boolean glassPanes;
+        private Material material;
 
-        public Fast() {
-            this(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+        public Fast(List<Material> materials) {
+            Validate.noNullElements(materials, "A ReinforcedRainbowTicker cannot have a Material that is null!");
+
+            if (materials.isEmpty()) {
+                throw new IllegalArgumentException(
+                        "A ReinforcedRainbowTicker must have at least one Material associated with it!");
+            }
+
+            glassPanes = containsGlassPanes(materials);
+            iterator = new LoopIterator<>(materials);
+            material = iterator.next();
         }
 
-        public Fast(int... data) {
-            this.queue = data;
-            this.meta = data[0];
+        public Fast(Material... materials) {
+            this(Arrays.asList(materials));
         }
 
-        @SuppressWarnings("deprecation")
+        public Fast(ColoredMaterial material) {
+            this(material.asList());
+        }
+
+        private boolean containsGlassPanes(List<Material> materials) {
+            if (SlimefunPlugin.getMinecraftVersion() == MinecraftVersion.UNIT_TEST) {
+
+                return false;
+            }
+
+            for (Material type : materials) {
+                if (type.createBlockData() instanceof GlassPane) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         @Override
         public void tick(Block b, SlimefunItem item, Config data) {
-            b.setData((byte) this.meta, false);
+            if (b.getType() == Material.AIR) {
+                return;
+            }
+
+            if (glassPanes) {
+                BlockData blockData = b.getBlockData();
+
+                if (blockData instanceof GlassPane) {
+                    BlockData block = material.createBlockData(bd -> {
+                        if (bd instanceof GlassPane) {
+                            GlassPane previousData = (GlassPane) blockData;
+                            GlassPane nextData = (GlassPane) bd;
+
+                            nextData.setWaterlogged(previousData.isWaterlogged());
+
+                            for (BlockFace face : previousData.getAllowedFaces()) {
+                                nextData.setFace(face, previousData.hasFace(face));
+                            }
+                        }
+                    });
+
+                    b.setBlockData(block, false);
+                    return;
+                }
+            }
+
+            b.setType(material, false);
         }
 
         @Override
         public void uniqueTick() {
-            this.meta = this.queue[RandomUtils.nextInt(0, this.queue.length - 1)];
+            material = iterator.next();
         }
 
         @Override
@@ -42,30 +108,87 @@ public class ReinforcedRainbowTicker {
 
     public static class Fancy extends BlockTicker {
 
-        public int[] queue;
+        private final LoopIterator<Material> iterator;
+        private final boolean glassPanes;
+        private Material material;
 
-        public Fancy() {
-            this(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+        public Fancy(List<Material> materials) {
+            Validate.noNullElements(materials, "A ReinforcedRainbowTicker cannot have a Material that is null!");
+
+            if (materials.isEmpty()) {
+                throw new IllegalArgumentException(
+                        "A ReinforcedRainbowTicker must have at least one Material associated with it!");
+            }
+
+            glassPanes = containsGlassPanes(materials);
+            iterator = new LoopIterator<>(materials);
+            material = materials.get(RandomUtils.nextInt(materials.size() - 1));
         }
 
-        public Fancy(int... data) {
-            this.queue = data;
+        public Fancy(Material... materials) {
+            this(Arrays.asList(materials));
         }
 
-        @SuppressWarnings("deprecation")
+        public Fancy(ColoredMaterial material) {
+            this(material.asList());
+        }
+
+        private boolean containsGlassPanes(List<Material> materials) {
+            if (SlimefunPlugin.getMinecraftVersion() == MinecraftVersion.UNIT_TEST) {
+
+                return false;
+            }
+
+            for (Material type : materials) {
+                if (type.createBlockData() instanceof GlassPane) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         @Override
         public void tick(Block b, SlimefunItem item, Config data) {
-            b.setData((byte) this.queue[RandomUtils.nextInt(0, this.queue.length - 1)], false);
+            if (b.getType() == Material.AIR) {
+                return;
+            }
+
+            if (glassPanes) {
+                BlockData blockData = b.getBlockData();
+
+                if (blockData instanceof GlassPane) {
+                    BlockData block = material.createBlockData(bd -> {
+                        if (bd instanceof GlassPane) {
+                            GlassPane previousData = (GlassPane) blockData;
+                            GlassPane nextData = (GlassPane) bd;
+
+                            nextData.setWaterlogged(previousData.isWaterlogged());
+
+                            for (BlockFace face : previousData.getAllowedFaces()) {
+                                nextData.setFace(face, previousData.hasFace(face));
+                            }
+                        }
+                    });
+
+                    b.setBlockData(block, false);
+                    return;
+                }
+            }
+
+            b.setType(material, false);
         }
 
         @Override
         public void uniqueTick() {
+            material = iterator.next();
         }
 
         @Override
         public boolean isSynchronized() {
             return true;
         }
+
     }
 
 }

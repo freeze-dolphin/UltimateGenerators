@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.freeze-dolphin</groupId>
     <artifactId>ultimate-generators</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
 
     <name>UltimateGenerators</name>
 
@@ -18,42 +16,40 @@
 
     <repositories>
         <repository>
-            <id>taboolib</id>
-            <url>https://repo.ptms.ink/repository/maven-releases/</url>
+            <id>paper-repo</id>
+            <url>https://repo.destroystokyo.com/repository/maven-public/</url>
+        </repository>
+
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>ink.ptms.core</groupId>
-            <artifactId>v11200</artifactId>
-            <version>11200</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-            <classifier>all</classifier>
-        </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
-        <dependency>
-            <groupId>org.dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>2.1.3</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>me.mrCookieSlime</groupId>
-            <artifactId>Slimefun</artifactId>
-            <version>4.1.15</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>me.mrCookieSlime</groupId>
-            <artifactId>CS-CoreLib</artifactId>
-            <version>1.5.18</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
+            <groupId>com.github.Slimefun</groupId>
+            <artifactId>Slimefun4</artifactId>
+            <version>RC-22</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.github.thebusybiscuit</groupId>
+                    <artifactId>cscorelib2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -63,42 +59,10 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>*</include>
+                </includes>
             </resource>
         </resources>
-
-        <plugins>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <escapeString>\</escapeString>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>org.dom4j:dom4j</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

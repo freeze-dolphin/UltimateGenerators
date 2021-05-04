@@ -1,5 +1,7 @@
 package io.freeze_dolphin.api.updating_server;
 
+public package io.freeze_dolphin.api.updating_server;
+
 import io.freeze_dolphin.ultimate_generators.DefaultConfig;
 import java.io.IOException;
 import java.io.InputStream;
