@@ -10,7 +10,7 @@ public class DefaultConfig {
     static {
         map.put("enable-update-notification", "true");
         map.put("update-check-timeout", "9000");
-        map.put("show-machine-indicator", "true");
+        // map.put("show-machine-indicator", "true"); Machine Indicator Not Available Anymore
         map.put("magnesium-salt-require-zinc-dust", "false");
         map.put("generation-per-crystal", "128");
         map.put("warning-crystal-number", "9");

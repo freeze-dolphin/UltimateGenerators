@@ -4,40 +4,36 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 
-public abstract class BiofuelRefinery extends AContainer {
+public abstract class DieselRefinery extends AContainer {
 
-    public BiofuelRefinery(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public DieselRefinery(Category category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(category, item, recipeType, recipe);
     }
 
     @Override
     public ItemStack getProgressBar() {
-        return new ItemStack(Material.SLIME_BALL);
+        return new ItemStack(Material.FLINT_AND_STEEL);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        registerRecipe(40, new ItemStack[] { UGItems.BIOMASS_BUCKET }, new ItemStack[] { UGItems.BIOFUEL_BUCKET });
+        registerRecipe(40, new ItemStack[] { SlimefunItems.OIL_BUCKET }, new ItemStack[] { UGItems.DIESEL_BUCKET });
     }
 
     @Override
     public String getMachineIdentifier() {
-        return "BIOMASS_REFINERY";
+        return "DIESEL_REFINERY";
     }
 
     @Override
     public String getInventoryTitle() {
-        return "&2生物燃油精炼器";
-    }
-
-    @Override
-    public int getEnergyConsumption() {
-        return 18;
+        return "&c柴油精炼器";
     }
 
 }

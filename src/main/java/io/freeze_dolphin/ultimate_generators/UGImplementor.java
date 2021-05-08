@@ -1,5 +1,7 @@
 package io.freeze_dolphin.ultimate_generators;
 
+import java.lang.reflect.Field;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -7,11 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.BiofuelRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.MagnesiumGenerator;
-import io.freeze_dolphin.ultimate_generators.objects.machines.OilRefinery;
+import io.freeze_dolphin.ultimate_generators.objects.machines.DieselRefinery;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalGenerator;
 import io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator.EnderCrystalStabilizer;
 import io.freeze_dolphin.ultimate_generators.objects.machines.rainbow_generator.RainbowGenerator;
@@ -45,7 +45,7 @@ class UGImplementor {
         this.plug = plug;
     }
 
-    public void implementIngredients() {
+    public void implementIngredients() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 
         (new SlimefunItem(UGCategories.DTechMisc, UGItems.MODULAR_GENERATOR_REGULATOR,
                 RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -149,14 +149,22 @@ class UGImplementor {
 
         SlimefunPlugin.getItemCfg().setValue("REINFORCED_RAINBOW_GLASS.allow-disenchanting", false);
         BlockTicker fast = new ReinforcedRainbowTicker.Fast();
-        (new SlimefunItem(UGCategories.DMagic, UGItems.REINFORCED_RAINBOW_GLASS, RecipeType.ANCIENT_ALTAR,
+
+        SlimefunItem SFI_REINFORCED_RAINBOW_GLASS = (new SlimefunItem(UGCategories.DMagic,
+                UGItems.REINFORCED_RAINBOW_GLASS, RecipeType.ANCIENT_ALTAR,
                 new ItemStack[] { SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                         SlimefunItems.REINFORCED_ALLOY_INGOT, UGItems.RAINBOW_ALLOY,
                         SlimefunItems.REINFORCED_ALLOY_INGOT, SlimefunItems.RAINBOW_GLASS, SlimefunItems.RAINBOW_GLASS,
                         SlimefunItems.RAINBOW_GLASS },
-                new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS,
-                        Integer.parseInt(DefaultConfig.getConfig("reinforced-rainbow-glass-crafting-number-on-once")))))
-                                .register(plug.getAddonHandle());
+                new CustomItem(UGItems.REINFORCED_RAINBOW_GLASS, Integer
+                        .parseInt(DefaultConfig.getConfig("reinforced-rainbow-glass-crafting-number-on-once")))));
+
+        Field F_WIKI_REINFORCED_RAINBOW_GLASS = SlimefunItem.class.getDeclaredField("wikiURL");
+        F_WIKI_REINFORCED_RAINBOW_GLASS.setAccessible(true);
+        F_WIKI_REINFORCED_RAINBOW_GLASS.set(SFI_REINFORCED_RAINBOW_GLASS,
+                "https://gitee.com/freeze-dolphin/UltimateGenerators-wiki/blob/master/Generator-(Rainbow-Reactor).md");
+
+        SFI_REINFORCED_RAINBOW_GLASS.register(plug.getAddonHandle());
 
         SlimefunItem.getByItem(UGItems.REINFORCED_RAINBOW_GLASS)
                 .addItemHandler(new ItemHandler[] {
@@ -164,20 +172,15 @@ class UGImplementor {
                                 ? new ReinforcedRainbowTicker.Fancy()
                                 : fast });
 
-        //
-        // Slimefun.addWikiPage("REINFORCED_RAINBOW_GLAS
-        // ",
-        // "https://gitee.com/freeze-dolphin/UltimateGenerators-wiki/blob/master/Generator-(Rainbow-Reactor).md");
-
     }
 
     public void implementMachines() {
 
-        (new OilRefinery(UGCategories.CMachine, UGItems.DIESEL_REFINERY, RecipeType.ENHANCED_CRAFTING_TABLE,
+        (new DieselRefinery(UGCategories.CMachine, UGItems.DIESEL_REFINERY, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HEATING_COIL,
                         SlimefunItems.HARDENED_GLASS, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.HARDENED_GLASS,
                         SlimefunItems.HARDENED_GLASS, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HARDENED_GLASS)) {
-        }).registerChargeableBlock(false, 256);
+        }).register(plug.getAddonHandle();
 
         (new BiofuelRefinery(UGCategories.CMachine, UGItems.BIOFUEL_REFINERY, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Utils.buildRecipe(SlimefunItems.HEATING_COIL, SlimefunItems.PLASTIC_SHEET, SlimefunItems.HEATING_COIL,
@@ -185,7 +188,7 @@ class UGImplementor {
                         SlimefunItems.HEATING_COIL, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.HEATING_COIL)) {
         }).registerChargeableBlock(false, 256);
 
-        (new BContainer(UGCategories.CMachine, UGItems.BIOMASS_EXTRACTION_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE,
+        (new AContainer(UGCategories.CMachine, UGItems.BIOMASS_EXTRACTION_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE,
                 Utils.buildRecipe(ALUI, mat(Material.PISTON_BASE), ALUI, HGLASS, COIL, HGLASS, COIL,
                         mat(Material.HOPPER), COIL),
                 Loader.getDisplaySw()) {
