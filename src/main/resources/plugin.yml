@@ -1,7 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/bukkit-plugin
+
 name: UltimateGenerators
 main: io.freeze_dolphin.ultimate_generators.Loader
 version: ${project.version}
 author: Freeze_Dolphin
 website: https://github.com/freeze-dolphin/UltimateGenerators/
+
+api-version: 1.14
 
 depend: [Slimefun, CS-CoreLib]
