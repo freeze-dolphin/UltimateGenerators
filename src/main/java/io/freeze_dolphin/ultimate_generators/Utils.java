@@ -15,9 +15,6 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.Plugin;
 
-import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
-import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
-
 public class Utils {
 
     @SuppressWarnings("CallToPrintStackTrace")

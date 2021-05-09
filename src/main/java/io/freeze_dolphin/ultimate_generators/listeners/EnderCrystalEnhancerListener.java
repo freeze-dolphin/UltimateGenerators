@@ -8,9 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
-import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
+import me.mrCookieSlime.Slimefun.cscorelib2.inventory.InvUtils;
 
 public class EnderCrystalEnhancerListener implements Listener {
 
