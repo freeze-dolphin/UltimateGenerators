@@ -45,19 +45,18 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <!-- Since Slimefun (Nar14), did not have
-                maven repository and github source repository, you must install Slimefun
-                JAR file into your local maven repository -->
             <groupId>me.mrCookieSlime</groupId>
             <artifactId>Slimefun</artifactId>
-            <version>nar4.1.15</version>
-            <scope>provided</scope>
+            <version>4.1.15</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/Slimefun-4.1.15-NOBUTS.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.github.TheBusyBiscuit</groupId>
+            <groupId>me.mrCookieSlime</groupId>
             <artifactId>CS-CoreLib</artifactId>
             <version>1.5.18</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/CS-CoreLib-1.5.18.jar</systemPath>
         </dependency>
     </dependencies>
 
