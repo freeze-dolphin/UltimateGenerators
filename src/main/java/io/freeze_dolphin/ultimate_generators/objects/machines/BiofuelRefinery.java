@@ -1,8 +1,9 @@
 package io.freeze_dolphin.ultimate_generators.objects.machines;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.freeze_dolphin.ultimate_generators.PlugGividado;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
@@ -12,21 +13,18 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecip
 import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Loader;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.BContainer;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BiofuelRefinery extends BContainer {
 
     public BiofuelRefinery(Category category, ItemStack item, String name, RecipeType recipeType, ItemStack[] recipe) {
-        super(category, item, name, recipeType, recipe, Loader.getDisplaySw());
+        super(category, item, name, recipeType, recipe, PlugGividado.getDisplaySw());
     }
 
     @Override
@@ -58,7 +56,7 @@ public abstract class BiofuelRefinery extends BContainer {
     public int getSpeed() {
         return 1;
     }
-    
+
     @Override
     protected void tick(Block b) {
 
@@ -102,7 +100,7 @@ public abstract class BiofuelRefinery extends BContainer {
             for (int slot : getInputSlots()) {
                 if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(b).getItemInSlot(slot), UGItems.BIOMASS_BUCKET, true)) {
                     MachineRecipe r = new MachineRecipe(40, new ItemStack[0], new ItemStack[]{UGItems.BIOFUEL_BUCKET});
-                    if (!fits(b, r.getOutput())) {
+                    if (fits(b, r.getOutput())) {
                         return;
                     }
                     BlockStorage.getInventory(b).replaceExistingItem(slot, InvUtils.decreaseItem(BlockStorage.getInventory(b).getItemInSlot(slot), 1));

@@ -1,5 +1,7 @@
 package io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator;
 
+import io.freeze_dolphin.ultimate_generators.PlugGividado;
+import io.freeze_dolphin.ultimate_generators.Utils;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -7,15 +9,11 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
-
-import io.freeze_dolphin.ultimate_generators.Loader;
-import io.freeze_dolphin.ultimate_generators.Utils;
 
 public class EnderCrystalStabilizer extends SlimefunItem {
 
@@ -56,7 +54,7 @@ public class EnderCrystalStabilizer extends SlimefunItem {
         }
 
         if (ChargableBlock.getCharge(b) < getEnergyConsumption()) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(PlugGividado.getImplement(), () -> {
                 BlockStorage.clearBlockInfo(b);
                 b.setType(Material.AIR);
                 b.getWorld().createExplosion(Utils.locModify(b.getLocation(), 0.5F, 0.5F, 0.5F), 0F, false);

@@ -1,17 +1,16 @@
 package io.freeze_dolphin.ultimate_generators.listeners;
 
-import java.util.Iterator;
-
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+
+import java.util.Iterator;
 
 @Deprecated
 public class ReinforcedRainbowGlassBlastProofListener implements Listener {

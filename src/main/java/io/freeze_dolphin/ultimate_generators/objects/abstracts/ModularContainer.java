@@ -1,9 +1,7 @@
 package io.freeze_dolphin.ultimate_generators.objects.abstracts;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -17,7 +15,6 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineHelper;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
@@ -33,47 +30,39 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Utils;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@SuppressWarnings("unused")
 public abstract class ModularContainer extends SlimefunItem {
-
-    public static Map<Block, MachineRecipe> processing = new HashMap<>();
-    public static Map<Block, Integer> progress = new HashMap<>();
-    protected List<MachineRecipe> recipes = new ArrayList<>();
-
-    private static final int[] border
-            = {
-                0,
-                9, 17,
-                18, 19, 20, 21, 23, 24, 25, 26,
-                27, 35,
-                36, 44
-            };
-    private static final int[] border_in
-            = {
-                1, 7,
-                10, 11, 12, 13, 14, 15, 16
-            };
-    private static final int[] border_out
-            = {
-                28, 29, 30, 31, 32, 33, 34,
-                37, 43
-            };
-
-    public int[] getInputSlots() {
-        return new int[]{2, 3, 4, 5, 6};
-    }
-
-    public int[] getOutputSlots() {
-        return new int[]{38, 39, 40, 41, 42};
-    }
 
     protected static final int INDICATOR = 22;
     protected static final int MACHINE_INFO = 8;
-
+    private static final int[] border
+            = {
+            0,
+            9, 17,
+            18, 19, 20, 21, 23, 24, 25, 26,
+            27, 35,
+            36, 44
+    };
+    private static final int[] border_in
+            = {
+            1, 7,
+            10, 11, 12, 13, 14, 15, 16
+    };
+    private static final int[] border_out
+            = {
+            28, 29, 30, 31, 32, 33, 34,
+            37, 43
+    };
+    public static Map<Block, MachineRecipe> processing = new HashMap<>();
+    public static Map<Block, Integer> progress = new HashMap<>();
     private final String ID;
     private final boolean displayMachineInfo;
+    protected List<MachineRecipe> recipes = new ArrayList<>();
 
     public ModularContainer(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, boolean displayMachineInfo) {
         super(category, item, id, recipeType, recipe);
@@ -136,20 +125,28 @@ public abstract class ModularContainer extends SlimefunItem {
         registerDefaultRecipes();
     }
 
+    public int[] getInputSlots() {
+        return new int[]{2, 3, 4, 5, 6};
+    }
+
+    public int[] getOutputSlots() {
+        return new int[]{38, 39, 40, 41, 42};
+    }
+
     protected void constructMenu(BlockMenuPreset preset) {
         for (int i : border) {
             preset.addItem(i,
-                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " ", new String[0]), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
+                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
         for (int i : border_in) {
             preset.addItem(i,
-                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " ", new String[0]), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
+                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 9), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
         for (int i : border_out) {
             preset.addItem(i,
-                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " ", new String[0]), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
+                    new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 1), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         }
-        preset.addItem(INDICATOR, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " ", new String[0]), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
+        preset.addItem(INDICATOR, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "), (Player arg0, int arg1, ItemStack arg2, ClickAction arg3) -> false);
         for (int i : getOutputSlots()) {
             preset.addMenuClickHandler(i, new ChestMenu.AdvancedMenuClickHandler() {
                 @Override
@@ -159,7 +156,7 @@ public abstract class ModularContainer extends SlimefunItem {
 
                 @Override
                 public boolean onClick(InventoryClickEvent e, Player p, int slot, ItemStack cursor,
-                        ClickAction action) {
+                                       ClickAction action) {
                     return (cursor == null) || (cursor.getType() == null) || (cursor.getType() == Material.AIR);
                 }
             });
@@ -189,7 +186,7 @@ public abstract class ModularContainer extends SlimefunItem {
     }
 
     public MachineRecipe getProcessing(Block b) {
-        return (MachineRecipe) processing.get(b);
+        return processing.get(b);
     }
 
     public boolean isProcessing(Block b) {
@@ -231,7 +228,7 @@ public abstract class ModularContainer extends SlimefunItem {
 
     @Override
     public void register(boolean slimefun) {
-        addItemHandler(new ItemHandler[]{new BlockTicker() {
+        addItemHandler(new BlockTicker() {
 
             @Override
             public void tick(Block b, SlimefunItem sf, Config data) {
@@ -246,7 +243,7 @@ public abstract class ModularContainer extends SlimefunItem {
             public boolean isSynchronized() {
                 return false;
             }
-        }});
+        });
         super.register(slimefun);
     }
 
@@ -267,11 +264,11 @@ public abstract class ModularContainer extends SlimefunItem {
             int timeleft = (progress.get(b));
             if (timeleft > 0) {
                 ItemStack item = getProgressBar().clone();
-                item.setDurability(MachineHelper.getDurability(item, timeleft, ((MachineRecipe) processing.get(b)).getTicks()));
+                item.setDurability(MachineHelper.getDurability(item, timeleft, processing.get(b).getTicks()));
                 im = item.getItemMeta();
                 im.setDisplayName(" ");
                 List<String> lore = new ArrayList<>();
-                lore.add(MachineHelper.getProgress(timeleft, ((MachineRecipe) processing.get(b)).getTicks()));
+                lore.add(MachineHelper.getProgress(timeleft, processing.get(b).getTicks()));
                 lore.add("");
                 lore.add(MachineHelper.getTimeLeft(timeleft / 2));
                 im.setLore(lore);
@@ -283,14 +280,12 @@ public abstract class ModularContainer extends SlimefunItem {
                         return;
                     }
                     ChargableBlock.addCharge(b, -getEnergyConsumption());
-                    progress.put(b, timeleft - 1);
-                } else {
-                    progress.put(b, timeleft - 1);
                 }
+                progress.put(b, timeleft - 1);
             } else {
                 BlockStorage.getInventory(b).replaceExistingItem(INDICATOR,
-                        new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " ", new String[0]));
-                pushItems(b, (ItemStack[]) ((MachineRecipe) processing.get(b)).getOutput().clone());
+                        new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
+                pushItems(b, processing.get(b).getOutput().clone());
 
                 progress.remove(b);
                 processing.remove(b);
@@ -318,10 +313,8 @@ public abstract class ModularContainer extends SlimefunItem {
                 if (!fits(b, r.getOutput())) {
                     return;
                 }
-                found.entrySet().forEach(entry -> {
-                    BlockStorage.getInventory(b).replaceExistingItem((entry.getKey()),
-                            InvUtils.decreaseItem(BlockStorage.getInventory(b).getItemInSlot((entry.getKey())), (entry.getValue())));
-                });
+                found.forEach((key, value) -> BlockStorage.getInventory(b).replaceExistingItem((key),
+                        InvUtils.decreaseItem(BlockStorage.getInventory(b).getItemInSlot((key)), (value))));
                 processing.put(b, r);
                 progress.put(b, r.getTicks());
             }

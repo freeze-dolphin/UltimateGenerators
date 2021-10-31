@@ -22,7 +22,7 @@ public class DefaultConfig {
     }
 
     public static String getConfig(String s) {
-        return Loader.getProperties().getProperty(s, map.get(s));
+        return PlugGividado.getProperties().getProperty(s, map.get(s));
     }
 
 }

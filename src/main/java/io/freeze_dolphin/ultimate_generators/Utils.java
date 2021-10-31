@@ -1,10 +1,7 @@
 package io.freeze_dolphin.ultimate_generators;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Random;
-
+import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
+import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -15,20 +12,17 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.Plugin;
 
-import me.mrCookieSlime.CSCoreLibPlugin.CSCoreLib;
-import me.mrCookieSlime.Slimefun.Misc.compatibles.ProtectionUtils;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.List;
+import java.util.Random;
 
+@SuppressWarnings("unused")
 public class Utils {
 
     @SuppressWarnings("CallToPrintStackTrace")
-    public static final String db64s(final String base64) {
-        try {
-            return new String(Base64.getDecoder().decode(base64), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            Loader.severe("Error occourred while decoding Base64, have you ever modified the plugin?");
-            return base64;
-        }
+    public static String db64s(final String base64) {
+        return new String(Base64.getDecoder().decode(base64), StandardCharsets.UTF_8);
     }
 
     public static ItemStack[] buildRecipe(ItemStack... itemStacks) {
@@ -77,7 +71,7 @@ public class Utils {
     }
 
     public static void asyncDelay(Runnable r) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), r);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(PlugGividado.getImplement(), r);
     }
 
     public static int getRandomMetaExcept(int except) {

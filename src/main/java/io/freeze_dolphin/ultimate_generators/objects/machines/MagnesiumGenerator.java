@@ -1,13 +1,12 @@
 package io.freeze_dolphin.ultimate_generators.objects.machines;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import io.freeze_dolphin.ultimate_generators.lists.UGItems;
 import io.freeze_dolphin.ultimate_generators.objects.abstracts.BGenerator;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class MagnesiumGenerator extends BGenerator {
 

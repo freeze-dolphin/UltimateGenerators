@@ -1,8 +1,5 @@
 package io.freeze_dolphin.ultimate_generators.objects.basics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.mrCookieSlime.Slimefun.AncientAltar.AltarRecipe;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Objects.Category;
@@ -12,6 +9,10 @@ import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Deprecated
 public class DebugSlimefunItem extends SlimefunItem {
@@ -34,7 +35,7 @@ public class DebugSlimefunItem extends SlimefunItem {
             if (getRecipeType().toItem().isSimilar(RecipeType.MOB_DROP.toItem())) {
                 try {
                     EntityType entity = EntityType.valueOf(ChatColor.stripColor(getRecipe()[4].getItemMeta().getDisplayName()).toUpperCase().replace(" ", "_"));
-                    List<ItemStack> dropping = new ArrayList<ItemStack>();
+                    List<ItemStack> dropping = new ArrayList<>();
                     if (SlimefunManager.drops.containsKey(entity)) {
                         dropping = SlimefunManager.drops.get(entity);
                     }

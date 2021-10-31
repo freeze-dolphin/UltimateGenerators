@@ -1,5 +1,7 @@
 package io.freeze_dolphin.ultimate_generators.listeners;
 
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.FireworkShow;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -10,10 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
-
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-
-import me.mrCookieSlime.CSCoreLibPlugin.general.Particles.FireworkShow;
 
 public class UltimateElectricityStorageCraftingListener implements Listener {
 

@@ -1,16 +1,14 @@
 package io.freeze_dolphin.ultimate_generators.listeners;
 
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
+import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
-import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 
 public class EnderCrystalEnhancerListener implements Listener {
 

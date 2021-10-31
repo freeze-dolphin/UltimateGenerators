@@ -1,12 +1,9 @@
 package io.freeze_dolphin.ultimate_generators.objects.machines.ender_crystal_generator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import io.freeze_dolphin.ultimate_generators.PlugGividado;
+import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.AdvancedMenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -28,7 +25,6 @@ import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-
 import org.apache.commons.lang3.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,37 +39,23 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Loader;
-import io.freeze_dolphin.ultimate_generators.Utils;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import java.util.*;
 
+@SuppressWarnings("unused")
 public abstract class EnderCrystalGenerator extends SlimefunItem {
-
-    public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
-    public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
-
-    private Set<MachineFuel> recipes = new HashSet<>();
-
-    private static final int[] border = { 0, 8, 9, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 35, 36 };
-    private static final int[] border_in = { 1, 7, 10, 11, 12, 13, 14, 15, 16 };
-    private static final int[] border_out = { 28, 29, 30, 31, 32, 33, 34, 37, 43 };
-
-    public int[] getInputSlots() {
-        return new int[] { 2, 3, 4, 5, 6 };
-    }
-
-    public int[] getOutputSlots() {
-        return new int[] { 38, 39, 40, 41, 42 };
-    }
 
     protected static final int INDICATOR = 22;
     protected static final int MACHINE_INFO = 44;
-
+    private static final int[] border = {0, 8, 9, 17, 18, 19, 20, 21, 23, 24, 25, 26, 27, 35, 36};
+    private static final int[] border_in = {1, 7, 10, 11, 12, 13, 14, 15, 16};
+    private static final int[] border_out = {28, 29, 30, 31, 32, 33, 34, 37, 43};
+    public static Map<Location, MachineFuel> processing = new HashMap<>();
+    public static Map<Location, Integer> progress = new HashMap<>();
     private final String ID;
+    private final Set<MachineFuel> recipes = new HashSet<>();
 
     public EnderCrystalGenerator(Category category, ItemStack item, String id, RecipeType recipeType,
-            ItemStack[] recipe) {
+                                 ItemStack[] recipe) {
         super(category, item, id, recipeType, recipe);
 
         ID = id;
@@ -154,6 +136,32 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
         registerDefaultRecipes();
     }
 
+    private static void setConnectedCrystalNum(Block b, int num) {
+        BlockStorage.addBlockInfo(b, "crystal-number", String.valueOf(num));
+    }
+
+    @SuppressWarnings("deprecation")
+    private static int getConnectedCrystalNum(Block b) {
+        if (!BlockStorage.hasBlockInfo(b)) {
+            return 0;
+        }
+        if (BlockStorage.getBlockInfo(b, "crystal-number") == null) {
+            return 0;
+        }
+        if (BlockStorage.getBlockInfo(b, "crystal-number").equals("")) {
+            return 0;
+        }
+        return Integer.parseInt(BlockStorage.getBlockInfo(b, "crystal-number"));
+    }
+
+    public int[] getInputSlots() {
+        return new int[]{2, 3, 4, 5, 6};
+    }
+
+    public int[] getOutputSlots() {
+        return new int[]{38, 39, 40, 41, 42};
+    }
+
     private void constructMenu(BlockMenuPreset preset) {
         for (int i : border) {
             preset.addItem(i, new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 7), " "),
@@ -178,7 +186,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
                 @Override
                 public boolean onClick(InventoryClickEvent e, Player p, int slot, ItemStack cursor,
-                        ClickAction action) {
+                                       ClickAction action) {
                     return cursor == null || cursor.getType() == null || cursor.getType() == Material.AIR;
                 }
             });
@@ -255,7 +263,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                 Location genL = Utils.locModify(l.getBlock().getLocation(), 0.5F, -1.5F, 0.5F);
                 Location partL = Utils.locModify(genL, 0F, 2F, 0F);
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Loader.getImplement(), () -> {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(PlugGividado.getImplement(), () -> {
                     List<EnderCrystal> ecc = new ArrayList<>();
 
                     l.getWorld().getNearbyEntities(l, 4D, 4D, 4D).stream()
@@ -284,11 +292,9 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                 }
 
                 if (!checkStructure(l.getBlock())) {
-                    Utils.asyncDelay(() -> {
-                        BlockStorage.getInventory(l).replaceExistingItem(MACHINE_INFO,
-                                new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &4&l✘&r",
-                                        "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常"));
-                    });
+                    Utils.asyncDelay(() -> BlockStorage.getInventory(l).replaceExistingItem(MACHINE_INFO,
+                            new CustomItem(new UniversalMaterial(Material.EMPTY_MAP), "&f机器信息", "&3结构完整性: &4&l✘&r",
+                                    "&3已连接水晶: &e" + getConnectedCrystalNum(l.getBlock()), "&3机器状态: &a正常")));
                     return 0D;
                 }
 
@@ -298,7 +304,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                         try {
                             ParticleEffect.END_ROD.display(partL, 0F, 0F, 0F, 0.1F,
                                     RandomUtils.nextInt(2, getConnectedCrystalNum(l.getBlock()) + 2));
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
 
                         if (getConnectedCrystalNum(l.getBlock()) > getWarningCrystalNum()) {
@@ -317,7 +323,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                                 try {
                                     ParticleEffect.VILLAGER_ANGRY.display(partL, 0F, 0F, 0F, 0.1F,
                                             RandomUtils.nextInt(1, warn + 2));
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
                             }
                         } else {
@@ -328,7 +334,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                             try {
                                 ParticleEffect.DRAGON_BREATH.display(partL, 0F, 0F, 0F, 0.3F,
                                         RandomUtils.nextInt(1, 3));
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
                             }
                         }
                     });
@@ -351,7 +357,7 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                         if (ChargableBlock.isChargable(l)) {
                             if (ChargableBlock.getMaxCharge(l)
                                     - ChargableBlock.getCharge(l) >= getEnergyProductionPerCrystal()
-                                            * getConnectedCrystalNum(l.getBlock())) {
+                                    * getConnectedCrystalNum(l.getBlock())) {
                                 ChargableBlock.addCharge(l,
                                         getEnergyProductionPerCrystal() * getConnectedCrystalNum(l.getBlock()));
                                 progress.put(l, timeleft - 1);
@@ -365,17 +371,17 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                     } else {
                         ItemStack fuel = processing.get(l).getInput();
                         if (SlimefunManager.isItemSimiliar(fuel, new ItemStack(Material.LAVA_BUCKET), true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_FUEL, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_OIL, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOFUEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOMASS_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.DIESEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         }
                         BlockStorage.getInventory(l).replaceExistingItem(INDICATOR,
                                 new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
@@ -392,7 +398,8 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
 
                     MachineFuel r = null;
                     Map<Integer, Integer> found = new HashMap<>();
-                    outer: for (MachineFuel recipe : recipes) {
+                    outer:
+                    for (MachineFuel recipe : recipes) {
                         for (int slot : getInputSlots()) {
                             if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot),
                                     recipe.getInput(), true)) {
@@ -404,10 +411,8 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
                     }
 
                     if (r != null) {
-                        found.entrySet().forEach(entry -> {
-                            BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(
-                                    BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
-                        });
+                        found.forEach((key, value) -> BlockStorage.getInventory(l).replaceExistingItem(key, InvUtils.decreaseItem(
+                                BlockStorage.getInventory(l).getItemInSlot(key), value)));
                         processing.put(l, r);
                         progress.put(l, r.getTicks());
                     }
@@ -451,24 +456,6 @@ public abstract class EnderCrystalGenerator extends SlimefunItem {
         for (int slot : getOutputSlots()) {
             BlockStorage.getInventory(l).replaceExistingItem(slot, inv.getItem(slot));
         }
-    }
-
-    private static void setConnectedCrystalNum(Block b, int num) {
-        BlockStorage.addBlockInfo(b, "crystal-number", String.valueOf(num));
-    }
-
-    @SuppressWarnings("deprecation")
-    private static int getConnectedCrystalNum(Block b) {
-        if (!BlockStorage.hasBlockInfo(b)) {
-            return 0;
-        }
-        if (BlockStorage.getBlockInfo(b, "crystal-number") == null) {
-            return 0;
-        }
-        if (BlockStorage.getBlockInfo(b, "crystal-number").equals("")) {
-            return 0;
-        }
-        return Integer.parseInt(BlockStorage.getBlockInfo(b, "crystal-number"));
     }
 
 }

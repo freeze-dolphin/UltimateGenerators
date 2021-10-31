@@ -1,14 +1,12 @@
 package io.freeze_dolphin.ultimate_generators.lists;
 
 import io.freeze_dolphin.ultimate_generators.DefaultConfig;
-import org.bukkit.Material;
-
-import io.freeze_dolphin.ultimate_generators.Loader;
+import io.freeze_dolphin.ultimate_generators.PlugGividado;
 import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
-
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
 import me.mrCookieSlime.Slimefun.Lists.Categories;
 import me.mrCookieSlime.Slimefun.Objects.Category;
+import org.bukkit.Material;
 
 public class UGCategories {
 
@@ -29,7 +27,10 @@ public class UGCategories {
                     "&7&oAuthor: Freeze_Dolphin", "&a> 点击打开"),
             5);
 
-    public UGCategories(Loader plug) {
+    public UGCategories(PlugGividado plug) {
+    }
+
+    public void setup() {
         if (Boolean.getBoolean(DefaultConfig.getConfig("hide-author-name-in-category"))) {
             MACHINES = new Category(
                     new CustomItem(new UniversalMaterial(Material.PAPER), "&d终极发电机 &7- &9机器&r", "", "&a> 点击打开"), 4);

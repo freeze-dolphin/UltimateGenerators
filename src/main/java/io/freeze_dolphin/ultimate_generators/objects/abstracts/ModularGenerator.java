@@ -1,12 +1,8 @@
 package io.freeze_dolphin.ultimate_generators.objects.abstracts;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu.AdvancedMenuClickHandler;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -27,7 +23,6 @@ import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,49 +33,36 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Utils;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import java.util.*;
 
+@SuppressWarnings("unused")
 public abstract class ModularGenerator extends SlimefunItem {
-
-    public static Map<Location, MachineFuel> processing = new HashMap<Location, MachineFuel>();
-    public static Map<Location, Integer> progress = new HashMap<Location, Integer>();
-
-    public Set<MachineFuel> recipes = new HashSet<>();
-
-    private static final int[] border
-            = {
-                0,
-                9, 17,
-                18, 19, 20, 21, 23, 24, 25, 26,
-                27, 35,
-                36, 44
-            };
-    private static final int[] border_in
-            = {
-                1, 7,
-                10, 11, 12, 13, 14, 15, 16
-            };
-    private static final int[] border_out
-            = {
-                28, 29, 30, 31, 32, 33, 34,
-                37, 43
-            };
-
-    public int[] getInputSlots() {
-        return new int[]{2, 3, 4, 5, 6};
-    }
-
-    public int[] getOutputSlots() {
-        return new int[]{38, 39, 40, 41, 42};
-    }
 
     protected static final int INDICATOR = 22;
     protected static final int MACHINE_INFO = 8;
-
+    private static final int[] border
+            = {
+            0,
+            9, 17,
+            18, 19, 20, 21, 23, 24, 25, 26,
+            27, 35,
+            36, 44
+    };
+    private static final int[] border_in
+            = {
+            1, 7,
+            10, 11, 12, 13, 14, 15, 16
+    };
+    private static final int[] border_out
+            = {
+            28, 29, 30, 31, 32, 33, 34,
+            37, 43
+    };
+    public static Map<Location, MachineFuel> processing = new HashMap<>();
+    public static Map<Location, Integer> progress = new HashMap<>();
     private final String ID;
     private final boolean displayMachineInfo;
+    public Set<MachineFuel> recipes = new HashSet<>();
 
     public ModularGenerator(Category category, ItemStack item, String id, RecipeType recipeType, ItemStack[] recipe, boolean displayMachineInfo) {
         super(category, item, id, recipeType, recipe);
@@ -144,6 +126,14 @@ public abstract class ModularGenerator extends SlimefunItem {
             }
         });
         registerDefaultRecipes();
+    }
+
+    public int[] getInputSlots() {
+        return new int[]{2, 3, 4, 5, 6};
+    }
+
+    public int[] getOutputSlots() {
+        return new int[]{38, 39, 40, 41, 42};
     }
 
     private void constructMenu(BlockMenuPreset preset) {
@@ -221,7 +211,7 @@ public abstract class ModularGenerator extends SlimefunItem {
                     return 0D;
                 }
 
-                if (!checkStructure(l.getBlock())) {
+                if (checkStructure(l.getBlock())) {
                     return 0D;
                 }
 
@@ -288,9 +278,7 @@ public abstract class ModularGenerator extends SlimefunItem {
                     }
 
                     if (r != null) {
-                        found.entrySet().forEach(entry -> {
-                            BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
-                        });
+                        found.forEach((key, value) -> BlockStorage.getInventory(l).replaceExistingItem(key, InvUtils.decreaseItem(BlockStorage.getInventory(l).getItemInSlot(key), value)));
                         processing.put(l, r);
                         progress.put(l, r.getTicks());
                     }

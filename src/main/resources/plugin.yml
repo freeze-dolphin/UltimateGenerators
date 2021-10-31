@@ -1,7 +1,11 @@
-name: UltimateGenerators
-main: io.freeze_dolphin.ultimate_generators.Loader
+main: io.freeze_dolphin.ultimate_generators.PlugGividado
 version: ${project.version}
+
+name: UltimateGenerators
 author: Freeze_Dolphin
+
 website: https://github.com/freeze-dolphin/UltimateGenerators/
 
-depend: [Slimefun, CS-CoreLib]
+depend:
+  - Slimefun
+  - CS-CoreLib

@@ -15,7 +15,7 @@ public class UniversalMaterial extends MaterialData {
     }
 
     public MaterialData toData() {
-        return (MaterialData) this;
+        return this;
     }
 
 }

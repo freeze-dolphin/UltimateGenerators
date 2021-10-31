@@ -1,31 +1,50 @@
 package io.freeze_dolphin.ultimate_generators;
 
-import io.freeze_dolphin.api.updating_server.UpdatingServerUtils;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.IOException;
-import java.util.Properties;
-
+import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.freeze_dolphin.api.updating_server.UpdatingServerUtils.VersionInfo;
-import static io.freeze_dolphin.api.updating_server.UpdatingServerUtils.getLatestVersion;
-import static io.freeze_dolphin.api.updating_server.UpdatingServerUtils.getVersionInfo;
-import io.freeze_dolphin.ultimate_generators.lists.UGCategories;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.lists.UGRecipeType;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import org.dom4j.DocumentException;
+import java.io.*;
+import java.util.Properties;
 
-public class Loader extends JavaPlugin {
+public class PlugGividado extends JavaPlugin {
 
     private static Plugin plug;
     private static Properties pp;
+
+    public static Plugin getImplement() {
+        return plug;
+    }
+
+    public static void info(String msg) {
+        getImplement().getLogger().info(msg);
+    }
+
+    public static void severe(String msg) {
+        getImplement().getLogger().severe(msg);
+    }
+
+    public static Properties getProperties() {
+        return pp;
+    }
+
+    public static boolean getDisplaySw() {
+
+        return Boolean.parseBoolean(getProperties().getProperty("show-machine-indicator", "true"));
+
+        /*
+         * YamlConfiguration pdf = new YamlConfiguration(); try { pdf.load(new
+         * InputStreamReader(Loader.class.getClassLoader().getResourceAsStream(
+         * "plugin.yml"))); } catch (Exception e) { e.printStackTrace();
+         * plug.getLogger()
+         * .severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling..."
+         * ); plug.getServer().getPluginManager().disablePlugin(plug); }
+         *
+         * return pdf.contains("show-machine-indicator") &&
+         * pdf.isBoolean("show-machine-indicator") &&
+         * pdf.getBoolean("show-machine-indicator");
+         */
+    }
 
     @Override
     @SuppressWarnings("CallToPrintStackTrace")
@@ -41,10 +60,11 @@ public class Loader extends JavaPlugin {
                 info("Configuration is not exist, creating one...");
 
                 if (!ppf.getParentFile().exists()) {
-                    ppf.getParentFile().mkdirs();
+                    if (!ppf.getParentFile().mkdirs()) throw new IOException("Couldn't make directories.");
                 }
                 InputStream is = this.getClass().getClassLoader().getResourceAsStream("config.properties");
                 try (FileOutputStream fos = new FileOutputStream(ppf)) {
+                    assert is != null;
                     byte[] b = new byte[is.available()];
                     while (is.read(b) != -1) {
                         fos.write(b);
@@ -62,14 +82,12 @@ public class Loader extends JavaPlugin {
             this.setEnabled(false);
             return;
         }
-        
+
         // load
         try {
-            new UGItems(this);
-            new UGRecipeType();
             new UGCategories(this);
 
-            UGImplementor implementor = new UGImplementor(this);
+            UGImplementor implementor = new UGImplementor();
             implementor.implementIngredients();
             implementor.implementMachines();
             implementor.implementSingleGenerators();
@@ -82,29 +100,16 @@ public class Loader extends JavaPlugin {
             this.setEnabled(false);
         }
 
-        // initialize configurations
         /*
-		 * (Deprecated) try { Class<?> ugItemClass =
-		 * Class.forName("io.github.freeze_dolphin.ultimate_generators.lists.UGItems");
-		 * for (Field f : ugItemClass.getFields()) { if
-		 * (f.isAnnotationPresent(MachineItemStack.class)) { if
-		 * (SlimefunItem.getByID(f.getName()) == null) {
-		 * severe("An unexpected error occurred: Item '" + f.getName() +
-		 * "' is not loaded!"); continue; } else {
-		 * getUGConfig().setMachineValue(f.getName(), "speed", 1); } } else { continue;
-		 * } } } catch (ClassNotFoundException e) { e.printStackTrace();
-		 * severe("In-plugin file 'UGItems.class' is lost, self-disabling...");
-		 * this.setEnabled(false); }
-         */
         Utils.asyncDelay(() -> {
             if (Boolean.parseBoolean(getProperties().getProperty("enable-update-notification", "true"))) {
                 info("Checking Updates...");
                 try {
                     UpdatingServerUtils.setTimeOut(Integer.parseInt(DefaultConfig.getConfig("update-check-timeout")));
-                    String latest = getLatestVersion(Loader.getImplement().getName());
-                    String current = Loader.getImplement().getDescription().getVersion();
+                    String latest = getLatestVersion(PlugGividado.getImplement().getName());
+                    String current = PlugGividado.getImplement().getDescription().getVersion();
                     if (Integer.parseInt(latest.replaceAll("\\.", "")) > Integer.parseInt(current.replaceAll("\\.", ""))) {
-                        VersionInfo vi = getVersionInfo(Loader.getImplement().getName(), latest);
+                        VersionInfo vi = getVersionInfo(PlugGividado.getImplement().getName(), latest);
                         warn("Update detected: v" + latest + " (Current: v" + current + ")" + "\n\t· " + vi.getName() + "\n\t· " + vi.getDescription() + "\n\t· " + vi.getURL());
                     } else {
                         info("You are now in the latest version!");
@@ -118,43 +123,6 @@ public class Loader extends JavaPlugin {
                 }
             }
         });
-    }
-
-    public static Plugin getImplement() {
-        return plug;
-    }
-
-    public static void info(String msg) {
-        getImplement().getLogger().info(msg);
-    }
-
-    public static void warn(String msg) {
-        getImplement().getLogger().warning(msg);
-    }
-
-    public static void severe(String msg) {
-        getImplement().getLogger().severe(msg);
-    }
-
-    public static Properties getProperties() {
-        return pp;
-    }
-
-    public static boolean getDisplaySw() {
-
-        return Boolean.parseBoolean(getProperties().getProperty("show-machine-indicator", "true"));
-
-        /*
-		 * YamlConfiguration pdf = new YamlConfiguration(); try { pdf.load(new
-		 * InputStreamReader(Loader.class.getClassLoader().getResourceAsStream(
-		 * "plugin.yml"))); } catch (Exception e) { e.printStackTrace();
-		 * plug.getLogger()
-		 * .severe("The internal plugin description file 'plugin.yml' cannot be read, self-disabling..."
-		 * ); plug.getServer().getPluginManager().disablePlugin(plug); }
-		 * 
-		 * return pdf.contains("show-machine-indicator") &&
-		 * pdf.isBoolean("show-machine-indicator") &&
-		 * pdf.getBoolean("show-machine-indicator");
          */
     }
 

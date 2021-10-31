@@ -1,10 +1,9 @@
 package io.freeze_dolphin.ultimate_generators.objects.machines.rainbow_generator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import io.freeze_dolphin.ultimate_generators.Utils;
+import io.freeze_dolphin.ultimate_generators.lists.UGItems;
+import io.freeze_dolphin.ultimate_generators.objects.abstracts.ModularGenerator;
+import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.InvUtils;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.Item.CustomItem;
@@ -18,17 +17,16 @@ import me.mrCookieSlime.Slimefun.Setup.SlimefunManager;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import me.mrCookieSlime.Slimefun.api.energy.EnergyTicker;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.freeze_dolphin.ultimate_generators.Utils;
-import io.freeze_dolphin.ultimate_generators.lists.UGItems;
-import io.freeze_dolphin.ultimate_generators.objects.abstracts.ModularGenerator;
-import io.freeze_dolphin.ultimate_generators.objects.basics.UniversalMaterial;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class RainbowGenerator extends ModularGenerator {
 
@@ -172,7 +170,7 @@ public abstract class RainbowGenerator extends ModularGenerator {
         s.add(Utils.locModify(l, 2, 2, 1));
         s.add(Utils.locModify(l, 2, 2, 2));
 
-        return s.stream().noneMatch(ll -> (ll.getBlock().getType().equals(Material.AIR)
+        return s.stream().anyMatch(ll -> (ll.getBlock().getType().equals(Material.AIR)
                 || !BlockStorage.check(ll, "REINFORCED_RAINBOW_GLASS")));
 
     }
@@ -188,7 +186,7 @@ public abstract class RainbowGenerator extends ModularGenerator {
                     return 0D;
                 }
 
-                if (!checkStructure(l.getBlock())) {
+                if (checkStructure(l.getBlock())) {
                     return 0D;
                 }
 
@@ -212,7 +210,7 @@ public abstract class RainbowGenerator extends ModularGenerator {
                         if (ChargableBlock.isChargable(l)) {
                             if (ChargableBlock.getMaxCharge(l) - ChargableBlock
                                     .getCharge(l) >= (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5
-                                            : getEnergyProduction())) {
+                                    : getEnergyProduction())) {
                                 ChargableBlock.addCharge(l,
                                         (int) (l.getWorld().isThundering() ? getEnergyProduction() * 1.5
                                                 : getEnergyProduction()));
@@ -227,17 +225,17 @@ public abstract class RainbowGenerator extends ModularGenerator {
                     } else {
                         ItemStack fuel = processing.get(l).getInput();
                         if (SlimefunManager.isItemSimiliar(fuel, new ItemStack(Material.LAVA_BUCKET), true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_FUEL, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, SlimefunItems.BUCKET_OF_OIL, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOFUEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.BIOMASS_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         } else if (SlimefunManager.isItemSimiliar(fuel, UGItems.DIESEL_BUCKET, true)) {
-                            pushItems(l, new ItemStack[] { new ItemStack(Material.BUCKET) });
+                            pushItems(l, new ItemStack[]{new ItemStack(Material.BUCKET)});
                         }
                         BlockStorage.getInventory(l).replaceExistingItem(INDICATOR,
                                 new CustomItem(new UniversalMaterial(Material.STAINED_GLASS_PANE, 15), " "));
@@ -249,7 +247,8 @@ public abstract class RainbowGenerator extends ModularGenerator {
                 } else {
                     MachineFuel r = null;
                     Map<Integer, Integer> found = new HashMap<>();
-                    outer: for (MachineFuel recipe : recipes) {
+                    outer:
+                    for (MachineFuel recipe : recipes) {
                         for (int slot : getInputSlots()) {
                             if (SlimefunManager.isItemSimiliar(BlockStorage.getInventory(l).getItemInSlot(slot),
                                     recipe.getInput(), true)) {
@@ -261,10 +260,8 @@ public abstract class RainbowGenerator extends ModularGenerator {
                     }
 
                     if (r != null) {
-                        found.entrySet().forEach(entry -> {
-                            BlockStorage.getInventory(l).replaceExistingItem(entry.getKey(), InvUtils.decreaseItem(
-                                    BlockStorage.getInventory(l).getItemInSlot(entry.getKey()), entry.getValue()));
-                        });
+                        found.forEach((key, value) -> BlockStorage.getInventory(l).replaceExistingItem(key, InvUtils.decreaseItem(
+                                BlockStorage.getInventory(l).getItemInSlot(key), value)));
                         processing.put(l, r);
                         progress.put(l, r.getTicks());
                     }
